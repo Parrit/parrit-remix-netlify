@@ -6,6 +6,9 @@ publish = "build/client"
 command = "npm run dev"
 framework = "vite"
 
+[[plugins]]
+package = "@xata.io/netlify"
+
 # Set immutable caching for static files, because they have fingerprinted filenames
 
 [[headers]]

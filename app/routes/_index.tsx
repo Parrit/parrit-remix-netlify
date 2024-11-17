@@ -1,3 +1,6 @@
+import { useLoaderData } from "@remix-run/react";
+import useXataClient from "~/server-hooks/useXataClient";
+
 export function headers({
   loaderHeaders,
   parentHeaders,
@@ -15,38 +18,21 @@ export function headers({
   };
 }
 
+export const loader = async () => {
+  const projects = await useXataClient().db.Projects.getPaginated();
+  return { projects };
+};
+
 export default function Index() {
+  const { projects } = useLoaderData<typeof loader>();
+
   return (
     <main style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <h1>Welcome to Remix</h1>
       <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer noopener"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer noopener"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer noopener"
-          >
-            Remix Docs
-          </a>
-        </li>
+        {projects.records.map((proj) => (
+          <li>{proj.name}</li>
+        ))}
       </ul>
     </main>
   );

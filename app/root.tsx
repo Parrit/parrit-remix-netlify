@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { ContextStack } from "./contexts/ContextStack";
 
 export const meta: MetaFunction = () => [
   {
@@ -29,7 +30,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <ContextStack>
+          <Outlet />
+        </ContextStack>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

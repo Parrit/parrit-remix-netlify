@@ -1,0 +1,79 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_csshr9g6e9h141eb98e0",
+    "operations": [
+      {
+        "create_table": {
+          "name": "pairing_history_fixed",
+          "columns": [
+            {
+              "name": "pairing_board_name",
+              "type": "text",
+              "comment": "{}",
+              "nullable": true
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamptz",
+              "comment": "{}",
+              "nullable": true
+            },
+            {
+              "name": "project_id",
+              "type": "int",
+              "comment": "{}",
+              "nullable": true
+            },
+            {
+              "name": "xata_id",
+              "type": "text",
+              "check": {
+                "name": "pairing_history_fixed_xata_id_length_xata_id",
+                "constraint": "length(\"xata_id\") < 256"
+              },
+              "unique": true,
+              "default": "'rec_' || xata_private.xid()",
+              "nullable": false
+            },
+            {
+              "name": "xata_version",
+              "type": "integer",
+              "default": "0",
+              "nullable": false
+            },
+            {
+              "name": "xata_createdat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            },
+            {
+              "name": "xata_updatedat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            }
+          ]
+        }
+      },
+      {
+        "sql": {
+          "up": "ALTER TABLE \"pairing_history_fixed\" REPLICA IDENTITY FULL",
+          "onComplete": true
+        }
+      },
+      {
+        "sql": {
+          "up": "CREATE TRIGGER xata_maintain_metadata_trigger_pgroll\n  BEFORE INSERT OR UPDATE\n  ON \"pairing_history_fixed\"\n  FOR EACH ROW\n  EXECUTE FUNCTION xata_private.maintain_metadata_trigger_pgroll()",
+          "onComplete": true
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_csshr9g6e9h141eb98e0",
+  "parent": "mig_csshoi86e9h141eb98d0",
+  "schema": "public",
+  "startedAt": "2024-11-16T22:33:10.988134Z"
+}
