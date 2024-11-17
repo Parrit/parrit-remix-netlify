@@ -1,0 +1,1 @@
+html,body,#reactRoot{height:100%;margin:0;padding:0}.layout-wrapper{display:flex;flex-direction:column;min-height:100%}header{flex-shrink:0}main{flex:1}footer{flex-shrink:0}
