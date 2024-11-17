@@ -23,6 +23,14 @@ Visit the app: https://parrit.io/
 5. link your project with `supabase link`
 6. clone the remote project with `supabase db pull`
 
+
+### Create local .env file
+
+1. In the root of your project create a file labeled `.env`
+2. Add `SUPABASE_URL = '{SUPABASE_DB_URL}'` 
+3. Add `SUPABASE_KEY = '{SUPABASE_ANON_KEY}'`
+4. These values are printed as `DB URL` and `anon key` when you run `supabase start` 
+
 ### Start localhost
 
 1. `npm i netlify-cli -g`

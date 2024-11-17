@@ -4,6 +4,7 @@ node_modules
 /public/build
 /build
 .env
-
+.vscode
+.vscode/extensions.json
 # Local Netlify folder
 .netlify

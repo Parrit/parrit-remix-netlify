@@ -9,7 +9,8 @@
     "start": "netlify serve",
     "typecheck": "tsc -b",
     "build:css": "node-sass ./styles -o ./app/styles --output-style compressed",
-    "dev:css": "npm run build:css && node-sass -rw ./styles -o ./app/styles"
+    "dev:css": "npm run build:css && node-sass -rw ./styles -o ./app/styles",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@netlify/functions": "^2.4.1",
@@ -17,7 +18,9 @@
     "@remix-run/css-bundle": "^2.5.0",
     "@remix-run/node": "^2.5.0",
     "@remix-run/react": "^2.5.0",
-    "@supabase/supabase-js": "^2.39.3",
+    "@remix-run/testing": "^2.9.1",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.42.5",
     "cross-env": "^7.0.3",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
@@ -29,8 +32,11 @@
     "@remix-run/serve": "^2.5.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@types/webpack": "^5.28.5",
+    "cypress": "^13.8.1",
     "eslint": "^8.27.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "webpack": "^5.91.0"
   },
   "engines": {
     "node": ">=18"
