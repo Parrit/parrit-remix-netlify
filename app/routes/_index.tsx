@@ -1,3 +1,6 @@
+import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { getXataClient } from "src/xata";
+
 export function headers({
   loaderHeaders,
   parentHeaders,
@@ -14,6 +17,9 @@ export function headers({
     "Cache-Control": "public, max-age=60, s-maxage=60",
   };
 }
+
+export const loader = async ({ request }: LoaderFunctionArgs) =>
+  await getXataClient().db.Projects.getPaginated();
 
 export default function Index() {
   return (

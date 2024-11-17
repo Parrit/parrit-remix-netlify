@@ -18,6 +18,8 @@
     "@remix-run/node": "^2.14.0",
     "@remix-run/react": "^2.14.0",
     "@remix-run/serve": "^2.14.0",
+    "@xata.io/client": "^0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930",
+    "@xata.io/netlify": "^0.1.33",
     "isbot": "^4.1.0"
   },
   "devDependencies": {

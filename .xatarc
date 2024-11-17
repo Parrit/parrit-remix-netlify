@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Anthony-Dreessen-s-workspace-n4lug6.us-east-1.xata.sh/db/parrit-remix",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}

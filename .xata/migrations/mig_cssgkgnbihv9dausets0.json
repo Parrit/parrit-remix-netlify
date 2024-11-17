@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cssgkgnbihv9dausets0",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "pairing_history"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cssgkgnbihv9dausets0",
+  "parent": "mig_cssgjbnbihv9dausetr0",
+  "schema": "public",
+  "startedAt": "2024-11-16T21:10:27.233792Z"
+}

@@ -1,0 +1,27 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_csq2au2kta50bp70sogg",
+    "operations": [
+      {
+        "add_column": {
+          "up": "''",
+          "table": "Projects",
+          "column": {
+            "pk": false,
+            "name": "hashed_password",
+            "type": "text",
+            "unique": false,
+            "comment": "",
+            "nullable": false
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_csq2au2kta50bp70sogg",
+  "parent": "mig_csq2a5kij75jt6qvtlhg",
+  "schema": "public",
+  "startedAt": "2024-11-16T20:49:51.21413Z"
+}
