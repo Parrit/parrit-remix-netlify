@@ -1,9 +1,10 @@
 import React from "react";
+import "~/styles/footer.css";
 
 export const Footer: React.FC = (props) => {
   return (
     <footer>
-      <div className="fake-copyright">&copy; Parrit 2020</div>
+      <div className="fake-copyright">&copy; Parrit 2024</div>
       <div className="footer-links">
         <a
           target="_blank"
@@ -15,7 +16,7 @@ export const Footer: React.FC = (props) => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="http://www.github.com/Parrit/Parrit"
+          href="https://github.com/Parrit/parrit-remix-netlify"
         >
           GitHub
         </a>

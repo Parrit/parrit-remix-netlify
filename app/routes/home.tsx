@@ -1,77 +1,109 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type { FormEvent } from "react";
-import React, { useContext, useState } from "react";
-import type { ErrorResponse } from "~/models/Error.model";
+import { Form, useActionData } from "@remix-run/react";
+import {
+  ActionFunctionArgs,
+  Session,
+  SessionData,
+  redirect,
+} from "@remix-run/node";
+import { cssBundleHref } from "@remix-run/css-bundle";
+
+import { LinksFunction } from "@remix-run/node";
 
 import { Button } from "~/ui/Button";
 import { Footer } from "~/ui/Footer";
 
-import { DatabaseContext } from "~/contexts/DatabaseContext";
-import "~/styles/home.css";
+import { ErrorResponse } from "~/models/Error.model";
 
-interface Target {
-  value: string;
-}
+import signUp from "~/api/signUp";
+import signIn from "~/api/signIn";
 
-interface Event {
-  target: Target;
-  preventDefault: VoidFunction;
-}
+type ActionData = {
+  action: string;
+  error: ErrorResponse;
+};
 
-const HomePage: React.FC = () => {
-  // const { postLoginAndRedirect, postProject } = useContext(ApiContext);
-  const [newProjectName, setNewProjectName] = useState("");
-  const [newProjectPassword, setNewProjectPassword] = useState("");
-  const [loginProjectName, setLoginProjectName] = useState("");
-  const [loginProjectPassword, setLoginProjectPassword] = useState("");
-  const [loginErrorResponse, setLoginErrorResponse] = useState<ErrorResponse>(
-    {}
-  );
-  const [newProjectErrorResponse, setNewProjectErrorResponse] =
-    useState<ErrorResponse>({});
+import homeStyles from "~/styles/home.css";
+import { AuthSession } from "~/api/shared.interfaces";
 
-  const handleLoginName = (event: Event) => {
-    setLoginProjectName(event.target.value);
-  };
+export let links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: homeStyles }];
+};
 
-  const handleLoginPassword = (event: Event) => {
-    setLoginProjectPassword(event.target.value);
-  };
+const setAuthSession = (session: AuthSession) => {
+  console.warn("Setting Auth session not yet implemented");
+  console.warn(session);
+  return session.session;
+};
 
-  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // postLoginAndRedirect(loginProjectName, loginProjectPassword).catch(
-    //   (error: ErrorResponse) => {
-    //     setLoginErrorResponse(error);
-    //   }
-    // );
-  };
+const commitSession = async (session: Session): Promise<string> =>
+  "DEMO_TEST_SESSION";
 
-  const handleNewProjectName = (event: Event) => {
-    setNewProjectName(event.target.value);
-  };
+export async function action({ request }: ActionFunctionArgs) {
+  let session = {} as Session<SessionData, SessionData>;
+  let formData = await request.formData();
+  let _action = String(formData.get("_action"));
+  let email = String(formData.get("email"));
+  let password = String(formData.get("password"));
 
-  const handleNewProjectPassword = (event: Event) => {
-    setNewProjectPassword(event.target.value);
-  };
-
-  const createProjectWithName = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const req = new Request("/.netlify/functions/create-new-project", {
-      method: "POST",
-      body: JSON.stringify({
-        name: newProjectName,
-        password: newProjectPassword,
-      }),
+  if (_action == "sign-up") {
+    let { accessToken, refreshToken, error } = await signUp({
+      email,
+      password,
     });
-    fetch(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((errorResponse: ErrorResponse) => {
-        setNewProjectErrorResponse(errorResponse);
-      });
-  };
+
+    if (error) {
+      return { action: _action, error: error };
+    }
+    if (!accessToken || !refreshToken) {
+      return { action: _action, error: { message: "Something went wrong" } };
+    }
+    session = setAuthSession({ session, accessToken, refreshToken });
+
+    return redirect("/project", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+
+  if (_action == "login") {
+    let { accessToken, refreshToken, error } = await signIn({
+      email,
+      password,
+    });
+
+    if (error) {
+      return { action: _action, error: error };
+    }
+
+    if (!accessToken || !refreshToken) {
+      return {
+        action: _action,
+        error: { message: "Something is wrong with your credentials." },
+      };
+    }
+
+    session = setAuthSession({ session, accessToken, refreshToken });
+
+    return redirect("/project", {
+      headers: { "Set-Cookie": await commitSession(session) },
+    });
+  }
+}
+
+export default function Home() {
+  let signUpErrorResponse: ErrorResponse = {};
+  let loginErrorResponse: ErrorResponse = {};
+
+  let actionData = useActionData<ActionData>();
+
+  if (actionData?.error && actionData?.action == "sign-up") {
+    signUpErrorResponse = actionData?.error;
+  }
+
+  if (actionData?.error && actionData?.action == "login") {
+    loginErrorResponse = actionData?.error;
+  }
 
   return (
     <div className="layout-wrapper dashboard-container">
@@ -84,55 +116,59 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="forms-container">
-            <form className="form new-form" onSubmit={createProjectWithName}>
-              <h2 className="form-label">Create Project</h2>
+            <Form className="form new-form" method="post">
+              <input type="hidden" name="_action" value="sign-up"></input>
+              <h2 className="form-label">Create an account</h2>
               <input
                 className={
-                  newProjectErrorResponse.fieldErrors?.name ? "error" : ""
+                  signUpErrorResponse?.fieldErrors?.email ? "error" : ""
                 }
                 type="text"
-                placeholder="Project name"
-                onChange={handleNewProjectName}
+                name="email"
+                placeholder="Email"
               />
               <input
                 className={
-                  newProjectErrorResponse.fieldErrors?.password ? "error" : ""
+                  signUpErrorResponse.fieldErrors?.password ? "error" : ""
                 }
                 type="password"
+                name="password"
                 placeholder="Password"
-                onChange={handleNewProjectPassword}
               />
               <Button className="button-blue" name="Create" type="submit" />
               <div className="error-message">
-                {newProjectErrorResponse.fieldErrors?.name ??
-                  newProjectErrorResponse.fieldErrors?.password}
+                {signUpErrorResponse.fieldErrors?.email ??
+                  signUpErrorResponse.fieldErrors?.password ??
+                  signUpErrorResponse.message}
               </div>
-            </form>
+            </Form>
 
             <div className="dotted-line" />
 
-            <form className="form login-form" onSubmit={handleLogin}>
-              <h2 className="form-label">Login to Project</h2>
+            <Form className="form login-form" method="post">
+              <input type="hidden" name="_action" value="login"></input>
+              <h2 className="form-label">Login to your account</h2>
               <input
-                className={loginErrorResponse.fieldErrors?.name ? "error" : ""}
+                className={loginErrorResponse.fieldErrors?.email ? "error" : ""}
                 type="text"
-                placeholder="Project name"
-                onChange={handleLoginName}
+                name="email"
+                placeholder="Email"
               />
               <input
                 className={
                   loginErrorResponse.fieldErrors?.password ? "error" : ""
                 }
                 type="password"
+                name="password"
                 placeholder="Password"
-                onChange={handleLoginPassword}
               />
               <Button className="button-green" name="Login" type="submit" />
               <div className="error-message">
-                {loginErrorResponse.fieldErrors?.name ??
-                  loginErrorResponse.fieldErrors?.password}
+                {loginErrorResponse.fieldErrors?.email ??
+                  loginErrorResponse.fieldErrors?.password ??
+                  loginErrorResponse.message}
               </div>
-            </form>
+            </Form>
           </div>
 
           <div className="feedback-container">
@@ -152,6 +188,4 @@ const HomePage: React.FC = () => {
       <Footer />
     </div>
   );
-};
-
-export default HomePage;
+}
