@@ -6,6 +6,7 @@ import type { ErrorResponse } from "~/models/Error.model";
 import { Button } from "~/ui/Button";
 import { Footer } from "~/ui/Footer";
 
+import { DatabaseContext } from "~/contexts/DatabaseContext";
 import "~/styles/home.css";
 
 interface Target {

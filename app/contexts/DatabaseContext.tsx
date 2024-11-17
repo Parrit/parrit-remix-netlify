@@ -1,21 +1,12 @@
-import React from "react";
-import { XataClient } from "src/xata";
+import React, { ReactNode } from "react";
 
-export interface IDatabaseContext {
-  xata: XataClient;
-}
+export interface IDatabaseContext {}
 
-export const DatabaseContext = React.createContext({});
+export const DatabaseContext = React.createContext({} as IDatabaseContext);
 
-export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = (
-  props
-) => {
-  const xata = new XataClient({
-    apiKey: Netlify.env.get("XATA_API_KEY"),
-  });
-
+export const DatabaseProvider: React.FC<{ children: ReactNode }> = (props) => {
   return (
-    <DatabaseContext.Provider value={xata}>
+    <DatabaseContext.Provider value={{}}>
       {props.children}
     </DatabaseContext.Provider>
   );

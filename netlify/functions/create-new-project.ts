@@ -1,5 +1,4 @@
 import { Context } from "@netlify/functions";
-import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 
 interface HashResult {
@@ -23,7 +22,6 @@ export default async (req: Request, context: Context) => {
       }),
     };
   }
-  const supabase = createClient(databaseUrl, databaseKey);
   try {
     const hashedPassword = await hashPassword(plaintextPassword);
     const result = await supabase
