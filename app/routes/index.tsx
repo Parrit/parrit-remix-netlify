@@ -74,16 +74,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="layout-wrapper dashboard-container">
-      <main className="dashboard-content-container">
-        <div className="dashboard-content">
-          <div className="logo" />
-          <div className="description">
-            A historical recommendation engine for daily pair rotation
-            management, with an interactive visual aide of each pairing team.
-          </div>
 
-          <div className="forms-container">
             <form className="form new-form" onSubmit={createProjectWithName}>
               <h2 className="form-label">Create Project</h2>
               <input
@@ -133,24 +124,10 @@ const HomePage: React.FC = () => {
                   loginErrorResponse.fieldErrors?.password}
               </div>
             </form>
-          </div>
+          
 
-          <div className="feedback-container">
-            <div className="caption">What do you think of Parrit?</div>
-            <a
-              className="text-link"
-              href="https://goo.gl/forms/ZGqUyZDEDSWqZVBP2"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Send feedback
-              <span className="carrot" />
-            </a>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+          
+        
   );
 };
 
