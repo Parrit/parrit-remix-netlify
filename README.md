@@ -1,32 +1,68 @@
-# Netlify Remix Template
+# Welcome to Remix!
 
-Welcome to the Netlify Remix Template project. If you were expecting this to be your site, run `remix init` in the root of this project to get started.
+- [Remix Docs](https://remix.run/docs)
+- [Netlify Functions Overview](https://docs.netlify.com/functions/overview)
 
-To use the template, run
+## Netlify Setup
 
-```bash
-npx create-remix@latest --template netlify/remix-template
+1. Install the [Netlify CLI](https://docs.netlify.com/cli/get-started/):
+
+```sh
+npm i -g netlify-cli
 ```
 
-This project includes:
+If you have previously installed the Netlify CLI, you should update it to the latest version:
 
-- Netlify Functions template for Remix sites
-- Netlify Edge Functions template for Remix sites
+```sh
+npm i -g netlify-cli@latest
+```
 
-From the `create-remix` command, you may pass `--netlify-edge` or `--no-netlify-edge` to generate a template that uses Netlify Edge or Serverless functions explicitly. Without passing this option, the create workflow will ask you which you would prefer.
+2. Sign up and log in to Netlify:
+
+```sh
+netlify login
+```
+
+3. Create a new site:
+
+```sh
+netlify init
+```
 
 ## Development
 
-There is no need to run `npm install` as this is a template. The Remix CLI will install the dependencies for you. Make changes to files as you see fit. If there are transformations for files for either the Netlify Functions or Netlify Edge Functions template, make the appropriate changes to the `remix.init/index.js` file.
+Ensure all packages are installed by running:
 
-If you're new to Remix stacks and the remix.init concept, see the official [Remix Stacks](https://remix.run/stacks) documentation.
-
-### Testing your changes
+```sh
+npm install
+```
 
 Run
 
-```bash
-npx create-remix@latest --template ./remix-template
+```sh
+netlify dev
 ```
 
-to test your changes to the template. Follow the steps the Remix CLI prompts you with to create a new project. Ensure to test for both the Netlify Functions template and the Netlify Edge Functions template.
+Open up [http://localhost:8888](http://localhost:8888), and you're ready to go!
+
+### Serve your site locally
+
+To serve your site locally in a production-like environment, run
+
+```sh
+netlify serve
+```
+
+Your site will be available at [http://localhost:8888](http://localhost:8888). Note that it will not auto-reload when you make changes.
+
+## Deployment
+
+There are two ways to deploy your app to Netlify, you can either link your app to your git repo and have it auto deploy changes to Netlify, or you can deploy your app manually. If you've followed the setup instructions already, all you need to do is run this:
+
+```sh
+# preview deployment
+netlify deploy --build
+
+# production deployment
+netlify deploy --build --prod
+```
