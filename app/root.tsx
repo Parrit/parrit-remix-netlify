@@ -1,8 +1,6 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -10,7 +8,7 @@ import {
 } from "@remix-run/react";
 import { ContextStack } from "./contexts/ContextStack";
 
-import layoutStyles from "~/styles/layout.css";
+import layoutStyles from "~/styles/layout.css?url";
 
 export const meta: MetaFunction = () => [
   {
@@ -21,12 +19,7 @@ export const meta: MetaFunction = () => [
 ];
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref
-    ? [
-        { rel: "stylesheet", href: cssBundleHref },
-        { rel: "stylesheet", href: layoutStyles },
-      ]
-    : []),
+  { rel: "stylesheet", href: layoutStyles },
 ];
 
 export default function App() {

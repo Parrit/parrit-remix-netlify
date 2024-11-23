@@ -5,7 +5,6 @@ import {
   SessionData,
   redirect,
 } from "@remix-run/node";
-import { cssBundleHref } from "@remix-run/css-bundle";
 
 import { LinksFunction } from "@remix-run/node";
 
@@ -22,7 +21,7 @@ type ActionData = {
   error: ErrorResponse;
 };
 
-import homeStyles from "~/styles/home.css";
+import homeStyles from "~/styles/home.css?url";
 import { AuthSession } from "~/api/shared.interfaces";
 
 export let links: LinksFunction = () => {

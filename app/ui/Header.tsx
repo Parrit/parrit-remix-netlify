@@ -1,4 +1,4 @@
-import HeaderStyles from "~/styles/header.css";
+import HeaderStyles from "~/styles/header.css?url";
 
 import { Form, Link } from "@remix-run/react";
 

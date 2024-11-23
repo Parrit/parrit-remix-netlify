@@ -2,7 +2,7 @@ import Header, { links as headerLinks } from "~/ui/Header";
 import { Outlet } from "@remix-run/react";
 import { LoaderFunctionArgs, LinksFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import projectStyles from "~/styles/project.css";
+import projectStyles from "~/styles/project.css?url";
 
 import getProject from "~/api/getProject";
 
