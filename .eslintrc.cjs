@@ -49,7 +49,6 @@ module.exports = {
       },
       rules: {
         "react/display-name": "off",
-        "react-refresh/only-export-components": "warn",
       }
     },
 

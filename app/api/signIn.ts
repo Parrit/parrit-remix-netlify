@@ -1,4 +1,4 @@
-import useXataClient from "~/server-hooks/useXataClient";
+import useXataClient from "~/server-hooks/useXataClient.server";
 import { ProjectsRecord } from "src/xata";
 
 import { parseHashedPassword } from "./helpers/parseHashedPassword";
