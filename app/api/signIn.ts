@@ -9,6 +9,7 @@ interface Request {
 }
 
 const ALG_REGEX = /{(.*)}(.*)/;
+const PARSE_HASHED_REGEX = /\{(\w+)\}(\{.+\})/;
 
 export default async ({
   projectName,
@@ -29,13 +30,15 @@ export default async ({
     throw new Error("Project does not have a password. Fatal error.");
   }
 
-  const [_full, encryptionAlgoritm, storedHash] = project.password.match(
-    ALG_REGEX
-  ) ?? ["", "unknown", "invalid"];
+  const info = parseHashedPassword(project.password);
+  if (!info) {
+    console.error("Unable to understand this hashed password.");
+    throw new Error("Unable to understand this hashed password.");
+  }
 
   let correctPassword: boolean = false;
 
-  switch (encryptionAlgoritm) {
+  switch (algorithm) {
     case "sha256":
       correctPassword = compare_sha256(password, storedHash);
       break;
@@ -44,10 +47,10 @@ export default async ({
       break;
     default:
       console.error(
-        `Unknown password hashing algorithm: [${encryptionAlgoritm}]`
+        `Unsupported password hashing algorithm: [${encryptionAlgoritm}]`
       );
       throw new Error(
-        `Unknown password hashing algorithm: [${encryptionAlgoritm}]`
+        `Unsupported password hashing algorithm: [${encryptionAlgoritm}]`
       );
   }
 
@@ -60,8 +63,26 @@ export default async ({
   }
 };
 
-const compare_sha256 = (attempt: string, stored: string): boolean =>
-  createHash("sha256").update(attempt).digest("hex") === stored;
+const evaluateAttempt(attempt: string, {fullHash, algorithm, salt, hash}: PasswordInfo): boolean => {
+  
+}
+
+const compare_sha256 = (attempt: string, stored: string): boolean => {
+  const saltMatch = stored.match(ALG_REGEX);
+  let hash: string = "";
+  if (saltMatch) {
+    const [_full, salt, salted] = saltMatch;
+    console.log("salt", salt);
+    console.log("salted", salted);
+    // created with a salt
+    hash = createHash("sha256")
+      .update(attempt + salt)
+      .digest("hex");
+    return hash === salted;
+  }
+  hash = createHash("sha256").update(attempt).digest("hex");
+  return hash === stored;
+};
 
 const compare_bcrypt = async (
   attempt: string,
