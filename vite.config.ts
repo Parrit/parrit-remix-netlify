@@ -5,4 +5,7 @@ import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
 
 export default defineConfig({
   plugins: [remix(), netlifyPlugin(), tsconfigPaths()],
+  optimizeDeps: {
+    exclude: ["bcrypt"],
+  },
 });
