@@ -6,16 +6,17 @@ import signIn from "~/api/signIn";
 
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
-export let authenticator = new Authenticator<ProjectsRecord>(sessionStorage);
+export const authenticator = new Authenticator<ProjectsRecord>(sessionStorage);
 
 export const PROJECT_PASS = "PROJECT_PASS";
 
 // Tell the Authenticator to use the form strategy
 authenticator.use(
   new FormStrategy(async ({ form }) => {
-    let name = form.get("name")?.toString();
-    let password = form.get("password")?.toString();
-    let project = await signIn({ name, password });
+    console.log("FormStrategy", form);
+    const projectName = form.get("projectName")?.toString();
+    const password = form.get("password")?.toString();
+    const project = await signIn({ projectName, password });
     // the type of this project must match the type you pass to the Authenticator
     // the strategy will automatically inherit the type if you instantiate
     // directly inside the `use` method

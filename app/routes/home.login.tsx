@@ -1,6 +1,16 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import React from "react";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
+import { PROJECT_PASS, authenticator } from "~/services/auth.server";
 import { Button } from "~/ui/Button";
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  console.log("submitted login form with", request);
+  await authenticator.authenticate(PROJECT_PASS, request, {
+    successRedirect: "/project",
+    failureRedirect: "/home/login",
+  });
+};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -14,7 +24,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   };
 };
 
-export default () => {
+export default function Home_Login() {
   const { loginErrorResponse } = useLoaderData<typeof loader>();
   return (
     <Form className="form login-form" method="post">
@@ -42,4 +52,4 @@ export default () => {
       </Link>
     </Form>
   );
-};
+}

@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   };
 };
 
-export default () => {
+export default function Home_Signup() {
   const { signUpErrorResponse } = useLoaderData<typeof loader>();
   return (
     <Form className="form new-form" method="post">
@@ -42,4 +42,4 @@ export default () => {
       </Link>
     </Form>
   );
-};
+}

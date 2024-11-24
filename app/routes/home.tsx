@@ -1,7 +1,5 @@
 import { Outlet, useActionData } from "@remix-run/react";
-import { LoaderFunctionArgs } from "@remix-run/node";
-
-import { LinksFunction } from "@remix-run/node";
+import { LoaderFunctionArgs, LinksFunction } from "@remix-run/node";
 import { Footer } from "~/ui/Footer";
 
 import { ErrorResponse } from "~/models/Error.model";
@@ -14,63 +12,24 @@ type ActionData = {
 import homeStyles from "~/styles/home.css?url";
 import { authenticator } from "~/services/auth.server";
 
-export let links: LinksFunction = () => {
+export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: homeStyles }];
 };
 
-// const setAuthSession = (session: AuthSession) => {
-//   console.warn("Setting Auth session not yet implemented");
-//   console.warn(session);
-//   return session.session;
-// };
-
-// const commitSession = async (session: Session): Promise<string> =>
-//   "DEMO_TEST_SESSION";
-
-// export async function action({ request }: ActionFunctionArgs) {
-//   let session = {} as Session<SessionData, SessionData>;
-//   let formData = await request.formData();
-//   let _action = String(formData.get("_action"));
-//   let email = String(formData.get("email"));
-//   let password = String(formData.get("password"));
-
-//   if (_action == "sign-up") {
-//     let { accessToken, refreshToken, error } = await signUp({
-//       email,
-//       password,
-//     });
-//     if (error) {
-//       return { action: _action, error: error };
-//     }
-//     if (!accessToken || !refreshToken) {
-//       return { action: _action, error: { message: "Something went wrong" } };
-//     }
-//     session = setAuthSession({ session, accessToken, refreshToken });
-//     return redirect("/project", {
-//       headers: {
-//         "Set-Cookie": await commitSession(session),
-//       },
-//     });
-//   }
-
-//   if (_action == "login") {
-//     return await authenticator.authenticate(PROJECT_PASS, request, {
-//       successRedirect: "/project",
-//       failureRedirect: "/home",
-//     });
-//   }
-// }
-
-export const loader = async ({ request }: LoaderFunctionArgs) =>
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   await authenticator.isAuthenticated(request, {
     successRedirect: "/project",
+    // failureRedirect: "/home/login",
   });
+  // console.log("home", request);
+  return null;
+};
 
 export default function Home() {
   let signUpErrorResponse: ErrorResponse = {};
   let loginErrorResponse: ErrorResponse = {};
 
-  let actionData = useActionData<ActionData>();
+  const actionData = useActionData<ActionData>();
 
   if (actionData?.error && actionData?.action == "sign-up") {
     signUpErrorResponse = actionData?.error;
