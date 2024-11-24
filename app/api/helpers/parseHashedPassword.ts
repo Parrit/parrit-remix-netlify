@@ -5,25 +5,22 @@ export interface PasswordInfo {
   hash: string;
 }
 
+const SALTED = /{(.*)}{(.*)}(.*)/;
+const UNSALTED = /{(.*)}(.*)/;
+
 export function parseHashedPassword(
   hashedPassword: string
 ): PasswordInfo | null {
-  const algorithmMatch = hashedPassword.match(/\{(\w+)\}/);
-  if (!algorithmMatch) {
-    return null;
+  const saltMatches = hashedPassword.match(SALTED);
+  if (saltMatches) {
+    const [fullHash, algorithm, salt, hash] = saltMatches;
+    return { fullHash, algorithm, salt, hash };
+  }
+  const unsaltMatches = hashedPassword.match(UNSALTED);
+  if (unsaltMatches) {
+    const [fullHash, algorithm, hash] = unsaltMatches;
+    return { fullHash, algorithm, hash };
   }
 
-  const algorithm = algorithmMatch[1];
-  const saltAndHash = hashedPassword.slice(algorithmMatch[0].length);
-
-  const saltEndIndex = saltAndHash.indexOf("}");
-  const salt = saltAndHash.slice(1, saltEndIndex);
-  const hash = saltAndHash.slice(saltEndIndex + 1);
-
-  return {
-    fullHash: hashedPassword,
-    algorithm,
-    salt,
-    hash,
-  };
+  return null;
 }
