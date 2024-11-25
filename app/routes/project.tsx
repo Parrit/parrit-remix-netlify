@@ -19,7 +19,6 @@ export const links: LinksFunction = () => {
 };
 
 export async function action({ request }: ActionFunctionArgs) {
-  console.log("project route action", request);
   const session = await sessionStorage.getSession(
     request.headers.get("cookie")
   );
@@ -32,7 +31,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const session = await sessionStorage.getSession(
     request.headers.get("cookie")
   );
-  console.log(session.data);
   const project: ProjectsRecord = session.get("user");
 
   if (!project) throw redirect("/home/login");

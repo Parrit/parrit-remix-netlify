@@ -28,7 +28,6 @@ const compare_sha256 = (attempt: string, info: PasswordInfo): boolean => {
   } else {
     attemptHash = createHash("sha256").update(attempt).digest("hex");
   }
-  console.log({ attemptHash, actuallHash: info.hash });
   return attemptHash === info.hash;
 };
 
@@ -36,6 +35,5 @@ const compare_bcrypt = async (
   attempt: string,
   info: PasswordInfo
 ): Promise<boolean> => {
-  console.log("comparing", attempt, info.hash);
   return bcrypt_lib.compare(attempt, info.hash);
 };

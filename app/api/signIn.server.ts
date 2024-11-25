@@ -3,6 +3,7 @@ import { ProjectsRecord } from "src/xata";
 
 import { parseHashedPassword } from "./helpers/parseHashedPassword";
 import { evaluatePassword } from "./helpers/evaluatePassword";
+import { FormErrors } from "./interfaces";
 
 interface Request {
   projectName?: string;
@@ -12,20 +13,27 @@ interface Request {
 export default async ({
   projectName,
   password,
-}: Request): Promise<ProjectsRecord> => {
-  console.log("signIn");
+}: Request): Promise<ProjectsRecord | FormErrors<Request>> => {
   if (!projectName || !password) {
     console.error("Missing project projectName or password.");
-    throw new Error("Missing project projectName or password.");
+    return {
+      fields: {
+        projectName: projectName ? null : "missing",
+        password: password ? null : "missing",
+      },
+      status: 400,
+    };
   }
   const xata = useXataClient();
   const project = await xata.db.Projects.filter({
     name: projectName,
   }).getFirstOrThrow();
-  console.log("got project", project);
 
   if (!project.password) {
-    throw new Error("Project does not have a password. Fatal error.");
+    return {
+      server: "This project does not have a password. Contact support.",
+      status: 500,
+    };
   }
 
   const info = parseHashedPassword(project.password);
@@ -40,10 +48,11 @@ export default async ({
   );
 
   if (correctPassword) {
-    console.log("successfully logged in to Project", project);
     return project;
   } else {
-    console.error("inorrect password");
-    throw new Error("Incorrect password.");
+    return {
+      server: "Incorrect password",
+      status: 401,
+    };
   }
 };

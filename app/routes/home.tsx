@@ -19,9 +19,7 @@ export const links: LinksFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   await authenticator.isAuthenticated(request, {
     successRedirect: "/project",
-    // failureRedirect: "/home/login",
   });
-  // console.log("home", request);
   return null;
 };
 
