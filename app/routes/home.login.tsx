@@ -1,8 +1,10 @@
 import React from "react";
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
+import { ActionFunctionArgs } from "@remix-run/node";
+import { Form, Link, useActionData } from "@remix-run/react";
 import { PROJECT_PASS, authenticator } from "~/services/auth.server";
 import { Button } from "~/ui/Button";
+import { ParritError } from "~/api/common/ParritError";
+import { LoginRequest } from "~/api/common/interfaces";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -18,35 +20,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Home_Login() {
-  const response = useActionData<Response>();
-  console.log(response);
-  if (response) {
-    response.body;
-  }
-
-  const loginErrorResponse = { fieldErrors: {} };
+  const { message } = useActionData<typeof action>();
+  const error = ParritError.fromString<LoginRequest>(message);
 
   return (
     <Form className="form login-form" method="post">
       <h2 className="form-label">Login to your project</h2>
+      <div className="error-message">{error?.data.fields?.projectName}</div>
       <input
-        className={loginErrorResponse.fieldErrors?.projectName ? "error" : ""}
+        className={error?.data.fields?.projectName ? "error" : ""}
         type="text"
         name="projectName"
         placeholder="Project Name"
       />
+      <div className="error-message">{error?.data.fields?.password}</div>
       <input
-        className={loginErrorResponse.fieldErrors?.password ? "error" : ""}
+        className={error?.data.fields?.password ? "error" : ""}
         type="password"
         name="password"
         placeholder="Password"
       />
       <Button className="button-green" name="Login" type="submit" />
-      <div className="error-message">
-        {loginErrorResponse.fieldErrors?.projectName ??
-          loginErrorResponse.fieldErrors?.password ??
-          loginErrorResponse.message}
-      </div>
+      <div className="error-message">{error?.data.server}</div>
       <Link className="button-blue" to="../signup" type="button">
         Create new project
       </Link>

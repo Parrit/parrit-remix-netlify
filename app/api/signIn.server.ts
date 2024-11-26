@@ -3,26 +3,20 @@ import { ProjectsRecord } from "src/xata";
 
 import { parseHashedPassword } from "./helpers/parseHashedPassword";
 import { evaluatePassword } from "./helpers/evaluatePassword";
-import { FormErrors } from "./interfaces";
-
-interface Request {
-  projectName?: string;
-  password?: string;
-}
+import { ParritError } from "./common/ParritError";
+import { LoginRequest } from "./common/interfaces";
 
 export default async ({
   projectName,
   password,
-}: Request): Promise<ProjectsRecord | FormErrors<Request>> => {
+}: LoginRequest): Promise<ProjectsRecord> => {
   if (!projectName || !password) {
-    console.error("Missing project projectName or password.");
-    return {
+    throw new ParritError({
       fields: {
-        projectName: projectName ? null : "missing",
-        password: password ? null : "missing",
+        projectName: projectName ? null : "Project Name is required.",
+        password: password ? null : "Password is required.",
       },
-      status: 400,
-    };
+    });
   }
   const xata = useXataClient();
   const project = await xata.db.Projects.filter({
@@ -30,16 +24,15 @@ export default async ({
   }).getFirstOrThrow();
 
   if (!project.password) {
-    return {
+    throw new ParritError({
       server: "This project does not have a password. Contact support.",
-      status: 500,
-    };
+    });
   }
 
   const info = parseHashedPassword(project.password);
   if (!info) {
     console.error("Unable to understand this hashed password.");
-    throw new Error("Unable to understand this hashed password.");
+    throw ParritError.obscured();
   }
 
   const correctPassword: boolean = await evaluatePassword(
@@ -50,9 +43,6 @@ export default async ({
   if (correctPassword) {
     return project;
   } else {
-    return {
-      server: "Incorrect password",
-      status: 401,
-    };
+    throw new ParritError({ server: "Incorrect password." });
   }
 };
