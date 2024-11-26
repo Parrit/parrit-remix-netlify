@@ -6,7 +6,7 @@ interface Props {
   name: string;
   shortName?: string;
   className?: string;
-  clickFunction?: VoidFunction;
+  onClick?: VoidFunction;
   type?: "button" | "submit" | "reset" | undefined;
   tooltip?: string;
 }
@@ -19,7 +19,7 @@ export const Button: React.FC<Props> = (props) => {
       type={type}
       title={props.tooltip}
       className={props.className}
-      onClick={props.clickFunction}
+      onClick={props.onClick}
       aria-label={props.name}
     >
       <span className="name">{props.name}</span>

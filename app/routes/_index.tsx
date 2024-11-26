@@ -18,5 +18,5 @@ export function headers({
 }
 
 export function loader() {
-  return redirect("/home");
+  return redirect("/home/login");
 }
