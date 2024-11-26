@@ -7,6 +7,7 @@ export const evaluatePassword = async (
   storedPassword: string
 ): Promise<boolean> => {
   const info = parseHashedPassword(storedPassword);
+  console.log(info);
   switch (info?.algorithm) {
     case "sha256":
       return compare_sha256(attempt, info);

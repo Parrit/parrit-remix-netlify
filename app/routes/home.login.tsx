@@ -4,7 +4,7 @@ import { Form, Link, useActionData } from "@remix-run/react";
 import { PROJECT_PASS, authenticator } from "~/services/auth.server";
 import { Button } from "~/ui/Button";
 import { ParritError } from "~/api/common/ParritError";
-import { LoginRequest } from "~/api/common/interfaces";
+import { LoginRequest, LoginResult } from "~/api/common/interfaces";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -20,8 +20,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Home_Login() {
-  const { message } = useActionData<typeof action>();
-  const error = ParritError.fromString<LoginRequest>(message);
+  const data = useActionData<typeof action>() as LoginResult | undefined;
+  const error = ParritError.fromString<LoginRequest>(data?.message);
 
   return (
     <Form className="form login-form" method="post">
