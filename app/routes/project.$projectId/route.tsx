@@ -1,25 +1,14 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { sessionStorage } from "~/services/session.server";
+
 import { Footer } from "~/ui/Footer";
 import { Button } from "~/ui/Button";
-import { ProjectsRecord } from "src/xata";
 
 import "~/styles/project.css";
+import hydrateProjectServer from "./server/hydrateProject.server";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await sessionStorage.getSession(
-    request.headers.get("cookie")
-  );
-  const project: ProjectsRecord = session.get("user");
-  if (!project) throw redirect("/home/login");
-
-  if (!request.url.endsWith(project.xata_id)) {
-    // we can't look at other groups projects
-    throw redirect(`/project/${project.xata_id}`);
-  }
-
-  return project;
+export async function loader(args: LoaderFunctionArgs) {
+  return await hydrateProjectServer(args);
 }
 
 export default function () {
