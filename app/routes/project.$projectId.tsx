@@ -1,18 +1,24 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { Outlet, useLoaderData, useParams } from "@remix-run/react";
 
 import { Footer } from "~/ui/Footer";
 import { Button } from "~/ui/Button";
 
 import "~/styles/project.css";
+import { ProjectsRecord } from "src/xata";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  return { projectName: "Data" };
+  const session = await sessionStorage.getSession(
+    request.headers.get("cookie")
+  );
+  const project: ProjectsRecord = session.get("user");
+
+  if (!project) throw redirect("/home/login");
+
+  return project;
 }
 
-export default function ProjectId() {
-  let projectData = useLoaderData<typeof loader>();
-
+export default function () {
   return (
     <div className="project-page-container">
       <div className="project">

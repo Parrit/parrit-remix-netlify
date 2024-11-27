@@ -1,4 +1,11 @@
-import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  Outlet,
+  useLoaderData,
+  useNavigate,
+  useParams,
+} from "@remix-run/react";
 import {
   LoaderFunctionArgs,
   LinksFunction,
@@ -10,6 +17,7 @@ import HeaderStyles from "~/styles/header.css?url";
 import { sessionStorage } from "~/services/session.server";
 
 import { ProjectsRecord } from "src/xata";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => {
   return [
@@ -34,13 +42,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const project: ProjectsRecord = session.get("user");
 
   if (!project) throw redirect("/home/login");
-  redirect(`${project.xata_id}`);
-  return { projectName: project.name };
+
+  if (request.url.endsWith("project")) {
+    return redirect(project.xata_id);
+  }
+
+  return project;
 }
 
 export default function Project() {
-  const { projectName } = useLoaderData<typeof loader>();
-
   return (
     <div className="project-page-container">
       <header>
@@ -56,8 +66,6 @@ export default function Project() {
           </Link>
         </div>
       </header>
-
-      {<h1>{projectName}</h1>}
       <Outlet />
     </div>
   );
