@@ -1,0 +1,3 @@
+GET https://Anthony-Dreessen-s-workspace-n4lug6.us-east-1.xata.sh/db/parrit-remix:production/gitBranches HTTP/1.1
+Authorization: Bearer {{xata_api_key}}
+Content-Type: application/json
