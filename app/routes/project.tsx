@@ -1,11 +1,4 @@
-import {
-  Form,
-  Link,
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useParams,
-} from "@remix-run/react";
+import { Form, Link, Outlet } from "@remix-run/react";
 import {
   LoaderFunctionArgs,
   LinksFunction,
@@ -15,9 +8,7 @@ import {
 import projectStyles from "~/styles/project.css?url";
 import HeaderStyles from "~/styles/header.css?url";
 import { sessionStorage } from "~/services/session.server";
-
 import { ProjectsRecord } from "src/xata";
-import { useEffect } from "react";
 
 export const links: LinksFunction = () => {
   return [
@@ -40,10 +31,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     request.headers.get("cookie")
   );
   const project: ProjectsRecord = session.get("user");
-
   if (!project) throw redirect("/home/login");
 
   if (request.url.endsWith("project")) {
+    // group-level route is meaningless
     return redirect(project.xata_id);
   }
 
