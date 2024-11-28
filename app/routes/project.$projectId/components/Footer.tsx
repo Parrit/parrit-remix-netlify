@@ -1,7 +1,7 @@
 import React from "react";
 import "~/styles/footer.css";
 
-export const Footer: React.FC = (props) => {
+export const Footer: React.FC = () => {
   return (
     <footer>
       <div className="fake-copyright">&copy; Parrit 2024</div>

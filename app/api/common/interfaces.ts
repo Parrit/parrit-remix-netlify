@@ -31,3 +31,14 @@ export interface Role {
   id: string;
   name: string;
 }
+
+export interface PairingArrangementDTO {
+  id: number; // this should be changed to string
+  pairingTime: string;
+  pairingHistories: PairingHistory[];
+}
+
+export interface PairingHistory {
+  pairingBoardName: string;
+  people: Person[];
+}

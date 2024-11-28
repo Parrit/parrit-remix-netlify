@@ -1,13 +1,10 @@
-import { Project } from "~/api/common/interfaces";
 import { Button } from "~/ui/Button";
-import { Footer } from "~/ui/Footer";
+import { Footer } from "~/routes/project.$projectId/components/Footer";
+import { useContext } from "react";
+import { ProjectContext } from "./ProjectContext";
 
-interface Props {
-  project: Project;
-}
-
-export const ProjectView: React.FC<Props> = ({ project }: Props) => {
-  console.log("project", project);
+export const ProjectView: React.FC = () => {
+  const { project } = useContext(ProjectContext);
   return (
     <div className="project-page-container">
       <div className="project">

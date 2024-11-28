@@ -6,7 +6,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { ContextStack } from "./contexts/ContextStack";
 
 import layoutStyles from "~/styles/layout.css?url";
 
@@ -30,9 +29,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <ContextStack>
-          <Outlet />
-        </ContextStack>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -32,7 +32,7 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
+        // "plugin:jsx-a11y/recommended", // bring this back once we have a replacement deploy
       ],
       settings: {
         react: {
@@ -48,7 +48,9 @@ module.exports = {
         },
       },
       rules: {
+        // Leave these off, they're dumb
         "react/display-name": "off",
+        "react/prop-types": "off",
       }
     },
 

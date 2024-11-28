@@ -5,7 +5,9 @@ import useXataClient from "~/server-hooks/useXataClient.server";
 import { sessionStorage } from "~/services/session.server";
 
 /**
- * @returns a Project with floating parrits and pairing boards. We have to retrieve the board-parrits separately (sad)
+ * Retrieves a project with its pairing boards and people.
+ * @throws {typeof redirect} redirects to login if user is not found.
+ * @throws {typeof redirect} redirects to user's project if accessing another project.
  */
 export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
   const session = await sessionStorage.getSession(
