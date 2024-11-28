@@ -6,3 +6,28 @@ export interface LoginRequest {
 export interface LoginResult {
   message: string;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  pairingBoards: PairingBoard[];
+  people: Person[];
+}
+
+export interface PairingBoard {
+  id: string;
+  name: string;
+  exempt: boolean;
+  people: Person[];
+  roles: Role[];
+}
+
+export interface Person {
+  id: string;
+  name: string;
+}
+
+export interface Role {
+  id: string;
+  name: string;
+}

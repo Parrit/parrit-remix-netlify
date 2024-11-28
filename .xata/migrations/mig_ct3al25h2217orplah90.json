@@ -1,0 +1,19 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ct3al25h2217orplah90",
+    "operations": [
+      {
+        "drop_column": {
+          "table": "PairingBoards",
+          "column": "project_id"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ct3al25h2217orplah90",
+  "parent": "mig_cssi2n86e9h141eb98jg",
+  "schema": "public",
+  "startedAt": "2024-11-27T05:13:45.280859Z"
+}

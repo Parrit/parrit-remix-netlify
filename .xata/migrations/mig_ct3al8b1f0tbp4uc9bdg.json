@@ -1,0 +1,32 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ct3al8b1f0tbp4uc9bdg",
+    "operations": [
+      {
+        "add_column": {
+          "table": "PairingBoards",
+          "column": {
+            "pk": false,
+            "name": "project_id",
+            "type": "text",
+            "unique": false,
+            "comment": "{\"xata.link\":\"Projects\"}",
+            "nullable": true,
+            "references": {
+              "name": "project_id_link",
+              "table": "Projects",
+              "column": "xata_id",
+              "on_delete": "SET NULL"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ct3al8b1f0tbp4uc9bdg",
+  "parent": "mig_ct3al25h2217orplah90",
+  "schema": "public",
+  "startedAt": "2024-11-27T05:14:10.343277Z"
+}

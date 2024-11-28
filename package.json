@@ -23,6 +23,7 @@
     "@xata.io/netlify": "^0.1.33",
     "bcrypt": "^5.1.1",
     "isbot": "^4.1.0",
+    "ramda": "^0.30.1",
     "remix-auth": "^3.7.0",
     "remix-auth-form": "^1.5.0"
   },
@@ -31,6 +32,7 @@
     "@remix-run/dev": "^2.14.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.14",
+    "@types/ramda": "^0.30.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

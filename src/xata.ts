@@ -8,6 +8,83 @@ import type {
 
 const tables = [
   {
+    name: "PairingBoardRoles",
+    checkConstraints: {
+      PairingBoardRoles_xata_id_length_xata_id: {
+        name: "PairingBoardRoles_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {
+      pairing_board_id_link: {
+        name: "pairing_board_id_link",
+        columns: ["pairing_board_id"],
+        referencedTable: "PairingBoards",
+        referencedColumns: ["xata_id"],
+        onDelete: "SET NULL",
+      },
+    },
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_PairingBoardRoles_xata_id_key: {
+        name: "_pgroll_new_PairingBoardRoles_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "name",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "{}",
+      },
+      {
+        name: "pairing_board_id",
+        type: "link",
+        link: { table: "PairingBoards" },
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"PairingBoards"}',
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
     name: "PairingBoards",
     checkConstraints: {
       PairingBoards_xata_id_length_xata_id: {
@@ -16,7 +93,15 @@ const tables = [
         definition: "CHECK ((length(xata_id) < 256))",
       },
     },
-    foreignKeys: {},
+    foreignKeys: {
+      project_id_link: {
+        name: "project_id_link",
+        columns: ["project_id"],
+        referencedTable: "Projects",
+        referencedColumns: ["xata_id"],
+        onDelete: "SET NULL",
+      },
+    },
     primaryKey: [],
     uniqueConstraints: {
       _pgroll_new_PairingBoards_xata_id_key: {
@@ -43,11 +128,12 @@ const tables = [
       },
       {
         name: "project_id",
-        type: "int",
+        type: "link",
+        link: { table: "Projects" },
         notNull: false,
         unique: false,
         defaultValue: null,
-        comment: "{}",
+        comment: '{"xata.link":"Projects"}',
       },
       {
         name: "xata_createdat",
@@ -128,7 +214,7 @@ const tables = [
       },
       {
         name: "timestamp",
-        type: "datetime",
+        type: "text",
         notNull: false,
         unique: false,
         defaultValue: null,
@@ -169,10 +255,10 @@ const tables = [
     ],
   },
   {
-    name: "PairingHistoryPeople",
+    name: "PairingHistory_Persons",
     checkConstraints: {
-      PairingHistoryPeople_xata_id_length_xata_id: {
-        name: "PairingHistoryPeople_xata_id_length_xata_id",
+      pairing_history_people_xata_id_length_xata_id: {
+        name: "pairing_history_people_xata_id_length_xata_id",
         columns: ["xata_id"],
         definition: "CHECK ((length(xata_id) < 256))",
       },
@@ -195,8 +281,8 @@ const tables = [
     },
     primaryKey: [],
     uniqueConstraints: {
-      _pgroll_new_PairingHistoryPeople_xata_id_key: {
-        name: "_pgroll_new_PairingHistoryPeople_xata_id_key",
+      _pgroll_new_pairing_history_people_xata_id_key: {
+        name: "_pgroll_new_pairing_history_people_xata_id_key",
         columns: ["xata_id"],
       },
     },
@@ -419,14 +505,17 @@ const tables = [
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
+export type PairingBoardRoles = InferredTypes["PairingBoardRoles"];
+export type PairingBoardRolesRecord = PairingBoardRoles & XataRecord;
+
 export type PairingBoards = InferredTypes["PairingBoards"];
 export type PairingBoardsRecord = PairingBoards & XataRecord;
 
 export type PairingHistory = InferredTypes["PairingHistory"];
 export type PairingHistoryRecord = PairingHistory & XataRecord;
 
-export type PairingHistoryPeople = InferredTypes["PairingHistoryPeople"];
-export type PairingHistoryPeopleRecord = PairingHistoryPeople & XataRecord;
+export type PairingHistoryPersons = InferredTypes["PairingHistory_Persons"];
+export type PairingHistoryPersonsRecord = PairingHistoryPersons & XataRecord;
 
 export type Persons = InferredTypes["Persons"];
 export type PersonsRecord = Persons & XataRecord;
@@ -435,9 +524,10 @@ export type Projects = InferredTypes["Projects"];
 export type ProjectsRecord = Projects & XataRecord;
 
 export type DatabaseSchema = {
+  PairingBoardRoles: PairingBoardRolesRecord;
   PairingBoards: PairingBoardsRecord;
   PairingHistory: PairingHistoryRecord;
-  PairingHistoryPeople: PairingHistoryPeopleRecord;
+  PairingHistory_Persons: PairingHistoryPersonsRecord;
   Persons: PersonsRecord;
   Projects: ProjectsRecord;
 };

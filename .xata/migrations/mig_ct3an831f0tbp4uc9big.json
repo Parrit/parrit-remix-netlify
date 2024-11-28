@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ct3an831f0tbp4uc9big",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "PairingBoards"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ct3an831f0tbp4uc9big",
+  "parent": "mig_ct3an5j1f0tbp4uc9bhg",
+  "schema": "public",
+  "startedAt": "2024-11-27T05:18:24.419588Z"
+}
