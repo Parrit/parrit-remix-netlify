@@ -38,17 +38,47 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
 
   const hydrated = selected.toSerializable() as unknown as SerializedProject;
 
+  const selectedPairingBoards = await xata.db.PairingBoards.select([
+    "name",
+    "exempt",
+    {
+      name: "<-Persons.pairing_board_id",
+      columns: ["name"],
+      as: "persons",
+    },
+    {
+      name: "<-PairingBoardRoles.pairing_board_id",
+      columns: ["name"],
+      as: "roles",
+    },
+  ])
+    .filter({
+      xata_id: {
+        $any: hydrated.pairingBoards.records.map((pb) => pb.xata_id),
+      },
+    })
+    .getMany();
+
+  const hydratedPairingBoards =
+    selectedPairingBoards.toSerializable() as unknown as SerializedPairingBoard[];
+
   const project: Project = {
     id: hydrated.xata_id,
     name: hydrated.name!,
-    pairingBoards: hydrated.pairingBoards.records.map((obj) => ({
+    pairingBoards: hydratedPairingBoards.map((obj) => ({
       id: obj.xata_id,
       name: obj.name,
-      exempt: obj.exempt,
-      people: [],
-      roles: [],
+      exempt: obj.exempt === "true",
+      people: (obj.persons ?? { records: [] }).records.map((obj) => ({
+        id: obj.xata_id,
+        name: obj.name,
+      })),
+      roles: (obj.roles ?? { records: [] }).records.map((obj) => ({
+        id: obj.xata_id,
+        name: obj.name,
+      })),
     })),
-    people: hydrated.pairingBoards.records.map((obj) => ({
+    people: hydrated.persons.records.map((obj) => ({
       id: obj.xata_id,
       name: obj.name,
     })),
@@ -60,8 +90,17 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
 interface SerializedProject {
   xata_id: string;
   name: string;
+
   pairingBoards: {
-    records: { xata_id: string; name: string; exempt: boolean }[];
+    records: { xata_id: string }[];
   };
   persons: { records: { xata_id: string; name: string }[] };
+}
+
+interface SerializedPairingBoard {
+  xata_id: string;
+  name: string;
+  exempt: string;
+  persons?: { records: { xata_id: string; name: string }[] };
+  roles?: { records: { xata_id: string; name: string }[] };
 }
