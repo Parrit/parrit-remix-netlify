@@ -11,7 +11,6 @@ interface Props {
 }
 
 export const FloatingParrits: React.FC<Props> = (props) => {
-  console.log("rendering FloatingParrits");
   const { movePerson } = useContext(ProjectContext);
 
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (event) => {

@@ -23,11 +23,18 @@ export const PairingBoardView: React.FC<Props> = (props) => {
     useContext(ProjectContext);
 
   const handleDragOver: React.DragEventHandler<HTMLDivElement> = (ev) => {
-    console.log("dragging", props.pairingBoard);
+    ev.preventDefault();
+    setIsOver(true);
     ev.dataTransfer.dropEffect = "move";
   };
 
+  const handleDragLeave: React.DragEventHandler<HTMLDivElement> = () => {
+    setIsOver(false);
+  };
+
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (ev) => {
+    ev.preventDefault();
+    console.log("handleDrop", props.pairingBoard.name);
     const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
     console.log("pairingboard drop", data, props.pairingBoard);
     switch (data.type) {
@@ -59,6 +66,7 @@ export const PairingBoardView: React.FC<Props> = (props) => {
   return (
     <div
       onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       className={pairingBoardClasses}
     >
