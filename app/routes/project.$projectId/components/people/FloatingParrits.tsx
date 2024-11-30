@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { useDrop } from "react-dnd";
 import { Person } from "~/api/common/interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import { DragItem, DragType, DropItem, DropTarget } from "../../interfaces";
+import { DragItem, DragType } from "../../interfaces";
 import { WorkspaceContext } from "../../contexts/Workspace";
 import { PersonList } from "./PersonList";
 import { TrashBin } from "../ui/TrashBin";
@@ -12,30 +11,26 @@ interface Props {
 }
 
 export const FloatingParrits: React.FC<Props> = (props) => {
+  console.log("rendering FloatingParrits");
   const { movePerson } = useContext(ProjectContext);
-  const [{ canDrop, isOver }, drop] = useDrop<DragItem, undefined, DropTarget>({
-    accept: DragType.Person,
-    drop: (item, monitor) => {
-      if (monitor.didDrop()) {
-        return; // don't do anything if a drop handler has already handled this
-      }
-      console.log("dropped item onto floating", item);
-      switch (item.type) {
-        case DragType.Person: {
-          movePerson(item as Person);
-        }
-      }
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
+
+  const handleDrop: React.DragEventHandler<HTMLDivElement> = (event) => {
+    const data = JSON.parse(
+      event.dataTransfer.getData("text/plain")
+    ) as DragItem;
+    switch (data.type) {
+      case DragType.Person:
+        movePerson(data as Person);
+        return;
+      default:
+        console.warn("Floating Parrits cannot handle", data.type);
+    }
+  };
 
   const { setNewPersonOpen } = useContext(WorkspaceContext);
 
   return (
-    <div ref={drop} className="floating-parrits">
+    <div onDrop={handleDrop} className="floating-parrits">
       <h2 className="floating-parrit-title">Floating Parrits</h2>
       <PersonList people={props.people} />
       <div className="floating-parrit-actions">

@@ -1,9 +1,8 @@
 import classNames from "classnames";
 import React, { useContext, useState } from "react";
-import { useDrop } from "react-dnd";
 import { PairingBoard, Person, Role } from "~/api/common/interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import { DragItem, DropTarget, DragType } from "../../interfaces";
+import { DragItem, DragType } from "../../interfaces";
 import { PersonList } from "../people/PersonList";
 import { PairingBoardHeader } from "./PairingBoardHeader";
 import { RoleList } from "./RoleList";
@@ -15,32 +14,32 @@ interface Props {
 export const PairingBoardView: React.FC<Props> = (props) => {
   const { name, exempt, people, roles } = props.pairingBoard;
   const { movePerson, moveRole } = useContext(ProjectContext);
-  const [{ canDrop, isOver }, drop] = useDrop<DragItem, undefined, DropTarget>({
-    accept: [DragType.Person, DragType.Role],
-    drop: (item, monitor) => {
-      if (monitor.didDrop()) {
-        return; // don't do anything if a drop handler has already handled this
-      }
-      switch (item.type) {
-        case DragType.Person:
-          movePerson(item as Person, props.pairingBoard);
-          return;
-        case DragType.Role:
-          moveRole(item as Role, props.pairingBoard);
-          return;
-      }
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
+  const [isOver, setIsOver] = useState(false);
 
   const [editing, setEditing] = useState(false);
   const [editingError, setEditingError] = useState<string>();
 
   const { destroyPairingBoard, renamePairingBoard } =
     useContext(ProjectContext);
+
+  const handleDragOver: React.DragEventHandler<HTMLDivElement> = (ev) => {
+    console.log("dragging", props.pairingBoard);
+    ev.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop: React.DragEventHandler<HTMLDivElement> = (ev) => {
+    const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
+    console.log("pairingboard drop", data, props.pairingBoard);
+    switch (data.type) {
+      case DragType.Person:
+        console.log("got person", data);
+        movePerson(data as Person, props.pairingBoard);
+        return;
+      case DragType.Role:
+        moveRole(data as Role, props.pairingBoard);
+        return;
+    }
+  };
 
   const pairingBoardClasses = classNames({
     "pairing-board": true,
@@ -58,7 +57,11 @@ export const PairingBoardView: React.FC<Props> = (props) => {
   };
 
   return (
-    <div ref={drop} className={pairingBoardClasses}>
+    <div
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      className={pairingBoardClasses}
+    >
       <PairingBoardHeader
         name={name}
         exempt={exempt}

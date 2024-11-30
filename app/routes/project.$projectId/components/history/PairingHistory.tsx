@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { AppContext } from "../../contexts/App";
 
-import { Scrollbar } from "react-scrollbars-custom";
 import { PairingHistoryRecordList } from "./PairingHistoryRecordList";
 
 export const PairingHistory: React.FC = () => {
@@ -23,37 +22,35 @@ export const PairingHistory: React.FC = () => {
 
   return (
     <div className={classes}>
-      <Scrollbar>
-        <div className="inner-pairing-history-wrapper">
-          <div className="header">
-            <div className="header-text">
-              <h2>Pair Rotation History</h2>
-              <h3>History is stored for 30 days.</h3>
-            </div>
-            <div
-              aria-label="close history"
-              className="cancel"
-              onClick={() => {
-                setPairingHistoryOpen(false);
-              }}
-            />
+      <div className="inner-pairing-history-wrapper">
+        <div className="header">
+          <div className="header-text">
+            <h2>Pair Rotation History</h2>
+            <h3>History is stored for 30 days.</h3>
           </div>
-
-          <div className="body">
-            {pairingHistory.length === 0 ? (
-              <div className="no-history">
-                <div className="clock" />
-                <div className="no-history-content">
-                  ‘Record Pairs’ to track daily rotation history. The more you
-                  record, the better the recommendation engine becomes.
-                </div>
-              </div>
-            ) : (
-              <PairingHistoryRecordList pairingHistoryList={pairingHistory} />
-            )}
-          </div>
+          <div
+            aria-label="close history"
+            className="cancel"
+            onClick={() => {
+              setPairingHistoryOpen(false);
+            }}
+          />
         </div>
-      </Scrollbar>
+
+        <div className="body">
+          {pairingHistory.length === 0 ? (
+            <div className="no-history">
+              <div className="clock" />
+              <div className="no-history-content">
+                ‘Record Pairs’ to track daily rotation history. The more you
+                record, the better the recommendation engine becomes.
+              </div>
+            </div>
+          ) : (
+            <PairingHistoryRecordList pairingHistoryList={pairingHistory} />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

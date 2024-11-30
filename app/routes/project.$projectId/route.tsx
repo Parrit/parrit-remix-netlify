@@ -36,5 +36,6 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export default function () {
   const project = useLoaderData<typeof loader>();
+  console.log("project page is here");
   return <App project={project} />;
 }

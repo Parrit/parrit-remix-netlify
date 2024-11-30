@@ -1,3 +1,5 @@
+import { DragItem, DragType } from "~/routes/project.$projectId/interfaces";
+
 export interface LoginRequest {
   projectName?: string;
   password?: string;
@@ -22,14 +24,16 @@ export interface PairingBoard {
   roles: Role[];
 }
 
-export interface Person {
+export interface Person extends DragItem {
   id: string;
   name: string;
+  type: DragType.Person;
 }
 
-export interface Role {
+export interface Role extends DragItem {
   id: string;
   name: string;
+  type: DragType.Person;
 }
 
 export interface PairingArrangementDTO {

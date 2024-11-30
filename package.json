@@ -26,10 +26,7 @@
     "isbot": "^4.1.0",
     "luxon": "^3.5.0",
     "ramda": "^0.30.1",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-modal": "^3.16.1",
-    "react-scrollbars-custom": "^4.1.1",
     "remix-auth": "^3.7.0",
     "remix-auth-form": "^1.5.0"
   },

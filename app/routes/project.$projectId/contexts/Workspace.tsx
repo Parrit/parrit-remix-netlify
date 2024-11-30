@@ -7,6 +7,7 @@ import { FloatingParrits } from "../components/people/FloatingParrits";
 import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
 import { NameForm } from "../components/people/NameForm";
 import Modal from "react-modal";
+import { DragProvider } from "./DragContext";
 
 interface IWorkspaceContext {
   newPersonOpen: boolean;
@@ -74,7 +75,7 @@ export const Workspace: React.FC = () => {
 
   return (
     <WorkspaceContext.Provider value={value}>
-      <DndProvider backend={HTML5Backend}>
+      <DragProvider>
         <div className="workspace">
           <FloatingParrits people={project.people} />
           <div className="dotted-line" />
@@ -126,7 +127,7 @@ export const Workspace: React.FC = () => {
             />
           </Modal>
         </div>
-      </DndProvider>
+      </DragProvider>
     </WorkspaceContext.Provider>
   );
 };
