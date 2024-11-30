@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import {
   PairingArrangementDTO,
   PairingBoard,
@@ -13,14 +7,14 @@ import {
   Project,
   Role,
 } from "~/api/common/interfaces";
-import { WorkspaceContext } from "./Workspace";
+import { AppContext } from "./App";
 
 export interface IProjectContext {
   project: Project;
   pairingHistory: PairingArrangementDTO[];
   createPerson: (name: string) => Promise<void>;
   createPairingBoard: (name: string) => Promise<void>;
-  renamePairingBoard: (name: string, pairingBoardId: number) => Promise<void>;
+  renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   createRole: (name: string, pairingBoard: PairingBoard) => Promise<void>;
   movePerson: (person: Person, position?: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
@@ -30,7 +24,7 @@ export interface IProjectContext {
   resetPairs: () => void;
   getRecommendedPairs: () => void;
   savePairing: () => void;
-  deletePairingArrangement: (pairingArrangementId: number) => void;
+  deletePairingArrangement: (pairingArrangementId: string) => void;
 }
 
 export const ProjectContext = createContext({} as IProjectContext);
@@ -41,7 +35,7 @@ interface Props {
 }
 
 export const ProjectProvider: React.FC<Props> = (props) => {
-  const { setSystemAlert } = useContext(WorkspaceContext);
+  const { setSystemAlert } = useContext(AppContext);
   const [project, setProject] = useState<Project>(props.project);
   const [pairingArrangements, setPairingArrangements] = useState<
     PairingArrangementDTO[]
@@ -250,7 +244,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   const renamePairingBoard = (
     name: string,
-    pairingBoardId: number
+    pairingBoardId: string
   ): Promise<void> => {
     console.error("renamePairingBoard not yet implemented");
     return Promise.reject("renamePairingBoard not yet implemented");
@@ -262,7 +256,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     // );
   };
 
-  const deletePairingArrangement = (pairingArrangementId: number): void => {
+  const deletePairingArrangement = (pairingArrangementId: string): void => {
     console.error("deletePairingArrangement not yet implemented");
     // setPairingArrangements(
     //   pairingArrangements.filter((pa) => pa.id != pairingArrangementId)

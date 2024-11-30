@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import React, { useContext } from "react";
 import { PairingArrangementDTO } from "~/api/common/interfaces";
-import { ProjectContext } from "../contexts/ProjectContext";
+import { ProjectContext } from "../../contexts/ProjectContext";
 import { TrashIcon } from "~/ui/TrashIcon";
 
 interface Props {

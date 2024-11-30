@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import classNames from "classnames";
-import { WorkspaceContext } from "../contexts/Workspace";
-import { Form, Link } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { Button } from "~/ui/Button";
+import { AppContext } from "../../contexts/App";
 
 export const Header: React.FC = () => {
-  const { pairingHistoryOpen, setPairingHistoryOpen } =
-    useContext(WorkspaceContext);
+  const { pairingHistoryOpen, setPairingHistoryOpen } = useContext(AppContext);
   const classes = classNames({
     history: true,
     open: pairingHistoryOpen,

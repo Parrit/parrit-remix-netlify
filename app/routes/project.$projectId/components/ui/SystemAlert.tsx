@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import classNames from "classnames";
 import React, { useContext } from "react";
-import { WorkspaceContext } from "../contexts/Workspace";
+import { AppContext } from "../../contexts/App";
 
 export const SystemAlert: React.FC = () => {
-  const { systemAlert, setSystemAlert } = useContext(WorkspaceContext);
+  const { systemAlert, setSystemAlert } = useContext(AppContext);
 
   const classes = classNames({
     "system-alert": true,

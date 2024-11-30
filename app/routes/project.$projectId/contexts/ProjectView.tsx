@@ -1,7 +1,7 @@
 import { Button } from "~/ui/Button";
-import { Footer } from "~/routes/project.$projectId/components/Footer";
 import { useContext } from "react";
 import { ProjectContext } from "./ProjectContext";
+import { Workspace } from "./Workspace";
 
 export const ProjectView: React.FC = () => {
   const { project } = useContext(ProjectContext);
@@ -32,7 +32,7 @@ export const ProjectView: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Workspace />
     </div>
   );
 };

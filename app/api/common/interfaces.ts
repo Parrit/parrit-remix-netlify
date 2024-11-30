@@ -33,7 +33,7 @@ export interface Role {
 }
 
 export interface PairingArrangementDTO {
-  id: number; // this should be changed to string
+  id: string;
   pairingTime: string;
   pairingHistories: PairingHistory[];
 }

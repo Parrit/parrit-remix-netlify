@@ -1,54 +1,132 @@
-import { createContext, useState } from "react";
-import { Project } from "~/api/common/interfaces";
-import classNames from "classnames";
-import { ProjectView } from "./ProjectView";
-import { SystemAlert } from "../components/SystemAlert";
-import { PairingHistory } from "../components/PairingHistory";
-import { Footer } from "../components/Footer";
-import { ProjectProvider } from "./ProjectContext";
-import { Header } from "../components/Header";
+import React, { useContext, useState } from "react";
+import { PairingBoard } from "~/api/common/interfaces";
+import { ProjectContext } from "./ProjectContext";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { FloatingParrits } from "../components/people/FloatingParrits";
+import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
+import { NameForm } from "../components/people/NameForm";
+import Modal from "react-modal";
 
-export interface IWorkspaceContext {
-  pairingHistoryOpen: boolean;
-  setPairingHistoryOpen: (isOpen: boolean) => void;
-  systemAlert?: string;
-  setSystemAlert: (value?: string) => void;
+interface IWorkspaceContext {
+  newPersonOpen: boolean;
+  newPairingBoardOpen: boolean;
+  newRoleOpen: boolean;
+  setNewPersonOpen: (isOpen: boolean) => void;
+  setNewPairingBoardOpen: (isOpen: boolean) => void;
+  setNewRoleOpen: (isOpen: boolean, pairingBoard?: PairingBoard) => void;
+  newPersonError?: Error;
+  newPairingBoardError?: Error;
+  newRoleError?: Error;
 }
 
-interface Props {
-  project: Project;
-}
+export const WorkspaceContext = React.createContext({} as IWorkspaceContext);
 
-export const WorkspaceContext = createContext({} as IWorkspaceContext);
+export const Workspace: React.FC = () => {
+  const [newPersonOpen, setNewPersonOpen] = useState(false);
+  const [newPairingBoardOpen, setNewPairingBoardOpen] = useState(false);
+  const [newRoleOpen, setNewRoleOpen] = useState(false);
+  const [newPersonError, setNewPersonError] = useState<Error>();
+  const [newPairingBoardError, setNewPairingBoardError] = useState<Error>();
+  const [newRoleError, setNewRoleError] = useState<Error>();
+  const [newRoleBoard, setNewRoleBoard] = useState<PairingBoard>();
 
-export const Workspace: React.FC<Props> = ({ project }) => {
-  const [systemAlert, setSystemAlert] = useState<string>();
-  const [pairingHistoryOpen, setPairingHistoryOpen] = useState(false);
+  const { project, createPerson, createPairingBoard, createRole } =
+    useContext(ProjectContext);
 
-  const classes = classNames({
-    "layout-wrapper": true,
-    "project-page-container": true,
-    "shift-left": pairingHistoryOpen,
-  });
+  const handleCreatePerson = (name: string) => {
+    createPerson(name)
+      .then((_) => setNewPersonOpen(false))
+      .catch((error) => setNewPersonError(error));
+  };
+
+  const handleCreatePairingBoard = (name: string) => {
+    createPairingBoard(name)
+      .then((_) => setNewPairingBoardOpen(false))
+      .catch((error) => setNewPairingBoardError(error));
+  };
+
+  const handleCreateNewRole = (name: string) => {
+    if (!newRoleBoard) {
+      throw new Error("creating a new role without a pairing board");
+    }
+    createRole(name, newRoleBoard)
+      .then((_) => setNewRoleOpen(false))
+      .catch((error) => setNewRoleError(error));
+  };
+
+  const handleSetNewRoleOpen = (open: boolean, pairingBoard?: PairingBoard) => {
+    if (open && !pairingBoard) {
+      throw new Error("opening a new role dialog without a pairing board");
+    }
+    setNewRoleOpen(open);
+    setNewRoleBoard(pairingBoard);
+  };
 
   const value = {
-    systemAlert,
-    setSystemAlert,
-    pairingHistoryOpen,
-    setPairingHistoryOpen,
+    newPersonOpen,
+    newPairingBoardOpen,
+    newRoleOpen,
+    setNewPersonOpen,
+    setNewPairingBoardOpen,
+    setNewRoleOpen: handleSetNewRoleOpen,
   };
 
   return (
-    <div className={classes}>
-      <WorkspaceContext.Provider value={value}>
-        <ProjectProvider project={project}>
-          <SystemAlert />
-          <Header />
-          <ProjectView />
-          <Footer />
-          <PairingHistory />
-        </ProjectProvider>
-      </WorkspaceContext.Provider>
-    </div>
+    <WorkspaceContext.Provider value={value}>
+      <DndProvider backend={HTML5Backend}>
+        <div className="workspace">
+          <FloatingParrits people={project.people} />
+          <div className="dotted-line" />
+          <div className="pairing-boards-container">
+            <h2 className="pairing-boards-title">Pairing Boards</h2>
+            <PairingBoardList pairingBoards={project.pairingBoards} />
+            <div
+              className="add-board-button"
+              onClick={() => setNewPairingBoardOpen(true)}
+            />
+          </div>
+
+          <Modal
+            contentLabel="New Person Modal"
+            isOpen={newPersonOpen}
+            onRequestClose={() => setNewPersonOpen(false)}
+          >
+            <NameForm
+              formTitle="Add Parrit Teammate"
+              confirmFunction={handleCreatePerson}
+              cancelFunction={() => setNewPersonOpen(false)}
+              errorMessage={newPersonError?.message}
+            />
+          </Modal>
+          <Modal
+            contentLabel="New Pairing Board Modal"
+            isOpen={newPairingBoardOpen}
+            onRequestClose={() => setNewPairingBoardOpen(false)}
+          >
+            <NameForm
+              formTitle="Add Pairing Board"
+              confirmFunction={handleCreatePairingBoard}
+              cancelFunction={() => setNewPairingBoardOpen(false)}
+              errorMessage={newPairingBoardError?.message}
+            />
+          </Modal>
+          <Modal
+            contentLabel="New Role Modal"
+            isOpen={newRoleOpen}
+            onRequestClose={() => setNewRoleOpen(false)}
+          >
+            <NameForm
+              formTitle="Add Pairing Board Role"
+              confirmFunction={(value) => {
+                handleCreateNewRole(value);
+              }}
+              cancelFunction={() => setNewRoleOpen(false)}
+              errorMessage={newRoleError?.message}
+            />
+          </Modal>
+        </div>
+      </DndProvider>
+    </WorkspaceContext.Provider>
   );
 };

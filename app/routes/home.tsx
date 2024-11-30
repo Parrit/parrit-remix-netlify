@@ -1,6 +1,6 @@
 import { Outlet, useActionData } from "@remix-run/react";
 import { LoaderFunctionArgs, LinksFunction } from "@remix-run/node";
-import { Footer } from "~/routes/project.$projectId/components/Footer";
+import { Footer } from "~/routes/project.$projectId/components/ui/Footer";
 
 import { ErrorResponse } from "~/models/Error.model";
 

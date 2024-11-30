@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import classNames from "classnames";
 
-import { ProjectContext } from "../contexts/ProjectContext";
-import { WorkspaceContext } from "../contexts/Workspace";
-import { PairingHistoryRecordList } from "./PairingHistoryRecordList";
+import { ProjectContext } from "../../contexts/ProjectContext";
+import { AppContext } from "../../contexts/App";
+
 import { Scrollbar } from "react-scrollbars-custom";
+import { PairingHistoryRecordList } from "./PairingHistoryRecordList";
 
 export const PairingHistory: React.FC = () => {
   const { pairingHistory } = useContext(ProjectContext);
-  const { pairingHistoryOpen, setPairingHistoryOpen } =
-    useContext(WorkspaceContext);
+  const { pairingHistoryOpen, setPairingHistoryOpen } = useContext(AppContext);
 
   const classes = classNames({
     "pairing-history-panel": true,

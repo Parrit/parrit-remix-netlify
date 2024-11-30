@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import "~/styles/project.css";
 import hydrateProjectServer from "./server/hydrateProject.server";
-import { Workspace } from "./contexts/Workspace";
+import { App } from "./contexts/App";
 
 export async function loader(args: LoaderFunctionArgs) {
   return await hydrateProjectServer(args);
@@ -11,5 +11,5 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export default function () {
   const project = useLoaderData<typeof loader>();
-  return <Workspace project={project} />;
+  return <App project={project} />;
 }

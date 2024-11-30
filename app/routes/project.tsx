@@ -1,4 +1,4 @@
-import { Form, Link, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import { LoaderFunctionArgs, LinksFunction, redirect } from "@remix-run/node";
 import projectStyles from "~/styles/project.css?url";
 import HeaderStyles from "~/styles/header.css?url";
