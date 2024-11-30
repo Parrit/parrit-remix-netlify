@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { Project } from "~/api/common/interfaces";
 import classNames from "classnames";
-import { ProjectView } from "./ProjectView";
+import { ProjectView } from "../ProjectView";
 import { PairingHistory } from "../components/history/PairingHistory";
 import { Footer } from "../components/ui/Footer";
 import { ProjectProvider } from "./ProjectContext";

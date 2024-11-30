@@ -1,7 +1,7 @@
 import { Button } from "~/ui/Button";
 import { useContext } from "react";
-import { ProjectContext } from "./ProjectContext";
-import { Workspace } from "./Workspace";
+import { ProjectContext } from "./contexts/ProjectContext";
+import { Workspace } from "./contexts/Workspace";
 
 export const ProjectView: React.FC = () => {
   const { project } = useContext(ProjectContext);
@@ -31,8 +31,8 @@ export const ProjectView: React.FC = () => {
             />
           </div>
         </div>
+        <Workspace />
       </div>
-      <Workspace />
     </div>
   );
 };
