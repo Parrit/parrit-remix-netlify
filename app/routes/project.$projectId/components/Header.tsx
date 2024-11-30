@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import classNames from "classnames";
 import { WorkspaceContext } from "../contexts/Workspace";
+import { Form, Link } from "@remix-run/react";
+import { Button } from "~/ui/Button";
 
 export const Header: React.FC = () => {
   const { pairingHistoryOpen, setPairingHistoryOpen } =
@@ -14,12 +16,9 @@ export const Header: React.FC = () => {
     <header>
       <a href="/" className="header-logo" />
       <div className="links">
-        <h3
-          className="logout"
-          onClick={() => console.log("bad logout clicked")}
-        >
-          LOGOUT
-        </h3>
+        <Form method="DELETE" action="/logout">
+          <Button name="LOGOUT" type="submit" />
+        </Form>
         <h3 className="feedback">
           <a
             href="https://goo.gl/forms/ZGqUyZDEDSWqZVBP2"
