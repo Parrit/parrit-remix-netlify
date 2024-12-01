@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { DragItem } from "../interfaces";
+import { DragItem } from "../../../api/common/interfaces/dragdrop.interface";
 
 interface IDragContext {
   dragItem?: DragItem;

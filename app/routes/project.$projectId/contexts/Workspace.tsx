@@ -1,8 +1,5 @@
-import React, { useContext, useState } from "react";
-import { PairingBoard } from "~/api/common/interfaces";
-import { ProjectContext } from "./ProjectContext";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import React, { useState } from "react";
+import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 import { FloatingParrits } from "../components/people/FloatingParrits";
 import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
 import { NameForm } from "../components/people/NameForm";
@@ -27,34 +24,7 @@ export const Workspace: React.FC = () => {
   const [newPersonOpen, setNewPersonOpen] = useState(false);
   const [newPairingBoardOpen, setNewPairingBoardOpen] = useState(false);
   const [newRoleOpen, setNewRoleOpen] = useState(false);
-  const [newPersonError, setNewPersonError] = useState<Error>();
-  const [newPairingBoardError, setNewPairingBoardError] = useState<Error>();
-  const [newRoleError, setNewRoleError] = useState<Error>();
   const [newRoleBoard, setNewRoleBoard] = useState<PairingBoard>();
-
-  const { project, createPerson, createPairingBoard, createRole } =
-    useContext(ProjectContext);
-
-  const handleCreatePerson = (name: string) => {
-    createPerson(name)
-      .then((_) => setNewPersonOpen(false))
-      .catch((error) => setNewPersonError(error));
-  };
-
-  const handleCreatePairingBoard = (name: string) => {
-    createPairingBoard(name)
-      .then((_) => setNewPairingBoardOpen(false))
-      .catch((error) => setNewPairingBoardError(error));
-  };
-
-  const handleCreateNewRole = (name: string) => {
-    if (!newRoleBoard) {
-      throw new Error("creating a new role without a pairing board");
-    }
-    createRole(name, newRoleBoard)
-      .then((_) => setNewRoleOpen(false))
-      .catch((error) => setNewRoleError(error));
-  };
 
   const handleSetNewRoleOpen = (open: boolean, pairingBoard?: PairingBoard) => {
     if (open && !pairingBoard) {
@@ -77,11 +47,11 @@ export const Workspace: React.FC = () => {
     <WorkspaceContext.Provider value={value}>
       <DragProvider>
         <div className="workspace">
-          <FloatingParrits people={project.people} />
+          <FloatingParrits />
           <div className="dotted-line" />
           <div className="pairing-boards-container">
             <h2 className="pairing-boards-title">Pairing Boards</h2>
-            <PairingBoardList pairingBoards={project.pairingBoards} />
+            <PairingBoardList />
             <div
               className="add-board-button"
               onClick={() => setNewPairingBoardOpen(true)}
@@ -94,10 +64,8 @@ export const Workspace: React.FC = () => {
             onRequestClose={() => setNewPersonOpen(false)}
           >
             <NameForm
-              formTitle="Add Parrit Teammate"
-              confirmFunction={handleCreatePerson}
-              cancelFunction={() => setNewPersonOpen(false)}
-              errorMessage={newPersonError?.message}
+              purpose="Person"
+              onCancel={() => setNewPersonOpen(false)}
             />
           </Modal>
           <Modal
@@ -106,10 +74,8 @@ export const Workspace: React.FC = () => {
             onRequestClose={() => setNewPairingBoardOpen(false)}
           >
             <NameForm
-              formTitle="Add Pairing Board"
-              confirmFunction={handleCreatePairingBoard}
-              cancelFunction={() => setNewPairingBoardOpen(false)}
-              errorMessage={newPairingBoardError?.message}
+              purpose="PairingBoard"
+              onCancel={() => setNewPairingBoardOpen(false)}
             />
           </Modal>
           <Modal
@@ -117,14 +83,7 @@ export const Workspace: React.FC = () => {
             isOpen={newRoleOpen}
             onRequestClose={() => setNewRoleOpen(false)}
           >
-            <NameForm
-              formTitle="Add Pairing Board Role"
-              confirmFunction={(value) => {
-                handleCreateNewRole(value);
-              }}
-              cancelFunction={() => setNewRoleOpen(false)}
-              errorMessage={newRoleError?.message}
-            />
+            <NameForm purpose="Role" onCancel={() => setNewRoleOpen(false)} />
           </Modal>
         </div>
       </DragProvider>

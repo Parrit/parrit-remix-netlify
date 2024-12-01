@@ -1,8 +1,12 @@
 import React, { useContext, useState } from "react";
 import classNames from "classnames";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import { DragItem, DragType, DropTarget } from "../../interfaces";
-import { Person, Role } from "~/api/common/interfaces";
+import {
+  DragItem,
+  DragType,
+  DropTarget,
+} from "../../../../api/common/interfaces/dragdrop.interface";
+import { Person, Role } from "~/api/common/interfaces/parrit.interfaces";
 
 export const TrashBin: React.FC = () => {
   const { destroyPerson, destroyRole } = useContext(ProjectContext);

@@ -1,8 +1,15 @@
 import classNames from "classnames";
 import React, { useContext, useState } from "react";
-import { PairingBoard, Person, Role } from "~/api/common/interfaces";
+import {
+  PairingBoard,
+  Person,
+  Role,
+} from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import { DragItem, DragType } from "../../interfaces";
+import {
+  DragItem,
+  DragType,
+} from "../../../../api/common/interfaces/dragdrop.interface";
 import { PersonList } from "../people/PersonList";
 import { PairingBoardHeader } from "./PairingBoardHeader";
 import { RoleList } from "./RoleList";
@@ -34,6 +41,7 @@ export const PairingBoardView: React.FC<Props> = (props) => {
 
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
+    setIsOver(false);
     console.log("handleDrop", props.pairingBoard.name);
     const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
     console.log("pairingboard drop", data, props.pairingBoard);

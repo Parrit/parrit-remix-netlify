@@ -1,7 +1,11 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
+import {
+  LoginResult,
+  LoginRequest,
+} from "~/api/common/interfaces/network.interfaces";
 import { ParritError } from "~/api/common/ParritError";
-import { LoginRequest, LoginResult } from "~/api/common/interfaces";
+
 import { NEW_PROJECT, authenticator } from "~/services/auth.server";
 import { Button } from "~/ui/Button";
 

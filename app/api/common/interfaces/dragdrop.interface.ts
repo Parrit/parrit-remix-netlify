@@ -13,6 +13,7 @@ export interface DragItem {
   id: string;
   name: string;
   type: DragType;
+  pairing_board_id: string;
 }
 
 export interface DropItem {

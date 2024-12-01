@@ -1,5 +1,5 @@
 import React from "react";
-import { Person } from "~/api/common/interfaces";
+import { Person } from "~/api/common/interfaces/parrit.interfaces";
 import { PersonView } from "./PersonView";
 
 interface Props {

@@ -6,7 +6,7 @@ import {
   Person,
   Project,
   Role,
-} from "~/api/common/interfaces";
+} from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
 
 export interface IProjectContext {
@@ -80,24 +80,24 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const destroyPairingBoard = (pairingBoard: PairingBoard) => {
-    const arr: PairingBoard[] = [];
-    const copy = { ...project, pairingBoards: arr };
-    project.pairingBoards.forEach((pb) => {
-      if (pb.id === pairingBoard.id) {
-        // this is the one we want to delete
-        copy.people = [...copy.people, ...pb.people];
-      } else {
-        copy.pairingBoards.push(pb);
-      }
-    });
-    console.log("setting project post deletion", copy);
-    setProject(copy);
+    // const arr: PairingBoard[] = [];
+    // const copy = { ...project, pairingBoards: arr };
+    // project.pairingBoards.forEach((pb) => {
+    //   if (pb.id === pairingBoard.id) {
+    //     // this is the one we want to delete
+    //     copy.people = [...copy.people, ...pb.people];
+    //   } else {
+    //     copy.pairingBoards.push(pb);
+    //   }
+    // });
+    // console.log("setting project post deletion", copy);
+    // setProject(copy);
     // return deletePairingBoard(project.id, pairingBoard.id).then(
     //   (updatedProject) => {
     //     setProject(updatedProject);
     //   }
     // );
-    return Promise.reject();
+    return Promise.reject("destroyPairingBoard not implemented");
   };
 
   const removeRole = (

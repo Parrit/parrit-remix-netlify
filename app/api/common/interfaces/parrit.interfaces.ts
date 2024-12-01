@@ -1,20 +1,13 @@
-import { DragItem, DragType } from "~/routes/project.$projectId/interfaces";
-
-export interface LoginRequest {
-  projectName?: string;
-  password?: string;
-}
-
-export interface LoginResult {
-  message: string;
-}
+import { DragItem, DragType } from "~/api/common/interfaces/dragdrop.interface";
 
 export interface Project {
   id: string;
   name: string;
   pairingBoards: PairingBoard[];
-  people: Person[];
+  floating: PairingBoard;
 }
+
+export const FLOATING_IDX = "-1";
 
 export interface PairingBoard {
   id: string;
@@ -33,7 +26,7 @@ export interface Person extends DragItem {
 export interface Role extends DragItem {
   id: string;
   name: string;
-  type: DragType.Person;
+  type: DragType.Role;
 }
 
 export interface PairingArrangementDTO {

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Project } from "~/api/common/interfaces";
+import { Project } from "~/api/common/interfaces/parrit.interfaces";
 import classNames from "classnames";
 import { ProjectView } from "../ProjectView";
 import { PairingHistory } from "../components/history/PairingHistory";

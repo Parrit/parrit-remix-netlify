@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import classNames from "classnames";
 import { WorkspaceContext } from "../../contexts/Workspace";
-import { PairingBoard } from "~/api/common/interfaces";
+import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 
 interface Props {
   name: string;

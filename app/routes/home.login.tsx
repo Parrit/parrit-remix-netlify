@@ -4,7 +4,10 @@ import { Form, Link, useActionData } from "@remix-run/react";
 import { PROJECT_PASS, authenticator } from "~/services/auth.server";
 import { Button } from "~/ui/Button";
 import { ParritError } from "~/api/common/ParritError";
-import { LoginRequest, LoginResult } from "~/api/common/interfaces";
+import {
+  LoginResult,
+  LoginRequest,
+} from "~/api/common/interfaces/network.interfaces";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {

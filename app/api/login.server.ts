@@ -1,10 +1,10 @@
-import useXataClient from "~/server-hooks/useXataClient.server";
+import getXataClient from "~/api/getXataClient.server";
 import { ProjectsRecord } from "src/xata";
 
 import { parseHashedPassword } from "./helpers/parseHashedPassword";
 import { evaluatePassword } from "./helpers/evaluatePassword";
 import { ParritError } from "./common/ParritError";
-import { LoginRequest } from "./common/interfaces";
+import { LoginRequest } from "./common/interfaces/network.interfaces";
 
 export default async ({
   projectName,
@@ -18,7 +18,7 @@ export default async ({
       },
     });
   }
-  const xata = useXataClient();
+  const xata = getXataClient();
   const project = await xata.db.Projects.filter({
     name: projectName,
   }).getFirstOrThrow();

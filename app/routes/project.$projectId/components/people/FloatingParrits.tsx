@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
-import { Person } from "~/api/common/interfaces";
+import { Person } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import { DragItem, DragType } from "../../interfaces";
+import {
+  DragItem,
+  DragType,
+} from "../../../../api/common/interfaces/dragdrop.interface";
 import { WorkspaceContext } from "../../contexts/Workspace";
 import { PersonList } from "./PersonList";
 import { TrashBin } from "../ui/TrashBin";
 
-interface Props {
-  people: Person[];
-}
-
-export const FloatingParrits: React.FC<Props> = (props) => {
-  const { movePerson } = useContext(ProjectContext);
+export const FloatingParrits: React.FC = () => {
+  const { movePerson, project } = useContext(ProjectContext);
 
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (event) => {
     const data = JSON.parse(
@@ -31,7 +30,7 @@ export const FloatingParrits: React.FC<Props> = (props) => {
   return (
     <div onDrop={handleDrop} className="floating-parrits">
       <h2 className="floating-parrit-title">Floating Parrits</h2>
-      <PersonList people={props.people} />
+      <PersonList people={project.floating.people} />
       <div className="floating-parrit-actions">
         <div
           className="add-parrit-button"

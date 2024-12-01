@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Role } from "~/api/common/interfaces";
+import { Role } from "~/api/common/interfaces/parrit.interfaces";
 
 interface Props {
   role: Role;

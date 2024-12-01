@@ -1,6 +1,6 @@
 import React from "react";
 import { RoleView } from "./RoleView";
-import { Role } from "~/api/common/interfaces";
+import { Role } from "~/api/common/interfaces/parrit.interfaces";
 
 interface Props {
   roles: Role[];

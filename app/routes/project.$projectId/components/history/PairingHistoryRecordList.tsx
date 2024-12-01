@@ -1,6 +1,6 @@
 import React from "react";
 import PairingHistoryRecord from "./PairingHistoryRecord";
-import { PairingArrangementDTO } from "~/api/common/interfaces";
+import { PairingArrangementDTO } from "~/api/common/interfaces/parrit.interfaces";
 
 interface Props {
   pairingHistoryList: PairingArrangementDTO[];

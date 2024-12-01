@@ -1,8 +1,15 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { ProjectsRecord } from "src/xata";
-import { Project } from "~/api/common/interfaces";
-import useXataClient from "~/server-hooks/useXataClient.server";
+import {
+  FLOATING_IDX,
+  Project,
+} from "~/api/common/interfaces/parrit.interfaces";
+import getXataClient from "~/api/getXataClient.server";
 import { sessionStorage } from "~/services/session.server";
+import {
+  DragType,
+  DropType,
+} from "../../../api/common/interfaces/dragdrop.interface";
 
 /**
  * Retrieves a project with its pairing boards and people.
@@ -21,7 +28,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
     throw redirect(`/project/${record.xata_id}`);
   }
 
-  const xata = useXataClient();
+  const xata = getXataClient();
   const selected = await xata.db.Projects.select([
     "name",
     {
@@ -45,12 +52,12 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
     "exempt",
     {
       name: "<-Persons.pairing_board_id",
-      columns: ["name"],
+      columns: ["name", "pairing_board_id"],
       as: "persons",
     },
     {
       name: "<-PairingBoardRoles.pairing_board_id",
-      columns: ["name"],
+      columns: ["name", "pairing_board_id"],
       as: "roles",
     },
   ])
@@ -74,16 +81,29 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
       people: (obj.persons ?? { records: [] }).records.map((obj) => ({
         id: obj.xata_id,
         name: obj.name,
+        type: DragType.Person,
+        pairing_board_id: obj.pairing_board_id,
       })),
       roles: (obj.roles ?? { records: [] }).records.map((obj) => ({
         id: obj.xata_id,
         name: obj.name,
+        type: DragType.Role,
+        pairing_board_id: obj.pairing_board_id,
       })),
+      type: DropType.PairingBoard,
     })),
-    people: hydrated.persons.records.map((obj) => ({
-      id: obj.xata_id,
-      name: obj.name,
-    })),
+    floating: {
+      people: hydrated.persons.records.map((obj) => ({
+        id: obj.xata_id,
+        name: obj.name,
+        type: DragType.Person,
+        pairing_board_id: FLOATING_IDX,
+      })),
+      id: FLOATING_IDX,
+      name: "Floating",
+      exempt: false,
+      roles: [],
+    },
   };
 
   return project;
@@ -96,13 +116,31 @@ interface SerializedProject {
   pairingBoards: {
     records: { xata_id: string }[];
   };
-  persons: { records: { xata_id: string; name: string }[] };
+  persons: {
+    records: {
+      xata_id: string;
+      name: string;
+      pairing_board_id: string;
+    }[];
+  };
 }
 
 interface SerializedPairingBoard {
   xata_id: string;
   name: string;
   exempt: string;
-  persons?: { records: { xata_id: string; name: string }[] };
-  roles?: { records: { xata_id: string; name: string }[] };
+  persons?: {
+    records: {
+      xata_id: string;
+      name: string;
+      pairing_board_id: string;
+    }[];
+  };
+  roles?: {
+    records: {
+      xata_id: string;
+      name: string;
+      pairing_board_id: string;
+    }[];
+  };
 }

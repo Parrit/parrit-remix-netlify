@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`func addPerson add to floating 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+      {
+        "id": "99",
+        "name": "Ms. Frizzle",
+        "pairing_board_id": "brand new individual",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [
+        {
+          "id": "red_parrit_id",
+          "name": "red_parrit",
+          "pairing_board_id": "red_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func movePerson moving from floating to blue 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [
+        {
+          "id": "red_parrit_id",
+          "name": "red_parrit",
+          "pairing_board_id": "red_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [
+        {
+          "id": "floater_id_start",
+          "name": "floater_name_start",
+          "pairing_board_id": "blue_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func movePerson moving from red to floating 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+      {
+        "id": "red_parrit_id",
+        "name": "red_parrit",
+        "pairing_board_id": "red_id_start",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func removePerson removing from floating 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [
+        {
+          "id": "red_parrit_id",
+          "name": "red_parrit",
+          "pairing_board_id": "red_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func removePerson removing from pb 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func renamePairingBoard does not rename the floating board 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [
+        {
+          "id": "red_parrit_id",
+          "name": "red_parrit",
+          "pairing_board_id": "red_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func renamePairingBoard happy path 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "Frog Board",
+      "people": [
+        {
+          "id": "red_parrit_id",
+          "name": "red_parrit",
+          "pairing_board_id": "red_id_start",
+          "type": "Person",
+        },
+      ],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
