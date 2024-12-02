@@ -42,12 +42,9 @@ export const PairingBoardView: React.FC<Props> = (props) => {
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
     setIsOver(false);
-    console.log("handleDrop", props.pairingBoard.name);
     const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
-    console.log("pairingboard drop", data, props.pairingBoard);
     switch (data.type) {
       case DragType.Person:
-        console.log("got person", data);
         movePerson(data as Person, props.pairingBoard);
         return;
       case DragType.Role:

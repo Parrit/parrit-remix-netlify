@@ -8,26 +8,28 @@ import * as R from "ramda";
 
 // Functional programing utilities for working with interfaces
 
-export const movePerson = (
+export const move_person = (
   project: Project,
   person: Person,
   position: PairingBoard
 ) =>
   R.pipe<[Project], Project, Project>(
-    removePerson(person),
-    addPerson(person, position)
+    remove_person(person),
+    add_person(person, position)
   )(project);
 
-export const addPerson = R.curry(
+export const add_person = R.curry(
   (person: Person, position: PairingBoard, project: Project) => {
-    const f1 = addPersonToPosition(person, position);
+    const f1 = add_person_to_position(person, position);
     const f2 =
-      position.id === FLOATING_IDX ? addPersonToFloating(person) : R.identity;
+      position.id === FLOATING_IDX
+        ? add_person_to_floating(person)
+        : R.identity;
     return R.pipe<[Project], Project, Project>(f1, f2)(project);
   }
 );
 
-const addPersonToPosition = R.curry(
+const add_person_to_position = R.curry(
   (person: Person, position: PairingBoard, project: Project) =>
     R.over<Project, PairingBoard[]>(
       R.lensProp("pairingBoards"),
@@ -45,7 +47,7 @@ const addPersonToPosition = R.curry(
     )
 );
 
-const addPersonToFloating = R.curry((person: Person, project: Project) =>
+const add_person_to_floating = R.curry((person: Person, project: Project) =>
   R.over<Project, Person[]>(
     R.lensPath(["floating", "people"]),
     R.append(person),
@@ -53,23 +55,23 @@ const addPersonToFloating = R.curry((person: Person, project: Project) =>
   )
 );
 
-export const removePerson = R.curry(
+export const remove_person = R.curry(
   (person: Person, project: Project): Project =>
     R.pipe<[Project], Project, Project>(
-      removePersonFromBoards(person),
-      removePersonFromFloating(person)
+      remove_person_from_boards(person),
+      remove_person_from_floating(person)
     )(project)
 );
 
-const removePersonFromBoards = R.curry(
+const remove_person_from_boards = R.curry(
   (person: Person, project: Project): Project =>
     R.over<Project, PairingBoard[]>(
       R.lensProp("pairingBoards"),
       R.map<PairingBoard, PairingBoard>((x) => {
-        if (x.people.includes(person)) {
+        if (x.people.map((p) => p.id).includes(person.id)) {
           return R.set<PairingBoard, Person[]>(
             R.lensProp("people"),
-            R.without(x.people, [person]),
+            R.without([person], x.people),
             x
           );
         }
@@ -79,7 +81,7 @@ const removePersonFromBoards = R.curry(
     )
 );
 
-const removePersonFromFloating = R.curry(
+const remove_person_from_floating = R.curry(
   (person: Person, project: Project): Project =>
     R.set<Project, Person[]>(
       R.lensPath(["floating", "people"]),
@@ -88,13 +90,13 @@ const removePersonFromFloating = R.curry(
     )
 );
 
-const pbIndexById = R.curry((pbs: PairingBoard[], pb_id: string) =>
+const pb_index_by_id = R.curry((pbs: PairingBoard[], pb_id: string) =>
   R.findIndex<PairingBoard>((pb) => pb.id === pb_id)(pbs)
 );
 
-const renamePairingBoardFromList = R.curry(
+const rename_pairing_board_from_list = R.curry(
   (pb_id: string, rename: string, pbs: PairingBoard[]) => {
-    const foundIndex = pbIndexById(pbs, pb_id);
+    const foundIndex = pb_index_by_id(pbs, pb_id);
     if (foundIndex < 0) {
       return pbs;
     }
@@ -102,27 +104,27 @@ const renamePairingBoardFromList = R.curry(
   }
 );
 
-export const renamePairingBoard = R.curry(
+export const rename_pairing_board = R.curry(
   (project: Project, pb_id: string, rename: string): Project =>
     R.over<Project, PairingBoard[]>(
       R.lensProp("pairingBoards"),
-      renamePairingBoardFromList(pb_id, rename),
+      rename_pairing_board_from_list(pb_id, rename),
       project
     )
 );
 
-export const canAPairingBeMade = (project: Project): boolean => {
+export const can_a_pairing_be_made = (project: Project): boolean => {
   const atLeast2Floaters = project.floating.people.length >= 2;
   const atLeast1Floater = project.floating.people.length >= 1;
-  const atLeast1EmptyBoard = getEmptyPairingBoard(project) !== undefined;
-  const atLeast1UnpairedSticker = unpairedStickingPeople(project).length >= 1;
+  const atLeast1EmptyBoard = get_empty_pairing_board(project) !== undefined;
+  const atLeast1UnpairedSticker = unpaired_sticking_people(project).length >= 1;
   return (
     (atLeast1Floater && atLeast1UnpairedSticker) ||
     (atLeast2Floaters && atLeast1EmptyBoard)
   );
 };
 
-export const getEmptyPairingBoard = (
+export const get_empty_pairing_board = (
   project: Project
 ): PairingBoard | undefined => {
   return project.pairingBoards.find(
@@ -130,13 +132,13 @@ export const getEmptyPairingBoard = (
   );
 };
 
-const unpairedStickingPeople = (project: Project): Person[] =>
+const unpaired_sticking_people = (project: Project): Person[] =>
   project.pairingBoards
     .filter((board) => !board.exempt)
     .filter((board) => board.people.length === 1)
     .flatMap((board) => board.people);
 
-const findPairingBoardByPerson = (
+const find_pairing_board_by_person = (
   project: Project,
   person: Person
 ): PairingBoard | undefined =>

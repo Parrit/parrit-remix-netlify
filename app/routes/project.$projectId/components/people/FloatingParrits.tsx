@@ -13,12 +13,13 @@ export const FloatingParrits: React.FC = () => {
   const { movePerson, project } = useContext(ProjectContext);
 
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
     const data = JSON.parse(
       event.dataTransfer.getData("text/plain")
     ) as DragItem;
     switch (data.type) {
       case DragType.Person:
-        movePerson(data as Person);
+        movePerson(data as Person, project.floating);
         return;
       default:
         console.warn("Floating Parrits cannot handle", data.type);
@@ -28,7 +29,11 @@ export const FloatingParrits: React.FC = () => {
   const { setNewPersonOpen } = useContext(WorkspaceContext);
 
   return (
-    <div onDrop={handleDrop} className="floating-parrits">
+    <div
+      onDrop={handleDrop}
+      onDragOver={(event) => event.preventDefault()}
+      className="floating-parrits"
+    >
       <h2 className="floating-parrit-title">Floating Parrits</h2>
       <PersonList people={project.floating.people} />
       <div className="floating-parrit-actions">

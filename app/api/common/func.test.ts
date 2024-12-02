@@ -7,12 +7,12 @@ import {
 } from "./interfaces/parrit.interfaces";
 import { DragType } from "./interfaces/dragdrop.interface";
 import {
-  addPerson,
-  canAPairingBeMade,
-  getEmptyPairingBoard,
-  movePerson,
-  removePerson,
-  renamePairingBoard,
+  add_person,
+  can_a_pairing_be_made,
+  get_empty_pairing_board,
+  move_person,
+  remove_person,
+  rename_pairing_board,
 } from "./func";
 
 const FRIZZLE: Person = {
@@ -76,13 +76,13 @@ const PROJECT_START: Project = {
 
 describe("func", () => {
   it("initial state", () => {
-    expect(canAPairingBeMade(PROJECT_START)).toBe(true);
-    const emptyPB = getEmptyPairingBoard(PROJECT_START);
+    expect(can_a_pairing_be_made(PROJECT_START)).toBe(true);
+    const emptyPB = get_empty_pairing_board(PROJECT_START);
     expect(emptyPB).not.toBeUndefined();
   });
-  describe("addPerson", () => {
+  describe("add_person", () => {
     it("adding to a pb", () => {
-      const result = addPerson(FRIZZLE, PB_RED, PROJECT_START);
+      const result = add_person(FRIZZLE, PB_RED, PROJECT_START);
       expect(result.pairingBoards[0].people).toStrictEqual([
         {
           id: "red_parrit_id",
@@ -100,11 +100,11 @@ describe("func", () => {
       expect(result.floating.people.length).toBe(
         PROJECT_START.floating.people.length
       );
-      expect(canAPairingBeMade(result)).toBe(false); // only one floater, all others are paired
+      expect(can_a_pairing_be_made(result)).toBe(false); // only one floater, all others are paired
     });
 
     it("add to floating", () => {
-      const result = addPerson(
+      const result = add_person(
         FRIZZLE,
         {
           id: FLOATING_IDX,
@@ -120,30 +120,34 @@ describe("func", () => {
     });
   });
 
-  describe("removePerson", () => {
+  describe("remove_person", () => {
     it("removing from pb", () => {
-      const result = removePerson(RED_PERSON, PROJECT_START);
+      const result = remove_person(RED_PERSON, PROJECT_START);
       expect(result.pairingBoards[0].people.length).toBe(0);
       expect(result).toMatchSnapshot();
-      expect(canAPairingBeMade(result)).toBe(false); // only one person in floating, no unpaired assigned
+      expect(can_a_pairing_be_made(result)).toBe(false); // only one person in floating, no unpaired assigned
     });
 
     it("removing from floating", () => {
-      const result = removePerson(FLOATING_PERSON, PROJECT_START);
+      const result = remove_person(FLOATING_PERSON, PROJECT_START);
       expect(result).toMatchSnapshot();
-      expect(canAPairingBeMade(result)).toBe(false); // no floating pairs
+      expect(can_a_pairing_be_made(result)).toBe(false); // no floating pairs
     });
   });
 
-  describe("renamePairingBoard", () => {
+  describe("rename_paring_board", () => {
     it("happy path", () => {
-      const result = renamePairingBoard(PROJECT_START, PB_RED.id, "Frog Board");
+      const result = rename_pairing_board(
+        PROJECT_START,
+        PB_RED.id,
+        "Frog Board"
+      );
       expect(result.pairingBoards[0].name).toBe("Frog Board");
       expect(result).toMatchSnapshot();
     });
 
     it("does not rename the floating board", () => {
-      const result = renamePairingBoard(
+      const result = rename_pairing_board(
         PROJECT_START,
         FLOATING_IDX,
         "NO, DONT"
@@ -152,25 +156,37 @@ describe("func", () => {
     });
   });
 
-  describe("movePerson", () => {
+  describe("move_person", () => {
     it("moving from floating to blue", () => {
-      const result = movePerson(PROJECT_START, FLOATING_PERSON, PB_BLUE);
+      const result = move_person(PROJECT_START, FLOATING_PERSON, PB_BLUE);
       expect(result.floating.people.length).toBe(0);
       expect(result.pairingBoards[1].people.length).toBe(1);
       expect(result).toMatchSnapshot();
-      expect(canAPairingBeMade(result)).toBe(false); // no floating
-      expect(getEmptyPairingBoard(result)).toBeUndefined();
+      expect(can_a_pairing_be_made(result)).toBe(false); // no floating
+      expect(get_empty_pairing_board(result)).toBeUndefined();
     });
 
     it("moving from red to floating", () => {
-      const result = movePerson(PROJECT_START, RED_PERSON, FLOATING_PARRITS);
+      const result = move_person(PROJECT_START, RED_PERSON, FLOATING_PARRITS);
       expect(result).toMatchSnapshot();
       expect(result.floating.people.length).toBe(2);
       expect(result.pairingBoards[1].people.length).toBe(0);
-      expect(canAPairingBeMade(result)).toBe(true); // 2 floating
+      expect(can_a_pairing_be_made(result)).toBe(true); // 2 floating
     });
 
-    xit("does not mmove a person that doesn't exist in the project", () => {
+    it("handles copies of objects", () => {
+      const result = move_person(
+        PROJECT_START,
+        { ...RED_PERSON },
+        FLOATING_PARRITS
+      );
+      expect(result).toMatchSnapshot();
+      expect(result.floating.people.length).toBe(2);
+      expect(result.pairingBoards[1].people.length).toBe(0);
+      expect(can_a_pairing_be_made(result)).toBe(true); // 2 floating
+    });
+
+    xit("does not move a person that doesn't exist in the project", () => {
       throw "not yet written";
     });
   });

@@ -8,6 +8,7 @@ import {
   Role,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
+import { move_person } from "~/api/common/func";
 
 export interface IProjectContext {
   project: Project;
@@ -16,7 +17,7 @@ export interface IProjectContext {
   createPairingBoard: (name: string) => Promise<void>;
   renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   createRole: (name: string, pairingBoard: PairingBoard) => Promise<void>;
-  movePerson: (person: Person, position?: PairingBoard) => void;
+  movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
   destroyPerson: (person: Person) => Promise<any>;
   destroyRole: (role: Role) => Promise<any>;
@@ -182,12 +183,8 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
     project.pairingBoards.find((pb) => pb.roles.find((r) => r.id === role.id));
 
-  const movePerson = (person: Person, position?: PairingBoard) => {
-    console.error("movePerson not yet implemented");
-    // const updatedProject = new Project(project).movePerson(person, position);
-    // updateProject(updatedProject);
-    // setProject(updatedProject);
-  };
+  const movePerson = (person: Person, position: PairingBoard) =>
+    setProject((oldVal) => move_person(oldVal, person, position));
 
   const destroyPerson = (person: Person) => {
     console.error("destroyPerson not yet implemented");

@@ -11,7 +11,6 @@ export const PersonView: React.FC<Props> = ({ person }) => (
     role="Box"
     className="person"
     onDragStart={(ev) => {
-      console.log("starting drag", person);
       ev.dataTransfer.setData("text/plain", JSON.stringify(person));
       ev.dataTransfer.dropEffect = "move";
     }}

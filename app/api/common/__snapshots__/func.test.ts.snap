@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`func addPerson add to floating 1`] = `
+exports[`func add_person add to floating 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -57,7 +57,57 @@ exports[`func addPerson add to floating 1`] = `
 }
 `;
 
-exports[`func movePerson moving from floating to blue 1`] = `
+exports[`func move_person handles copies of objects 1`] = `
+{
+  "floating": {
+    "exempt": false,
+    "id": "-1",
+    "name": "floating_board_name_start",
+    "people": [
+      {
+        "id": "floater_id_start",
+        "name": "floater_name_start",
+        "pairing_board_id": "-1",
+        "type": "Person",
+      },
+      {
+        "id": "red_parrit_id",
+        "name": "red_parrit",
+        "pairing_board_id": "red_id_start",
+        "type": "Person",
+      },
+    ],
+    "roles": [],
+  },
+  "id": "project_id_start",
+  "name": "project_name_start",
+  "pairingBoards": [
+    {
+      "exempt": false,
+      "id": "red_id_start",
+      "name": "red_start",
+      "people": [],
+      "roles": [],
+    },
+    {
+      "exempt": false,
+      "id": "blue_id_start",
+      "name": "blue_start",
+      "people": [],
+      "roles": [
+        {
+          "id": "role1",
+          "name": "role",
+          "pairing_board_id": "blue_id_start",
+          "type": "Role",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`func move_person moving from floating to blue 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -108,7 +158,7 @@ exports[`func movePerson moving from floating to blue 1`] = `
 }
 `;
 
-exports[`func movePerson moving from red to floating 1`] = `
+exports[`func move_person moving from red to floating 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -158,7 +208,7 @@ exports[`func movePerson moving from red to floating 1`] = `
 }
 `;
 
-exports[`func removePerson removing from floating 1`] = `
+exports[`func remove_person removing from floating 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -202,7 +252,7 @@ exports[`func removePerson removing from floating 1`] = `
 }
 `;
 
-exports[`func removePerson removing from pb 1`] = `
+exports[`func remove_person removing from pb 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -246,7 +296,7 @@ exports[`func removePerson removing from pb 1`] = `
 }
 `;
 
-exports[`func renamePairingBoard does not rename the floating board 1`] = `
+exports[`func rename_paring_board does not rename the floating board 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -297,7 +347,7 @@ exports[`func renamePairingBoard does not rename the floating board 1`] = `
 }
 `;
 
-exports[`func renamePairingBoard happy path 1`] = `
+exports[`func rename_paring_board happy path 1`] = `
 {
   "floating": {
     "exempt": false,

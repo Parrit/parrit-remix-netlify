@@ -42,7 +42,7 @@ export const PairingHistory: React.FC = () => {
             <div className="no-history">
               <div className="clock" />
               <div className="no-history-content">
-                ‘Record Pairs’ to track daily rotation history. The more you
+                Record Pairs to track daily rotation history. The more you
                 record, the better the recommendation engine becomes.
               </div>
             </div>

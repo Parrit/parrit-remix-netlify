@@ -4,7 +4,7 @@ import "~/styles/footer.css";
 export const Footer: React.FC = () => {
   return (
     <footer>
-      <div className="fake-copyright">&copy; Parrit 2024</div>
+      <div className="fake-copyright">copyright Parrit 2024</div>
       <div className="footer-links">
         <a
           target="_blank"
