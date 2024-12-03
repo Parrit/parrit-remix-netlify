@@ -46,6 +46,7 @@ export const App: React.FC<Props> = ({ project }) => {
           <ProjectView />
           <Footer />
           <PairingHistory />
+          <div id="modal-root" />
         </ProjectProvider>
       </AppContext.Provider>
     </div>

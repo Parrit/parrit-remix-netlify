@@ -3,7 +3,6 @@ import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 import { FloatingParrits } from "../components/people/FloatingParrits";
 import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
 import { NameForm } from "../components/people/NameForm";
-import Modal from "react-modal";
 import { DragProvider } from "./DragContext";
 
 interface IWorkspaceContext {
@@ -58,33 +57,22 @@ export const Workspace: React.FC = () => {
             />
           </div>
 
-          <Modal
-            contentLabel="New Person Modal"
-            isOpen={newPersonOpen}
-            onRequestClose={() => setNewPersonOpen(false)}
-          >
+          {newPersonOpen && (
             <NameForm
               purpose="Person"
-              onCancel={() => setNewPersonOpen(false)}
+              onClose={() => setNewPersonOpen(false)}
             />
-          </Modal>
-          <Modal
-            contentLabel="New Pairing Board Modal"
-            isOpen={newPairingBoardOpen}
-            onRequestClose={() => setNewPairingBoardOpen(false)}
-          >
+          )}
+
+          {newPairingBoardOpen && (
             <NameForm
               purpose="PairingBoard"
-              onCancel={() => setNewPairingBoardOpen(false)}
+              onClose={() => setNewPairingBoardOpen(false)}
             />
-          </Modal>
-          <Modal
-            contentLabel="New Role Modal"
-            isOpen={newRoleOpen}
-            onRequestClose={() => setNewRoleOpen(false)}
-          >
-            <NameForm purpose="Role" onCancel={() => setNewRoleOpen(false)} />
-          </Modal>
+          )}
+          {newRoleOpen && (
+            <NameForm purpose="Role" onClose={() => setNewRoleOpen(false)} />
+          )}
         </div>
       </DragProvider>
     </WorkspaceContext.Provider>
