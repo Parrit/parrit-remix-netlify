@@ -8,7 +8,7 @@ import {
   Role,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
-import { move_person } from "~/api/common/func";
+import { move_person } from "~/func";
 
 export interface IProjectContext {
   project: Project;

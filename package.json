@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "jest": "npx jest",
+    "test": "npx jest --runInBand",
+    "test:ci": "npx jest",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "netlify serve",

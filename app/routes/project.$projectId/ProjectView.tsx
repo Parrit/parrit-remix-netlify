@@ -4,7 +4,7 @@ import { ProjectContext } from "./contexts/ProjectContext";
 import { Workspace } from "./contexts/Workspace";
 
 export const ProjectView: React.FC = () => {
-  const { project } = useContext(ProjectContext);
+  const { project, resetPairs } = useContext(ProjectContext);
   return (
     <div className="project-page-container">
       <div className="project">
@@ -12,6 +12,7 @@ export const ProjectView: React.FC = () => {
           <h1 className="project-name">{project.name} </h1>
           <div className="project-actions">
             <Button
+              onClick={resetPairs}
               className="button-blue"
               name="Reset Pairs"
               shortName="reset"
