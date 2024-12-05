@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
 import { Person } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import {
-  DragItem,
-  DragType,
-} from "../../../../api/common/interfaces/dragdrop.interface";
+import { DragItem } from "../../../../api/common/interfaces/dragdrop.interface";
 import { WorkspaceContext } from "../../contexts/Workspace";
 import { PersonList } from "./PersonList";
 import { TrashBin } from "../ui/TrashBin";
@@ -18,7 +15,7 @@ export const FloatingParrits: React.FC = () => {
       event.dataTransfer.getData("text/plain")
     ) as DragItem;
     switch (data.type) {
-      case DragType.Person:
+      case "Person":
         movePerson(data as Person, project.floating);
         return;
       default:
@@ -35,7 +32,7 @@ export const FloatingParrits: React.FC = () => {
       className="floating-parrits"
     >
       <h2 className="floating-parrit-title">Floating Parrits</h2>
-      <PersonList people={project.floating.people} />
+      <PersonList />
       <div className="floating-parrit-actions">
         <div
           className="add-parrit-button"

@@ -1,4 +1,4 @@
-import { DragItem, DragType } from "~/api/common/interfaces/dragdrop.interface";
+import { DragItem } from "~/api/common/interfaces/dragdrop.interface";
 
 export interface Project {
   id: string;
@@ -20,13 +20,13 @@ export interface PairingBoard {
 export interface Person extends DragItem {
   id: string;
   name: string;
-  type: DragType.Person;
+  type: "Person";
 }
 
 export interface Role extends DragItem {
   id: string;
   name: string;
-  type: DragType.Role;
+  type: "Role";
 }
 
 export interface PairingArrangementDTO {

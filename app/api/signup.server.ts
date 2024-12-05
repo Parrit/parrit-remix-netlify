@@ -1,6 +1,6 @@
 import { ProjectsRecord } from "src/xata";
 import { ParritError } from "./common/ParritError";
-import getXataClient from "~/api/getXataClient.server";
+import parritXataClient from "~/api/parritXataClient";
 import hashPassword from "./helpers/hashPassword";
 import { LoginRequest } from "./common/interfaces/network.interfaces";
 
@@ -16,7 +16,7 @@ export default async ({
       },
     });
   }
-  const xata = getXataClient();
+  const xata = parritXataClient();
   const existing = await xata.db.Projects.filter({
     name: projectName,
   }).getFirst();

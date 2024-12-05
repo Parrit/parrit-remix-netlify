@@ -26,15 +26,15 @@ const remove_person_from_boards = curry(
   (person: Person, project: Project): Project =>
     over<Project, PairingBoard[]>(
       lensProp("pairingBoards"),
-      map<PairingBoard, PairingBoard>((x) => {
-        if (x.people.map((p) => p.id).includes(person.id)) {
+      map<PairingBoard, PairingBoard>((board) => {
+        if (board.people.map((p) => p.id).includes(person.id)) {
           return set<PairingBoard, Person[]>(
             lensProp("people"),
-            without([person], x.people),
-            x
+            without([person], board.people),
+            board
           );
         }
-        return x;
+        return board;
       }),
       project
     )

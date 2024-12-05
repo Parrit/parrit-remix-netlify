@@ -30,28 +30,34 @@ export const NameForm: React.FC<Props> = (props) => {
   let formTitle;
   switch (props.purpose) {
     case "Person":
-      action = "/person/new";
+      action = "/person";
       formTitle = "Add Parrit Teammate";
       break;
     case "PairingBoard":
-      action = "/pairing_board/new";
+      action = "/pairing_board";
       formTitle = "Add Pairing Board";
       break;
     case "Role":
-      action = "/role/new";
+      action = "/role";
       formTitle = "Add Pairing Board Role";
       break;
     default:
       throw new Error(`Unknown form purpose ${props.purpose}`);
   }
 
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    fetcher.submit(event.currentTarget);
+    props.onClose();
+  };
+
   return ReactDOM.createPortal(
     <div>
       <div className="ReactModal__Overlay" onClick={props.onClose} />
       <fetcher.Form
-        method="post"
+        method="POST"
         action={action}
         className="ReactModal__Content"
+        onSubmit={handleSubmit}
       >
         <div className="form-header">
           <h2 className="form-title">{formTitle}</h2>

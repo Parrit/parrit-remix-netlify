@@ -8,18 +8,19 @@ import {
   Role,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
-import { move_person } from "~/func";
+import { move_person, remove_person } from "~/func";
+import reset_pairs from "~/func/reset_pairs";
+import { useFetcher } from "@remix-run/react";
 
 export interface IProjectContext {
   project: Project;
   pairingHistory: PairingArrangementDTO[];
-  createPerson: (name: string) => Promise<void>;
   createPairingBoard: (name: string) => Promise<void>;
   renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   createRole: (name: string, pairingBoard: PairingBoard) => Promise<void>;
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
-  destroyPerson: (person: Person) => Promise<any>;
+  destroyPerson: (person: Person) => void;
   destroyRole: (role: Role) => Promise<any>;
   destroyPairingBoard: (pairingBoard: PairingBoard) => Promise<any>;
   resetPairs: () => void;
@@ -41,6 +42,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const [pairingArrangements, setPairingArrangements] = useState<
     PairingArrangementDTO[]
   >([]);
+  const fetcher = useFetcher();
 
   //   const {
   //     getPairingHistory,
@@ -63,14 +65,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   //   });
   //   //run only once
   // }, []);
-
-  const createPerson = (name: string) => {
-    console.error("createPerson not yet implemented");
-    //   return postPerson(project.id, name).then((updatedProject) => {
-    //     setProject(updatedProject);
-    //   });
-    return Promise.reject();
-  };
 
   const createPairingBoard = (name: string) => {
     console.error("createPairingBoard not yet implemented");
@@ -187,31 +181,17 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     setProject((oldVal) => move_person(oldVal, person, position));
 
   const destroyPerson = (person: Person) => {
-    console.error("destroyPerson not yet implemented");
-    // const updatedProject = removePerson(person, project);
-    // setProject(updatedProject);
-    // return deletePerson(project.id, person.id).then((updatedProject) =>
-    //   setProject(updatedProject)
-    // );
-    return Promise.reject();
+    setProject(remove_person(person, project));
+    return fetcher.submit(
+      {},
+      {
+        method: "DELETE",
+        action: `/person/${person.id}`,
+      }
+    );
   };
 
-  const resetPairs = () => {
-    console.error("resetPairs not yet implemented");
-    // const people: Person[] = [...project.people];
-    // const pbs: PairingBoard[] = [];
-    // project.pairingBoards.forEach((pb) => {
-    //   if (pb.exempt) {
-    //     pbs.push({ ...pb });
-    //   } else {
-    //     pb.people.forEach((p) => people.push(p));
-    //     pbs.push({ ...pb, people: [] });
-    //   }
-    // });
-    // const updated = { ...project, pairingBoards: pbs, people };
-    // setProject(updated);
-    // updateProject(updated);
-  };
+  const resetPairs = () => setProject(reset_pairs(project));
 
   const getRecommendedPairs = () => {
     console.error("getRecommendedPairs not yet implemented");
@@ -267,7 +247,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const value = {
-    createPerson,
     createPairingBoard,
     destroyPairingBoard,
     renamePairingBoard,

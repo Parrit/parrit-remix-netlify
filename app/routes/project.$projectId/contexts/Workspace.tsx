@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
+import {
+  FLOATING_IDX,
+  PairingBoard,
+} from "~/api/common/interfaces/parrit.interfaces";
 import { FloatingParrits } from "../components/people/FloatingParrits";
 import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
 import { NameForm } from "../components/people/NameForm";
 import { DragProvider } from "./DragContext";
+import { PairingBoardProvider } from "./PairingBoardContext";
 
 interface IWorkspaceContext {
   newPersonOpen: boolean;
@@ -46,7 +50,9 @@ export const Workspace: React.FC = () => {
     <WorkspaceContext.Provider value={value}>
       <DragProvider>
         <div className="workspace">
-          <FloatingParrits />
+          <PairingBoardProvider pairingBoardId={FLOATING_IDX}>
+            <FloatingParrits />
+          </PairingBoardProvider>
           <div className="dotted-line" />
           <div className="pairing-boards-container">
             <h2 className="pairing-boards-title">Pairing Boards</h2>

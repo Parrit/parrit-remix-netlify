@@ -5,10 +5,10 @@ exports[`move_person handles copies of objects 1`] = `
   "floating": {
     "exempt": false,
     "id": "-1",
-    "name": "floating_board_name_start",
+    "name": "floating_board_name",
     "people": [
       {
-        "id": "floater_id_start",
+        "id": "floater_id",
         "name": "floater_name_start",
         "pairing_board_id": "-1",
         "type": "Person",
@@ -16,32 +16,53 @@ exports[`move_person handles copies of objects 1`] = `
       {
         "id": "red_parrit_id",
         "name": "red_parrit",
-        "pairing_board_id": "red_id_start",
+        "pairing_board_id": "red_id",
         "type": "Person",
       },
     ],
     "roles": [],
   },
-  "id": "project_id_start",
-  "name": "project_name_start",
+  "id": "project_id",
+  "name": "project_name",
   "pairingBoards": [
     {
       "exempt": false,
-      "id": "red_id_start",
+      "id": "red_id",
       "name": "red_start",
       "people": [],
       "roles": [],
     },
     {
       "exempt": false,
-      "id": "blue_id_start",
+      "id": "blue_id",
       "name": "blue_start",
       "people": [],
       "roles": [
         {
           "id": "role1",
           "name": "role",
-          "pairing_board_id": "blue_id_start",
+          "pairing_board_id": "blue_id",
+          "type": "Role",
+        },
+      ],
+    },
+    {
+      "exempt": true,
+      "id": "exempt",
+      "name": "out_of_office",
+      "people": [
+        {
+          "id": "absent",
+          "name": "Permanent Vacation",
+          "pairing_board_id": "exempt",
+          "type": "Person",
+        },
+      ],
+      "roles": [
+        {
+          "id": "ooo",
+          "name": "OOOROLE",
+          "pairing_board_id": "exempt",
           "type": "Role",
         },
       ],
@@ -55,22 +76,22 @@ exports[`move_person moving from floating to blue 1`] = `
   "floating": {
     "exempt": false,
     "id": "-1",
-    "name": "floating_board_name_start",
+    "name": "floating_board_name",
     "people": [],
     "roles": [],
   },
-  "id": "project_id_start",
-  "name": "project_name_start",
+  "id": "project_id",
+  "name": "project_name",
   "pairingBoards": [
     {
       "exempt": false,
-      "id": "red_id_start",
+      "id": "red_id",
       "name": "red_start",
       "people": [
         {
           "id": "red_parrit_id",
           "name": "red_parrit",
-          "pairing_board_id": "red_id_start",
+          "pairing_board_id": "red_id",
           "type": "Person",
         },
       ],
@@ -78,13 +99,13 @@ exports[`move_person moving from floating to blue 1`] = `
     },
     {
       "exempt": false,
-      "id": "blue_id_start",
+      "id": "blue_id",
       "name": "blue_start",
       "people": [
         {
-          "id": "floater_id_start",
+          "id": "floater_id",
           "name": "floater_name_start",
-          "pairing_board_id": "blue_id_start",
+          "pairing_board_id": "blue_id",
           "type": "Person",
         },
       ],
@@ -92,7 +113,28 @@ exports[`move_person moving from floating to blue 1`] = `
         {
           "id": "role1",
           "name": "role",
-          "pairing_board_id": "blue_id_start",
+          "pairing_board_id": "blue_id",
+          "type": "Role",
+        },
+      ],
+    },
+    {
+      "exempt": true,
+      "id": "exempt",
+      "name": "out_of_office",
+      "people": [
+        {
+          "id": "absent",
+          "name": "Permanent Vacation",
+          "pairing_board_id": "exempt",
+          "type": "Person",
+        },
+      ],
+      "roles": [
+        {
+          "id": "ooo",
+          "name": "OOOROLE",
+          "pairing_board_id": "exempt",
           "type": "Role",
         },
       ],
@@ -106,10 +148,10 @@ exports[`move_person moving from red to floating 1`] = `
   "floating": {
     "exempt": false,
     "id": "-1",
-    "name": "floating_board_name_start",
+    "name": "floating_board_name",
     "people": [
       {
-        "id": "floater_id_start",
+        "id": "floater_id",
         "name": "floater_name_start",
         "pairing_board_id": "-1",
         "type": "Person",
@@ -117,32 +159,53 @@ exports[`move_person moving from red to floating 1`] = `
       {
         "id": "red_parrit_id",
         "name": "red_parrit",
-        "pairing_board_id": "red_id_start",
+        "pairing_board_id": "red_id",
         "type": "Person",
       },
     ],
     "roles": [],
   },
-  "id": "project_id_start",
-  "name": "project_name_start",
+  "id": "project_id",
+  "name": "project_name",
   "pairingBoards": [
     {
       "exempt": false,
-      "id": "red_id_start",
+      "id": "red_id",
       "name": "red_start",
       "people": [],
       "roles": [],
     },
     {
       "exempt": false,
-      "id": "blue_id_start",
+      "id": "blue_id",
       "name": "blue_start",
       "people": [],
       "roles": [
         {
           "id": "role1",
           "name": "role",
-          "pairing_board_id": "blue_id_start",
+          "pairing_board_id": "blue_id",
+          "type": "Role",
+        },
+      ],
+    },
+    {
+      "exempt": true,
+      "id": "exempt",
+      "name": "out_of_office",
+      "people": [
+        {
+          "id": "absent",
+          "name": "Permanent Vacation",
+          "pairing_board_id": "exempt",
+          "type": "Person",
+        },
+      ],
+      "roles": [
+        {
+          "id": "ooo",
+          "name": "OOOROLE",
+          "pairing_board_id": "exempt",
           "type": "Role",
         },
       ],

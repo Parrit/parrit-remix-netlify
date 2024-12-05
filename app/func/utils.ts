@@ -33,3 +33,11 @@ export const get_empty_pairing_board = (
     (pb) => pb.people.length === 0 && !pb.exempt
   );
 };
+
+export const all_people_in_project = (project: Project): Person[] => {
+  const people: Person[] = [...project.floating.people];
+  project.pairingBoards.forEach((pb) =>
+    pb.people.forEach((person) => people.push(person))
+  );
+  return people;
+};

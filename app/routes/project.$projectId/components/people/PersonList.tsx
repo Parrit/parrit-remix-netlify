@@ -1,15 +1,14 @@
-import React from "react";
-import { Person } from "~/api/common/interfaces/parrit.interfaces";
+import React, { useContext } from "react";
 import { PersonView } from "./PersonView";
+import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
-interface Props {
-  people: Person[];
-}
-
-export const PersonList: React.FC<Props> = (props) => {
+export const PersonList: React.FC = () => {
+  const {
+    pairingBoard: { people },
+  } = useContext(PairingBoardContext);
   return (
     <div className="person-list">
-      {props.people.map((person, idx) => {
+      {people.map((person, idx) => {
         return <PersonView key={`person-${idx}`} person={person} />;
       })}
     </div>

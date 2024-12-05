@@ -1,7 +1,4 @@
-export enum DragType {
-  Person = "Person",
-  Role = "Role",
-}
+export type DragType = "Person" | "Role";
 
 export enum DropType {
   Floating = "Floating",

@@ -1,25 +1,16 @@
 import classNames from "classnames";
 import React, { useContext, useState } from "react";
-import {
-  PairingBoard,
-  Person,
-  Role,
-} from "~/api/common/interfaces/parrit.interfaces";
+import { Person, Role } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
-import {
-  DragItem,
-  DragType,
-} from "../../../../api/common/interfaces/dragdrop.interface";
+import { DragItem } from "../../../../api/common/interfaces/dragdrop.interface";
 import { PersonList } from "../people/PersonList";
 import { PairingBoardHeader } from "./PairingBoardHeader";
 import { RoleList } from "./RoleList";
+import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
-interface Props {
-  pairingBoard: PairingBoard;
-}
-
-export const PairingBoardView: React.FC<Props> = (props) => {
-  const { name, exempt, people, roles } = props.pairingBoard;
+export const PairingBoardView: React.FC = () => {
+  const { pairingBoard } = useContext(PairingBoardContext);
+  const { name, exempt, roles } = pairingBoard;
   const { movePerson, moveRole } = useContext(ProjectContext);
   const [isOver, setIsOver] = useState(false);
 
@@ -44,11 +35,11 @@ export const PairingBoardView: React.FC<Props> = (props) => {
     setIsOver(false);
     const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
     switch (data.type) {
-      case DragType.Person:
-        movePerson(data as Person, props.pairingBoard);
+      case "Person":
+        movePerson(data as Person, pairingBoard);
         return;
-      case DragType.Role:
-        moveRole(data as Role, props.pairingBoard);
+      case "Role":
+        moveRole(data as Role, pairingBoard);
         return;
     }
   };
@@ -62,7 +53,7 @@ export const PairingBoardView: React.FC<Props> = (props) => {
 
   const handleRename = async (name: string) => {
     setEditing(false);
-    renamePairingBoard(name, props.pairingBoard.id).catch((error) => {
+    renamePairingBoard(name, pairingBoard.id).catch((error) => {
       console.log("rename error", error);
       setEditingError("rename failed");
     });
@@ -81,14 +72,14 @@ export const PairingBoardView: React.FC<Props> = (props) => {
         editMode={editing}
         editErrorMessage={editingError}
         renamePairingBoard={handleRename}
-        deletePairingBoard={() => destroyPairingBoard(props.pairingBoard)}
+        deletePairingBoard={() => destroyPairingBoard(pairingBoard)}
         setEditing={setEditing}
-        pairingBoard={props.pairingBoard}
+        pairingBoard={pairingBoard}
       />
 
       <RoleList roles={roles} />
 
-      <PersonList people={people} />
+      <PersonList />
     </div>
   );
 };

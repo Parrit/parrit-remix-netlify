@@ -1,13 +1,11 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { DragType } from "~/api/common/interfaces/dragdrop.interface";
 import { FLOATING_IDX } from "~/api/common/interfaces/parrit.interfaces";
 import { ParritError } from "~/api/common/ParritError";
-import getXataClient from "~/api/getXataClient.server";
+import parritXataClient from "~/api/parritXataClient";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  console.log("request", request);
+  console.log("/person");
   const form = await request.formData();
-  console.log("form", form);
   const project_id = form.get("project_id")?.toString();
   const name = form.get("name")?.toString();
 
@@ -16,7 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       fields: { personName: "Person Name is required" },
     });
   }
-  const xata = getXataClient();
+  const xata = parritXataClient();
 
   const record = await xata.db.Persons.create({
     name,
@@ -25,7 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   return {
     id: record.xata_id,
     name: record.name ?? "ERROR",
-    type: DragType.Person,
+    type: "Person",
     pairing_board_id: FLOATING_IDX,
   };
 };

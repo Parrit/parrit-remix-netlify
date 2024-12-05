@@ -4,12 +4,9 @@ import {
   FLOATING_IDX,
   Project,
 } from "~/api/common/interfaces/parrit.interfaces";
-import getXataClient from "~/api/getXataClient.server";
+import parritXataClient from "~/api/parritXataClient";
 import { sessionStorage } from "~/services/session.server";
-import {
-  DragType,
-  DropType,
-} from "../../../api/common/interfaces/dragdrop.interface";
+import { DropType } from "../../../api/common/interfaces/dragdrop.interface";
 
 /**
  * Retrieves a project with its pairing boards and people.
@@ -28,7 +25,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
     throw redirect(`/project/${record.xata_id}`);
   }
 
-  const xata = getXataClient();
+  const xata = parritXataClient();
   const selected = await xata.db.Projects.select([
     "name",
     {
@@ -81,13 +78,13 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
       people: (obj.persons ?? { records: [] }).records.map((obj) => ({
         id: obj.xata_id,
         name: obj.name,
-        type: DragType.Person,
+        type: "Person",
         pairing_board_id: obj.pairing_board_id,
       })),
       roles: (obj.roles ?? { records: [] }).records.map((obj) => ({
         id: obj.xata_id,
         name: obj.name,
-        type: DragType.Role,
+        type: "Role",
         pairing_board_id: obj.pairing_board_id,
       })),
       type: DropType.PairingBoard,
@@ -96,7 +93,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
       people: hydrated.persons.records.map((obj) => ({
         id: obj.xata_id,
         name: obj.name,
-        type: DragType.Person,
+        type: "Person",
         pairing_board_id: FLOATING_IDX,
       })),
       id: FLOATING_IDX,

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`add_person add to floating 1`] = `
+exports[`reset_pairs moves everything from non-exempt PBs to floating 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -14,9 +14,9 @@ exports[`add_person add to floating 1`] = `
         "type": "Person",
       },
       {
-        "id": "99",
-        "name": "Ms. Frizzle",
-        "pairing_board_id": "brand new individual",
+        "id": "red_parrit_id",
+        "name": "red_parrit",
+        "pairing_board_id": "red_id",
         "type": "Person",
       },
     ],
@@ -29,14 +29,7 @@ exports[`add_person add to floating 1`] = `
       "exempt": false,
       "id": "red_id",
       "name": "red_start",
-      "people": [
-        {
-          "id": "red_parrit_id",
-          "name": "red_parrit",
-          "pairing_board_id": "red_id",
-          "type": "Person",
-        },
-      ],
+      "people": [],
       "roles": [],
     },
     {
