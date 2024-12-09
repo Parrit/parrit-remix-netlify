@@ -54,7 +54,7 @@ export const PairingBoardView: React.FC = () => {
   const handleRename = async (name: string) => {
     setEditing(false);
     renamePairingBoard(name, pairingBoard.id).catch((error) => {
-      console.log("rename error", error);
+      console.error("rename error", error);
       setEditingError("rename failed");
     });
   };

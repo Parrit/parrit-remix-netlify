@@ -1,5 +1,4 @@
 import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 
 import hydrateProjectServer from "./server/hydrateProject.server";
 import { App } from "./contexts/App";
@@ -35,6 +34,5 @@ export async function loader(args: LoaderFunctionArgs) {
 }
 
 export default function () {
-  const project = useLoaderData<typeof loader>();
-  return <App project={project} />;
+  return <App />;
 }

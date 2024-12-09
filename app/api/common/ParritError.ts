@@ -11,6 +11,10 @@ export class ParritError<T> extends Error {
     this.data = arg;
   }
 
+  toResponse(status = 400): Response {
+    return new Response(JSON.stringify(this.data), { status });
+  }
+
   static obscured() {
     return new ParritError({ server: "Server error" });
   }
@@ -20,6 +24,14 @@ export class ParritError<T> extends Error {
       return undefined;
     }
     const obj = JSON.parse(str) as IParritError<T>;
-    return new ParritError(obj);
+    if (this.isParritError<T>) {
+      return new ParritError(obj);
+    }
+    return undefined;
+  }
+
+  private static isParritError<T>(obj: object): obj is ParritError<T> {
+    const cast = obj as ParritError<T>;
+    return !!cast.data.server || !!cast.data.fields;
   }
 }

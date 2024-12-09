@@ -6,7 +6,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     case "DELETE": {
       const id = request.url.split("/").at(-1);
       if (!id) {
-        console.log("No id found in", request.url);
+        console.error("No id found in", request.url);
         throw new Response("No person id found in URL", { status: 400 });
       }
       const xata = parritXataClient();
@@ -14,7 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     default: {
-      console.log("no handler for method", request.method);
+      console.error("no handler for method", request.method);
       throw new Response("This route doesn't know how to handle this method", {
         status: 400,
       });

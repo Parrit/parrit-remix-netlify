@@ -28,10 +28,6 @@ export const PairingBoardProvider: React.FC<Props> = (props) => {
     [project.floating, project.pairingBoards, props.pairingBoardId]
   );
 
-  if (pairingBoard?.id === FLOATING_IDX) {
-    console.log(pairingBoard);
-  }
-
   if (!pairingBoard) {
     throw new Error(
       "Project did not contain pairing board with id " + props.pairingBoardId

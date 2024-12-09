@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   PairingArrangementDTO,
   PairingBoard,
@@ -10,14 +17,17 @@ import {
 import { AppContext } from "./App";
 import { move_person, remove_person } from "~/func";
 import reset_pairs from "~/func/reset_pairs";
-import { useFetcher } from "@remix-run/react";
+import { Await, useFetcher, useLocation } from "@remix-run/react";
+import { NameFormPurpose } from "../components/people/NameForm";
 
 export interface IProjectContext {
   project: Project;
   pairingHistory: PairingArrangementDTO[];
-  createPairingBoard: (name: string) => Promise<void>;
+  // handleNameFormSubmit: (
+  //   purpose: NameFormPurpose,
+  //   event: React.FormEvent<HTMLFormElement>
+  // ) => void;
   renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
-  createRole: (name: string, pairingBoard: PairingBoard) => Promise<void>;
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
   destroyPerson: (person: Person) => void;
@@ -31,18 +41,39 @@ export interface IProjectContext {
 
 export const ProjectContext = createContext({} as IProjectContext);
 
+export const PROJECT_FETCHER = "PROJECT_FETCHER";
+export const PROJECT_MUTATOR = "PROJECT_MUTATOR";
+
 interface Props {
-  project: Project;
   children: ReactNode;
 }
 
 export const ProjectProvider: React.FC<Props> = (props) => {
+  const location = useLocation();
   const { setSystemAlert } = useContext(AppContext);
-  const [project, setProject] = useState<Project>(props.project);
+  const projectFetcher = useFetcher<Project>({ key: PROJECT_FETCHER });
+  const mutator = useFetcher({ key: PROJECT_MUTATOR });
   const [pairingArrangements, setPairingArrangements] = useState<
     PairingArrangementDTO[]
   >([]);
-  const fetcher = useFetcher();
+  const [project, setProject] = useState<Project>(
+    projectFetcher.data as Project
+  );
+
+  useEffect(() => {
+    try {
+      projectFetcher.load(location.pathname);
+    } catch (err) {
+      console.error(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (projectFetcher.data && projectFetcher.state === "idle") {
+      setProject(projectFetcher.data);
+    }
+  }, [projectFetcher.data, projectFetcher.state]);
 
   //   const {
   //     getPairingHistory,
@@ -73,6 +104,23 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     //   });
     return Promise.reject();
   };
+
+  // const handleNameFormSubmit = async (
+  //   purpose: NameFormPurpose,
+  //   event: React.FormEvent<HTMLFormElement>
+  // ) => {
+  //   switch (purpose) {
+  //     case "Person": {
+  //       mutator.submit(event.currentTarget, {
+  //         method: "POST",
+  //         action: "/person",
+  //       });
+  //       return;
+  //     }
+  //     default:
+  //       throw new Error("Uknown name form purpose " + purpose);
+  //   }
+  // };
 
   const destroyPairingBoard = (pairingBoard: PairingBoard) => {
     // const arr: PairingBoard[] = [];
@@ -181,8 +229,9 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     setProject((oldVal) => move_person(oldVal, person, position));
 
   const destroyPerson = (person: Person) => {
-    setProject(remove_person(person, project));
-    return fetcher.submit(
+    const after = remove_person(person, project);
+    setProject(after);
+    return mutator.submit(
       {},
       {
         method: "DELETE",
@@ -247,10 +296,9 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const value = {
-    createPairingBoard,
+    // handleNameFormSubmit,
     destroyPairingBoard,
     renamePairingBoard,
-    createRole,
     movePerson,
     moveRole,
     destroyPerson,
@@ -259,9 +307,13 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     getRecommendedPairs,
     savePairing,
     pairingHistory: pairingArrangements,
-    project,
     deletePairingArrangement,
+    project,
   };
+
+  if (!project) {
+    return <>Loading Project...</>;
+  }
 
   return (
     <ProjectContext.Provider value={value}>

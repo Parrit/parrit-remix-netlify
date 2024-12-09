@@ -17,8 +17,10 @@ export const TrashBin: React.FC = () => {
   const handleDrop: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData("text/plain")) as DragItem;
+    console.log("TrashBin");
     switch (data.type) {
       case "Person":
+        console.log("about to call destroy person");
         destroyPerson(data as Person);
         return;
       case "Role":

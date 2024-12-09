@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { Project } from "~/api/common/interfaces/parrit.interfaces";
 import classNames from "classnames";
 import { ProjectView } from "../ProjectView";
 import { PairingHistory } from "../components/history/PairingHistory";
@@ -14,13 +13,9 @@ export interface IAppContext {
   setSystemAlert: (value?: string) => void;
 }
 
-interface Props {
-  project: Project;
-}
-
 export const AppContext = createContext({} as IAppContext);
 
-export const App: React.FC<Props> = ({ project }) => {
+export const App: React.FC = () => {
   const [systemAlert, setSystemAlert] = useState<string>();
   const [pairingHistoryOpen, setPairingHistoryOpen] = useState(false);
 
@@ -40,7 +35,7 @@ export const App: React.FC<Props> = ({ project }) => {
   return (
     <div className={classes}>
       <AppContext.Provider value={value}>
-        <ProjectProvider project={project}>
+        <ProjectProvider>
           <SystemAlert />
           <Header />
           <ProjectView />
