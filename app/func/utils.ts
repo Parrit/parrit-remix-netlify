@@ -20,7 +20,7 @@ export const can_a_pairing_be_made = (project: Project): boolean => {
   );
 };
 
-const unpaired_sticking_people = (project: Project): Person[] =>
+export const unpaired_sticking_people = (project: Project): Person[] =>
   project.pairingBoards
     .filter((board) => !board.exempt)
     .filter((board) => board.people.length === 1)
@@ -41,3 +41,9 @@ export const all_people_in_project = (project: Project): Person[] => {
   );
   return people;
 };
+
+export const find_pairing_board_by_person = (
+  project: Project,
+  person: Person
+): PairingBoard | undefined =>
+  project.pairingBoards.find((pb) => pb.people.find((p) => p.id === person.id));

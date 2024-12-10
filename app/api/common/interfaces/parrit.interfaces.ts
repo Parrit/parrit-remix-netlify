@@ -32,10 +32,11 @@ export interface Role extends DragItem {
 export interface PairingArrangementDTO {
   id: string;
   pairingTime: string;
-  pairingHistories: PairingHistory[];
+  pairingHistories: PairingHistoryDTO[];
 }
 
-export interface PairingHistory {
+export interface PairingHistoryDTO {
   pairingBoardName: string;
   people: Person[];
+  pairingTime: string;
 }

@@ -17,8 +17,8 @@ import {
 import { AppContext } from "./App";
 import { move_person, remove_person } from "~/func";
 import reset_pairs from "~/func/reset_pairs";
-import { Await, useFetcher, useLocation } from "@remix-run/react";
-import { NameFormPurpose } from "../components/people/NameForm";
+import { useFetcher, useLocation } from "@remix-run/react";
+import { recommendPairs } from "~/func/recommend_pairs";
 
 export interface IProjectContext {
   project: Project;
@@ -104,23 +104,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     //   });
     return Promise.reject();
   };
-
-  // const handleNameFormSubmit = async (
-  //   purpose: NameFormPurpose,
-  //   event: React.FormEvent<HTMLFormElement>
-  // ) => {
-  //   switch (purpose) {
-  //     case "Person": {
-  //       mutator.submit(event.currentTarget, {
-  //         method: "POST",
-  //         action: "/person",
-  //       });
-  //       return;
-  //     }
-  //     default:
-  //       throw new Error("Uknown name form purpose " + purpose);
-  //   }
-  // };
 
   const destroyPairingBoard = (pairingBoard: PairingBoard) => {
     // const arr: PairingBoard[] = [];
@@ -243,19 +226,17 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const resetPairs = () => setProject(reset_pairs(project));
 
   const getRecommendedPairs = () => {
-    console.error("getRecommendedPairs not yet implemented");
-    // const pairingHistories = pairingArrangements.flatMap((arrangement) => {
-    //   return arrangement.pairingHistories.map((history) => {
-    //     return {
-    //       pairingBoardName: history.pairingBoardName,
-    //       people: history.people,
-    //       pairingTime: history.pairingTime,
-    //     };
-    //   });
-    // });
-    // const recommendedConfiguration = recommendPairs(project, pairingHistories);
-    // setProject(recommendedConfiguration);
-    // updateProject(recommendedConfiguration);
+    const pairingHistories = pairingArrangements.flatMap((arrangement) => {
+      return arrangement.pairingHistories.map((history) => {
+        return {
+          pairingBoardName: history.pairingBoardName,
+          people: history.people,
+          pairingTime: history.pairingTime,
+        };
+      });
+    });
+    const recommendedConfiguration = recommendPairs(project, pairingHistories);
+    setProject(recommendedConfiguration);
   };
 
   const savePairing = () => {

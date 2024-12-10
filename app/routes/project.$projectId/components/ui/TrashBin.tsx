@@ -8,6 +8,12 @@ export const TrashBin: React.FC = () => {
   const { destroyPerson, destroyRole } = useContext(ProjectContext);
   const [isOver, setIsOver] = useState(false);
 
+  const handleDragLeave: React.DragEventHandler<HTMLDivElement> = (ev) => {
+    ev.preventDefault();
+    setIsOver(false);
+    ev.dataTransfer.dropEffect = "none";
+  };
+
   const handleDragover: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
     setIsOver(true);
@@ -35,6 +41,11 @@ export const TrashBin: React.FC = () => {
   });
 
   return (
-    <div onDragOver={handleDragover} onDrop={handleDrop} className={classes} />
+    <div
+      onDragOver={handleDragover}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={classes}
+    />
   );
 };

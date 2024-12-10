@@ -4,7 +4,8 @@ import { ProjectContext } from "./contexts/ProjectContext";
 import { Workspace } from "./contexts/Workspace";
 
 export const ProjectView: React.FC = () => {
-  const { project, resetPairs } = useContext(ProjectContext);
+  const { project, resetPairs, getRecommendedPairs, savePairing } =
+    useContext(ProjectContext);
   return (
     <div className="project-page-container">
       <div className="project">
@@ -19,12 +20,14 @@ export const ProjectView: React.FC = () => {
               tooltip="Move All Pairs to Floating"
             />
             <Button
+              onClick={getRecommendedPairs}
               className="button-blue"
               name="Recommend Pairs"
               shortName="reset"
               tooltip="Automatically suggest pairings based on past paired date"
             />
             <Button
+              onClick={savePairing}
               className="button-green"
               name="Record Pairs"
               shortName="reset"
