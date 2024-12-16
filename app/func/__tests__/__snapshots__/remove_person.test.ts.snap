@@ -6,49 +6,49 @@ exports[`remove_person problematic input 1`] = `
     "exempt": false,
     "id": "-1",
     "name": "",
-    "people": [
-      {
-        "id": "20233",
-        "name": "David",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-      {
-        "id": "19093",
-        "name": "Billy",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-      {
-        "id": "19092",
-        "name": "John",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-      {
-        "id": "rec_ct6kg2ve4lpv8v5i3200",
-        "name": "Mario",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-      {
-        "id": "rec_ct8k0bfhvh3f7vsh7050",
-        "name": "jimbo",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-      {
-        "id": "rec_ct8k0bvhvh3f7vsh705g",
-        "name": "jimbo",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-    ],
-    "roles": [],
   },
   "id": "",
   "name": "",
   "pairingBoards": [],
+  "people": [
+    {
+      "id": "20233",
+      "name": "David",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "19093",
+      "name": "Billy",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "19092",
+      "name": "John",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "rec_ct6kg2ve4lpv8v5i3200",
+      "name": "Mario",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "rec_ct8k0bfhvh3f7vsh7050",
+      "name": "jimbo",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "rec_ct8k0bvhvh3f7vsh705g",
+      "name": "jimbo",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+  ],
+  "roles": [],
 }
 `;
 
@@ -58,8 +58,6 @@ exports[`remove_person removing from floating 1`] = `
     "exempt": false,
     "id": "-1",
     "name": "floating_board_name",
-    "people": [],
-    "roles": [],
   },
   "id": "project_id",
   "name": "project_name",
@@ -68,50 +66,50 @@ exports[`remove_person removing from floating 1`] = `
       "exempt": false,
       "id": "red_id",
       "name": "red_start",
-      "people": [
-        {
-          "id": "red_parrit_id",
-          "name": "red_parrit",
-          "pairing_board_id": "red_id",
-          "type": "Person",
-        },
-      ],
-      "roles": [],
     },
     {
       "exempt": false,
       "id": "blue_id",
       "name": "blue_start",
-      "people": [],
-      "roles": [
-        {
-          "id": "role1",
-          "name": "role",
-          "pairing_board_id": "blue_id",
-          "type": "Role",
-        },
-      ],
     },
     {
       "exempt": true,
       "id": "exempt",
       "name": "out_of_office",
-      "people": [
-        {
-          "id": "absent",
-          "name": "Permanent Vacation",
-          "pairing_board_id": "exempt",
-          "type": "Person",
-        },
-      ],
-      "roles": [
-        {
-          "id": "ooo",
-          "name": "OOOROLE",
-          "pairing_board_id": "exempt",
-          "type": "Role",
-        },
-      ],
+    },
+  ],
+  "people": [
+    {
+      "id": "red_parrit_id",
+      "name": "red_parrit",
+      "pairing_board_id": "red_id",
+      "type": "Person",
+    },
+    {
+      "id": "99",
+      "name": "Ms. Frizzle",
+      "pairing_board_id": "brand new individual",
+      "type": "Person",
+    },
+    {
+      "id": "absent",
+      "name": "Permanent Vacation",
+      "pairing_board_id": "exempt",
+      "type": "Person",
+    },
+  ],
+  "roles": [
+    {
+      "id": "blue_role",
+      "name": "Blue Role",
+      "pairing_board_id": "blue_id",
+      "type": "Role",
+    },
+    {
+      "id": "ooo",
+      "name": "OOOROLE",
+      "pairing_board_id": "exempt",
+      "type": "Role",
     },
   ],
 }
@@ -123,15 +121,6 @@ exports[`remove_person removing from pb 1`] = `
     "exempt": false,
     "id": "-1",
     "name": "floating_board_name",
-    "people": [
-      {
-        "id": "floater_id",
-        "name": "floater_name_start",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-    ],
-    "roles": [],
   },
   "id": "project_id",
   "name": "project_name",
@@ -140,43 +129,50 @@ exports[`remove_person removing from pb 1`] = `
       "exempt": false,
       "id": "red_id",
       "name": "red_start",
-      "people": [],
-      "roles": [],
     },
     {
       "exempt": false,
       "id": "blue_id",
       "name": "blue_start",
-      "people": [],
-      "roles": [
-        {
-          "id": "role1",
-          "name": "role",
-          "pairing_board_id": "blue_id",
-          "type": "Role",
-        },
-      ],
     },
     {
       "exempt": true,
       "id": "exempt",
       "name": "out_of_office",
-      "people": [
-        {
-          "id": "absent",
-          "name": "Permanent Vacation",
-          "pairing_board_id": "exempt",
-          "type": "Person",
-        },
-      ],
-      "roles": [
-        {
-          "id": "ooo",
-          "name": "OOOROLE",
-          "pairing_board_id": "exempt",
-          "type": "Role",
-        },
-      ],
+    },
+  ],
+  "people": [
+    {
+      "id": "99",
+      "name": "Ms. Frizzle",
+      "pairing_board_id": "brand new individual",
+      "type": "Person",
+    },
+    {
+      "id": "absent",
+      "name": "Permanent Vacation",
+      "pairing_board_id": "exempt",
+      "type": "Person",
+    },
+    {
+      "id": "floater_id",
+      "name": "floater_name_start",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+  ],
+  "roles": [
+    {
+      "id": "blue_role",
+      "name": "Blue Role",
+      "pairing_board_id": "blue_id",
+      "type": "Role",
+    },
+    {
+      "id": "ooo",
+      "name": "OOOROLE",
+      "pairing_board_id": "exempt",
+      "type": "Role",
     },
   ],
 }

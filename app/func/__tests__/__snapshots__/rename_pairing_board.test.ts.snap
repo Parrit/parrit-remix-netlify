@@ -6,15 +6,6 @@ exports[`rename_paring_board does not rename the floating board 1`] = `
     "exempt": false,
     "id": "-1",
     "name": "floating_board_name",
-    "people": [
-      {
-        "id": "floater_id",
-        "name": "floater_name_start",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-    ],
-    "roles": [],
   },
   "id": "project_id",
   "name": "project_name",
@@ -23,50 +14,56 @@ exports[`rename_paring_board does not rename the floating board 1`] = `
       "exempt": false,
       "id": "red_id",
       "name": "red_start",
-      "people": [
-        {
-          "id": "red_parrit_id",
-          "name": "red_parrit",
-          "pairing_board_id": "red_id",
-          "type": "Person",
-        },
-      ],
-      "roles": [],
     },
     {
       "exempt": false,
       "id": "blue_id",
       "name": "blue_start",
-      "people": [],
-      "roles": [
-        {
-          "id": "role1",
-          "name": "role",
-          "pairing_board_id": "blue_id",
-          "type": "Role",
-        },
-      ],
     },
     {
       "exempt": true,
       "id": "exempt",
       "name": "out_of_office",
-      "people": [
-        {
-          "id": "absent",
-          "name": "Permanent Vacation",
-          "pairing_board_id": "exempt",
-          "type": "Person",
-        },
-      ],
-      "roles": [
-        {
-          "id": "ooo",
-          "name": "OOOROLE",
-          "pairing_board_id": "exempt",
-          "type": "Role",
-        },
-      ],
+    },
+  ],
+  "people": [
+    {
+      "id": "red_parrit_id",
+      "name": "red_parrit",
+      "pairing_board_id": "red_id",
+      "type": "Person",
+    },
+    {
+      "id": "99",
+      "name": "Ms. Frizzle",
+      "pairing_board_id": "brand new individual",
+      "type": "Person",
+    },
+    {
+      "id": "absent",
+      "name": "Permanent Vacation",
+      "pairing_board_id": "exempt",
+      "type": "Person",
+    },
+    {
+      "id": "floater_id",
+      "name": "floater_name_start",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+  ],
+  "roles": [
+    {
+      "id": "blue_role",
+      "name": "Blue Role",
+      "pairing_board_id": "blue_id",
+      "type": "Role",
+    },
+    {
+      "id": "ooo",
+      "name": "OOOROLE",
+      "pairing_board_id": "exempt",
+      "type": "Role",
     },
   ],
 }
@@ -78,15 +75,6 @@ exports[`rename_paring_board happy path 1`] = `
     "exempt": false,
     "id": "-1",
     "name": "floating_board_name",
-    "people": [
-      {
-        "id": "floater_id",
-        "name": "floater_name_start",
-        "pairing_board_id": "-1",
-        "type": "Person",
-      },
-    ],
-    "roles": [],
   },
   "id": "project_id",
   "name": "project_name",
@@ -95,50 +83,56 @@ exports[`rename_paring_board happy path 1`] = `
       "exempt": false,
       "id": "red_id",
       "name": "Frog Board",
-      "people": [
-        {
-          "id": "red_parrit_id",
-          "name": "red_parrit",
-          "pairing_board_id": "red_id",
-          "type": "Person",
-        },
-      ],
-      "roles": [],
     },
     {
       "exempt": false,
       "id": "blue_id",
       "name": "blue_start",
-      "people": [],
-      "roles": [
-        {
-          "id": "role1",
-          "name": "role",
-          "pairing_board_id": "blue_id",
-          "type": "Role",
-        },
-      ],
     },
     {
       "exempt": true,
       "id": "exempt",
       "name": "out_of_office",
-      "people": [
-        {
-          "id": "absent",
-          "name": "Permanent Vacation",
-          "pairing_board_id": "exempt",
-          "type": "Person",
-        },
-      ],
-      "roles": [
-        {
-          "id": "ooo",
-          "name": "OOOROLE",
-          "pairing_board_id": "exempt",
-          "type": "Role",
-        },
-      ],
+    },
+  ],
+  "people": [
+    {
+      "id": "red_parrit_id",
+      "name": "red_parrit",
+      "pairing_board_id": "red_id",
+      "type": "Person",
+    },
+    {
+      "id": "99",
+      "name": "Ms. Frizzle",
+      "pairing_board_id": "brand new individual",
+      "type": "Person",
+    },
+    {
+      "id": "absent",
+      "name": "Permanent Vacation",
+      "pairing_board_id": "exempt",
+      "type": "Person",
+    },
+    {
+      "id": "floater_id",
+      "name": "floater_name_start",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+  ],
+  "roles": [
+    {
+      "id": "blue_role",
+      "name": "Blue Role",
+      "pairing_board_id": "blue_id",
+      "type": "Role",
+    },
+    {
+      "id": "ooo",
+      "name": "OOOROLE",
+      "pairing_board_id": "exempt",
+      "type": "Role",
     },
   ],
 }

@@ -3,11 +3,34 @@
 exports[`initial state 1`] = `
 [
   {
+    "id": "red_parrit_id",
+    "name": "red_parrit",
+    "pairing_board_id": "red_id",
+    "type": "Person",
+  },
+  {
+    "id": "99",
+    "name": "Ms. Frizzle",
+    "pairing_board_id": "brand new individual",
+    "type": "Person",
+  },
+  {
+    "id": "absent",
+    "name": "Permanent Vacation",
+    "pairing_board_id": "exempt",
+    "type": "Person",
+  },
+  {
     "id": "floater_id",
     "name": "floater_name_start",
     "pairing_board_id": "-1",
     "type": "Person",
   },
+]
+`;
+
+exports[`initial state 2`] = `
+[
   {
     "id": "red_parrit_id",
     "name": "red_parrit",
@@ -15,9 +38,21 @@ exports[`initial state 1`] = `
     "type": "Person",
   },
   {
+    "id": "99",
+    "name": "Ms. Frizzle",
+    "pairing_board_id": "brand new individual",
+    "type": "Person",
+  },
+  {
     "id": "absent",
     "name": "Permanent Vacation",
     "pairing_board_id": "exempt",
+    "type": "Person",
+  },
+  {
+    "id": "floater_id",
+    "name": "floater_name_start",
+    "pairing_board_id": "-1",
     "type": "Person",
   },
 ]

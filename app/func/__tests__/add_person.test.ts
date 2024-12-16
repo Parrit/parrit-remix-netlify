@@ -1,13 +1,17 @@
-import { expect } from "@jest/globals";
+import { expect, fit } from "@jest/globals";
 import add_person from "../add_person";
 import { FRIZZLE, PB_RED, PROJECT_START } from "./common";
-import { can_a_pairing_be_made } from "../utils";
+import { can_a_pairing_be_made, floating_people } from "../utils";
 import { FLOATING_IDX } from "~/api/common/interfaces/parrit.interfaces";
 
 describe("add_person", () => {
   it("adding to a pb", () => {
     const result = add_person(FRIZZLE, PB_RED, PROJECT_START);
-    expect(result.pairingBoards[0].people).toStrictEqual([
+    expect(
+      result.people.filter(
+        ({ pairing_board_id }) => pairing_board_id === PB_RED.id
+      )
+    ).toStrictEqual([
       {
         id: "red_parrit_id",
         name: "red_parrit",
@@ -21,13 +25,14 @@ describe("add_person", () => {
         type: "Person",
       },
     ]);
-    expect(result.floating.people.length).toBe(
-      PROJECT_START.floating.people.length
+    expect(floating_people(result).length).toBe(
+      floating_people(PROJECT_START).length
     );
     expect(can_a_pairing_be_made(result)).toBe(false); // only one floater, all others are paired
   });
 
   it("add to floating", () => {
+    const start_count = floating_people(PROJECT_START).length;
     const result = add_person(
       FRIZZLE,
       {
@@ -39,7 +44,7 @@ describe("add_person", () => {
       },
       PROJECT_START
     );
-    expect(result.floating.people.length).toEqual(2);
-    expect(result).toMatchSnapshot();
+    expect(floating_people(result).length).toEqual(start_count + 1);
+    expect(floating_people(result)).toMatchSnapshot();
   });
 });

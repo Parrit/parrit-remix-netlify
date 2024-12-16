@@ -11,17 +11,15 @@ import {
 } from "~/api/common/interfaces/parrit.interfaces";
 
 export const can_a_pairing_be_made = (project: Project): boolean => {
-  const floatingPeople = project.people.filter(
-    (p) => p.pairing_board_id === FLOATING_IDX
-  );
+  const floatingPeople = floating_people(project);
   const atLeast2Floaters = floatingPeople.length >= 2;
   const atLeast1Floater = floatingPeople.length >= 1;
   const atLeast1EmptyBoard = get_empty_pairing_board(project) !== undefined;
   const atLeast1UnpairedSticker = unpaired_sticking_people(project).length >= 1;
-  return (
-    (atLeast1Floater && atLeast1UnpairedSticker) ||
-    (atLeast2Floaters && atLeast1EmptyBoard)
-  );
+  const rule1 = atLeast1Floater && atLeast1UnpairedSticker;
+  const rule2 = atLeast2Floaters && atLeast1EmptyBoard;
+  console.log("pairing rules evaluate", rule1, rule2);
+  return rule1 || rule2;
 };
 
 export const unpaired_sticking_people = (project: Project): Person[] => {
@@ -55,4 +53,9 @@ export const find_pairing_board_by_person = (
   project.pairingBoards.find(
     (pb) =>
       pb.id === project.people.find((p) => p.id === person.id)?.pairing_board_id
+  );
+
+export const floating_people = (proj: Project) =>
+  proj.people.filter(
+    ({ pairing_board_id }) => pairing_board_id === FLOATING_IDX
   );
