@@ -5,6 +5,8 @@ export interface Project {
   name: string;
   pairingBoards: PairingBoard[];
   floating: PairingBoard;
+  people: Person[]; // the new cannonical location for people
+  roles: Role[]; // the new cannonical location for roles
 }
 
 export const FLOATING_IDX = "-1";
@@ -13,8 +15,6 @@ export interface PairingBoard {
   id: string;
   name: string;
   exempt: boolean;
-  people: Person[];
-  roles: Role[];
 }
 
 export interface Person extends DragItem {

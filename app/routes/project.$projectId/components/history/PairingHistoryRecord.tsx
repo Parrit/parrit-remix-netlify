@@ -13,7 +13,7 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
   const formattedDate = DateTime.fromISO(
     pairingArrangement.pairingTime
   ).toFormat("MMMM d y, h:mm a");
-  const { deletePairingArrangement, findPerson } = useContext(ProjectContext);
+  const { deletePairingArrangement } = useContext(ProjectContext);
 
   return (
     <div className="pairing-history-record">

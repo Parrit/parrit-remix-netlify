@@ -2,7 +2,9 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { ProjectsRecord } from "src/xata";
 import {
   FLOATING_IDX,
+  Person,
   Project,
+  Role,
 } from "~/api/common/interfaces/parrit.interfaces";
 import parritXataClient from "~/api/parritXataClient";
 import { sessionStorage } from "~/services/session.server";
@@ -67,40 +69,47 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
 
   const hydratedPairingBoards =
     selectedPairingBoards.toSerializable() as unknown as SerializedPairingBoard[];
+  const peopleSet = new Set<Person>();
+  const roleSet = new Set<Role>();
 
-  const project: Project = {
-    id: hydrated.xata_id,
-    name: hydrated.name!,
-    pairingBoards: hydratedPairingBoards.map((obj) => ({
-      id: obj.xata_id,
-      name: obj.name,
-      exempt: obj.exempt === "true",
-      people: (obj.persons ?? { records: [] }).records.map((obj) => ({
+  const pairingBoards = hydratedPairingBoards.map((obj) => ({
+    id: obj.xata_id,
+    name: obj.name,
+    exempt: obj.exempt === "true",
+    people: (obj.persons ?? { records: [] }).records.map((obj) => {
+      const person: Person = {
         id: obj.xata_id,
         name: obj.name,
         type: "Person",
         pairing_board_id: obj.pairing_board_id,
-      })),
-      roles: (obj.roles ?? { records: [] }).records.map((obj) => ({
+      };
+      peopleSet.add(person);
+      return person;
+    }),
+    roles: (obj.roles ?? { records: [] }).records.map((obj) => {
+      const role = {
         id: obj.xata_id,
         name: obj.name,
         type: "Role",
         pairing_board_id: obj.pairing_board_id,
-      })),
-      type: DropType.PairingBoard,
-    })),
+      } as Role;
+      roleSet.add(role);
+      return role;
+    }),
+    type: DropType.PairingBoard,
+  }));
+
+  const project: Project = {
+    id: hydrated.xata_id,
+    name: hydrated.name!,
+    pairingBoards,
     floating: {
-      people: hydrated.persons.records.map((obj) => ({
-        id: obj.xata_id,
-        name: obj.name,
-        type: "Person",
-        pairing_board_id: FLOATING_IDX,
-      })),
       id: FLOATING_IDX,
       name: "Floating",
       exempt: false,
-      roles: [],
     },
+    people: Array.from(peopleSet),
+    roles: Array.from(roleSet),
   };
 
   return project;

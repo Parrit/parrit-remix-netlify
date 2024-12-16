@@ -122,10 +122,3 @@ interface SerializedPairingHistory {
   timestamp?: string;
   xata_id: string;
 }
-
-interface SerializedPerson {
-  xata_id: string;
-  pairing_board_id: string;
-  project_id?: string;
-  name: string;
-}

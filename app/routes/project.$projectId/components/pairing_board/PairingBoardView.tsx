@@ -10,8 +10,11 @@ import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
 export const PairingBoardView: React.FC = () => {
   const { pairingBoard } = useContext(PairingBoardContext);
-  const { name, exempt, roles } = pairingBoard;
-  const { movePerson, moveRole } = useContext(ProjectContext);
+  const { name, exempt } = pairingBoard;
+  const { movePerson, moveRole, project } = useContext(ProjectContext);
+  const roles = project.roles.filter(
+    (r) => r.pairing_board_id === pairingBoard.id
+  );
   const [isOver, setIsOver] = useState(false);
 
   const [editing, setEditing] = useState(false);

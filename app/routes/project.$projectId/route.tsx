@@ -1,4 +1,9 @@
-import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  ActionFunction,
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 
 import hydrateProjectServer from "./hydrateProject.server";
 import { App } from "./contexts/App";
@@ -28,6 +33,19 @@ export const links: LinksFunction = () => [
   stylesheet(pairingHistoryStyles),
   stylesheet(pairingHistoryRecordStyles),
 ];
+
+export async function action({ request }: ActionFunctionArgs) {
+  switch (request.method) {
+    case "PUT":
+      console.log("PUT Project", request);
+      break;
+    default:
+      console.error("no handler found for method", request.method);
+      throw new Response("This route doesn't know how to handle this method", {
+        status: 400,
+      });
+  }
+}
 
 export async function loader(args: LoaderFunctionArgs) {
   return await hydrateProjectServer(args);

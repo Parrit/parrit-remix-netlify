@@ -28,7 +28,8 @@ export interface IProjectContext {
   //   purpose: NameFormPurpose,
   //   event: React.FormEvent<HTMLFormElement>
   // ) => void;
-  findPerson: (id: string) => Person | undefined;
+  findPairingBoardByRole: (role: Role) => PairingBoard | undefined;
+  findPairingBoardByPerson: (person: Person) => PairingBoard | undefined;
   renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
@@ -91,7 +92,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     if (historyFetcher.data && historyFetcher.state === "idle") {
       setPairingArrangements(historyFetcher.data);
     }
-  });
+  }, [historyFetcher.data, historyFetcher.state]);
 
   //   const {
   //     getPairingHistory,
@@ -149,21 +150,22 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     proj: Project,
     position: PairingBoard
   ): Project => {
-    const copy = { ...proj };
-    const arr: Role[] = [];
-    const board = copy.pairingBoards.find((pb) => pb.id === position.id);
-    if (!board) {
-      throw new Error("AWK! Totally Broken!");
-    }
-    const index = copy.pairingBoards.indexOf(board);
-    position.roles.forEach((r) => {
-      if (r.id !== role.id) {
-        arr.push(r);
-      }
-    });
-    copy.pairingBoards[index] = { ...board, roles: arr };
+    throw new Error("not yet implemented");
+    // const copy = { ...proj };
+    // const arr: Role[] = [];
+    // const board = copy.pairingBoards.find((pb) => pb.id === position.id);
+    // if (!board) {
+    //   throw new Error("AWK! Totally Broken!");
+    // }
+    // const index = copy.pairingBoards.indexOf(board);
+    // position.roles.forEach((r) => {
+    //   if (r.id !== role.id) {
+    //     arr.push(r);
+    //   }
+    // });
+    // copy.pairingBoards[index] = { ...board, roles: arr };
 
-    return copy;
+    // return copy;
   };
 
   const addRole = (
@@ -171,17 +173,18 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     proj: Project,
     position: PairingBoard
   ): Project => {
-    const copy = { ...proj };
-    const board = copy.pairingBoards.find((pb) => pb.id === position.id);
-    if (!board) {
-      throw new Error("AWK! Totally Broken!");
-    }
-    const index = copy.pairingBoards.indexOf(board);
-    board.roles.push(role);
-    copy.pairingBoards[index] = board;
-    setProject(copy);
+    throw new Error("not yet implemented");
+    // const copy = { ...proj };
+    // const board = copy.pairingBoards.find((pb) => pb.id === position.id);
+    // if (!board) {
+    //   throw new Error("AWK! Totally Broken!");
+    // }
+    // const index = copy.pairingBoards.indexOf(board);
+    // board.roles.push(role);
+    // copy.pairingBoards[index] = board;
+    // setProject(copy);
 
-    return copy;
+    // return copy;
   };
 
   const createRole = (name: string, pairingBoard: PairingBoard) => {
@@ -224,24 +227,25 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
-    project.pairingBoards.find((pb) => pb.roles.find((r) => r.id === role.id));
+    project.pairingBoards.find(
+      (pb) =>
+        pb.id === project.roles.find((r) => r.id === role.id)?.pairing_board_id
+    );
 
-  const findPerson = (id: string) => {
-    let found = project.floating.people.find((p) => p.id === id);
-    if (found) {
-      return found;
-    }
-    project.pairingBoards.forEach((pb) => {
-      const match = pb.people.find((p) => p.id === id);
-      if (match) {
-        found = match;
-      }
-    });
-    return found;
-  };
+  const findPairingBoardByPerson = (person: Person): PairingBoard | undefined =>
+    project.pairingBoards.find(
+      (pb) =>
+        pb.id ===
+        project.people.find((p) => p.id === person.id)?.pairing_board_id
+    );
 
-  const movePerson = (person: Person, position: PairingBoard) =>
+  const movePerson = (person: Person, position: PairingBoard) => {
     setProject((oldVal) => move_person(oldVal, person, position));
+    return mutator.submit(
+      { ...person, project_id: project.id, pairing_board_id: position.id },
+      { method: "PUT", action: `/person/${person.id}` }
+    );
+  };
 
   const destroyPerson = (person: Person) => {
     const after = remove_person(person, project);
@@ -310,7 +314,8 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   const value = {
     // handleNameFormSubmit,
-    findPerson,
+    findPairingBoardByRole,
+    findPairingBoardByPerson,
     destroyPairingBoard,
     renamePairingBoard,
     movePerson,

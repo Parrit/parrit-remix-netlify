@@ -7,11 +7,15 @@ import {
   Project,
   Person,
   PairingBoard,
+  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 
 export const can_a_pairing_be_made = (project: Project): boolean => {
-  const atLeast2Floaters = project.floating.people.length >= 2;
-  const atLeast1Floater = project.floating.people.length >= 1;
+  const floatingPeople = project.people.filter(
+    (p) => p.pairing_board_id === FLOATING_IDX
+  );
+  const atLeast2Floaters = floatingPeople.length >= 2;
+  const atLeast1Floater = floatingPeople.length >= 1;
   const atLeast1EmptyBoard = get_empty_pairing_board(project) !== undefined;
   const atLeast1UnpairedSticker = unpaired_sticking_people(project).length >= 1;
   return (
@@ -20,30 +24,35 @@ export const can_a_pairing_be_made = (project: Project): boolean => {
   );
 };
 
-export const unpaired_sticking_people = (project: Project): Person[] =>
-  project.pairingBoards
-    .filter((board) => !board.exempt)
-    .filter((board) => board.people.length === 1)
-    .flatMap((board) => board.people);
+export const unpaired_sticking_people = (project: Project): Person[] => {
+  const boardIdToPerson: Record<string, Person | null> = {};
+
+  for (const person of project.people) {
+    if (boardIdToPerson[person.pairing_board_id] === undefined) {
+      boardIdToPerson[person.pairing_board_id] = person;
+    } else {
+      // mark as null to show that there has already been a colision
+      boardIdToPerson[person.pairing_board_id] = null;
+    }
+  }
+
+  return Object.values(boardIdToPerson).filter((val) => val !== null);
+};
 
 export const get_empty_pairing_board = (
   project: Project
 ): PairingBoard | undefined => {
-  return project.pairingBoards.find(
-    (pb) => pb.people.length === 0 && !pb.exempt
-  );
-};
-
-export const all_people_in_project = (project: Project): Person[] => {
-  const people: Person[] = [...project.floating.people];
-  project.pairingBoards.forEach((pb) =>
-    pb.people.forEach((person) => people.push(person))
-  );
-  return people;
+  const populatedBoardIds = new Set<string>();
+  project.people.forEach((p) => populatedBoardIds.add(p.pairing_board_id));
+  const list = Array.from(populatedBoardIds);
+  return project.pairingBoards.find((pb) => !list.includes(pb.id));
 };
 
 export const find_pairing_board_by_person = (
   project: Project,
   person: Person
 ): PairingBoard | undefined =>
-  project.pairingBoards.find((pb) => pb.people.find((p) => p.id === person.id));
+  project.pairingBoards.find(
+    (pb) =>
+      pb.id === project.people.find((p) => p.id === person.id)?.pairing_board_id
+  );
