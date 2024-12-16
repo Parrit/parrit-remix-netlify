@@ -86,12 +86,6 @@ exports[`remove_person removing from floating 1`] = `
       "type": "Person",
     },
     {
-      "id": "99",
-      "name": "Ms. Frizzle",
-      "pairing_board_id": "brand new individual",
-      "type": "Person",
-    },
-    {
       "id": "absent",
       "name": "Permanent Vacation",
       "pairing_board_id": "exempt",
@@ -142,12 +136,6 @@ exports[`remove_person removing from pb 1`] = `
     },
   ],
   "people": [
-    {
-      "id": "99",
-      "name": "Ms. Frizzle",
-      "pairing_board_id": "brand new individual",
-      "type": "Person",
-    },
     {
       "id": "absent",
       "name": "Permanent Vacation",

@@ -69,7 +69,14 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
 
   const hydratedPairingBoards =
     selectedPairingBoards.toSerializable() as unknown as SerializedPairingBoard[];
-  const peopleSet = new Set<Person>();
+  const peopleSet = new Set<Person>(
+    hydrated.persons.records.map((r) => ({
+      id: r.xata_id,
+      name: r.name,
+      pairing_board_id: r.pairing_board_id ?? FLOATING_IDX,
+      type: "Person",
+    }))
+  );
   const roleSet = new Set<Role>();
 
   const pairingBoards = hydratedPairingBoards.map((obj) => ({

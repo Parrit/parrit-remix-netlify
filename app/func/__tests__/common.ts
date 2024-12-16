@@ -6,6 +6,7 @@ import {
   Role,
 } from "~/api/common/interfaces/parrit.interfaces";
 
+// Not initially in the project
 export const FRIZZLE: Person = {
   id: "99",
   name: "Ms. Frizzle",
@@ -77,6 +78,6 @@ export const PROJECT_START: Project = {
   name: "project_name",
   pairingBoards: [PB_RED, PB_BLUE, OUT_OF_OFFICE],
   floating: FLOATING_PARRITS,
-  people: [RED_PERSON, FRIZZLE, OOO_Person, FLOATING_PERSON],
+  people: [RED_PERSON, OOO_Person, FLOATING_PERSON],
   roles: [BLUE_Role, OOO_Role],
 };

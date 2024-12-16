@@ -26,6 +26,15 @@ export const unpaired_sticking_people = (project: Project): Person[] => {
   const boardIdToPerson: Record<string, Person | null> = {};
 
   for (const person of project.people) {
+    const isFloating = person.pairing_board_id === FLOATING_IDX;
+    const board = project.pairingBoards.find(
+      (pb) => pb.id === person.pairing_board_id
+    );
+    const isExempt = board?.exempt;
+    if (isFloating || isExempt) {
+      // move to next iteration
+      continue;
+    }
     if (boardIdToPerson[person.pairing_board_id] === undefined) {
       boardIdToPerson[person.pairing_board_id] = person;
     } else {
@@ -34,7 +43,7 @@ export const unpaired_sticking_people = (project: Project): Person[] => {
     }
   }
 
-  return Object.values(boardIdToPerson).filter((val) => val !== null);
+  return Object.values(boardIdToPerson).filter((val) => !!val);
 };
 
 export const get_empty_pairing_board = (

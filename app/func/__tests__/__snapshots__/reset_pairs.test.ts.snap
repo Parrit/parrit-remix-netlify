@@ -34,12 +34,6 @@ exports[`reset_pairs moves everything from non-exempt PBs to floating 1`] = `
       "type": "Person",
     },
     {
-      "id": "99",
-      "name": "Ms. Frizzle",
-      "pairing_board_id": "brand new individual",
-      "type": "Person",
-    },
-    {
       "id": "absent",
       "name": "Permanent Vacation",
       "pairing_board_id": "exempt",

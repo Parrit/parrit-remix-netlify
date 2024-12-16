@@ -34,12 +34,6 @@ exports[`rename_paring_board does not rename the floating board 1`] = `
       "type": "Person",
     },
     {
-      "id": "99",
-      "name": "Ms. Frizzle",
-      "pairing_board_id": "brand new individual",
-      "type": "Person",
-    },
-    {
       "id": "absent",
       "name": "Permanent Vacation",
       "pairing_board_id": "exempt",
@@ -100,12 +94,6 @@ exports[`rename_paring_board happy path 1`] = `
       "id": "red_parrit_id",
       "name": "red_parrit",
       "pairing_board_id": "red_id",
-      "type": "Person",
-    },
-    {
-      "id": "99",
-      "name": "Ms. Frizzle",
-      "pairing_board_id": "brand new individual",
       "type": "Person",
     },
     {

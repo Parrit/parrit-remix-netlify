@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`move_person handles copies of objects 1`] = `
+exports[`recommend_pairs doesn't shove everyone onto the same board 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -28,21 +28,81 @@ exports[`move_person handles copies of objects 1`] = `
   ],
   "people": [
     {
+      "id": "red_parrit_id",
+      "name": "red_parrit",
+      "pairing_board_id": "red_id",
+      "type": "Person",
+    },
+    {
       "id": "absent",
       "name": "Permanent Vacation",
       "pairing_board_id": "exempt",
       "type": "Person",
     },
     {
-      "id": "floater_id",
-      "name": "floater_name_start",
+      "id": "floaty_2",
+      "name": "Floaty2",
       "pairing_board_id": "-1",
       "type": "Person",
     },
     {
-      "id": "red_parrit_id",
-      "name": "red_parrit",
+      "id": "floaty_3",
+      "name": "Floaty3",
       "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_4",
+      "name": "Floaty4",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_5",
+      "name": "Floaty5",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_6",
+      "name": "Floaty6",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_7",
+      "name": "Floaty7",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_8",
+      "name": "Floaty8",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_9",
+      "name": "Floaty9",
+      "pairing_board_id": "-1",
+      "type": "Person",
+    },
+    {
+      "id": "floater_id",
+      "name": "floater_name_start",
+      "pairing_board_id": "red_id",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_1",
+      "name": "Floaty1",
+      "pairing_board_id": "blue_id",
+      "type": "Person",
+    },
+    {
+      "id": "floaty_10",
+      "name": "Floaty10",
+      "pairing_board_id": "blue_id",
       "type": "Person",
     },
   ],
@@ -63,7 +123,7 @@ exports[`move_person handles copies of objects 1`] = `
 }
 `;
 
-exports[`move_person moving from floating to blue 1`] = `
+exports[`recommend_pairs recommends pairs 1`] = `
 {
   "floating": {
     "exempt": false,
@@ -105,70 +165,7 @@ exports[`move_person moving from floating to blue 1`] = `
     {
       "id": "floater_id",
       "name": "floater_name_start",
-      "pairing_board_id": "blue_id",
-      "type": "Person",
-    },
-  ],
-  "roles": [
-    {
-      "id": "blue_role",
-      "name": "Blue Role",
-      "pairing_board_id": "blue_id",
-      "type": "Role",
-    },
-    {
-      "id": "ooo",
-      "name": "OOOROLE",
-      "pairing_board_id": "exempt",
-      "type": "Role",
-    },
-  ],
-}
-`;
-
-exports[`move_person moving from red to floating 1`] = `
-{
-  "floating": {
-    "exempt": false,
-    "id": "-1",
-    "name": "floating_board_name",
-  },
-  "id": "project_id",
-  "name": "project_name",
-  "pairingBoards": [
-    {
-      "exempt": false,
-      "id": "red_id",
-      "name": "red_start",
-    },
-    {
-      "exempt": false,
-      "id": "blue_id",
-      "name": "blue_start",
-    },
-    {
-      "exempt": true,
-      "id": "exempt",
-      "name": "out_of_office",
-    },
-  ],
-  "people": [
-    {
-      "id": "absent",
-      "name": "Permanent Vacation",
-      "pairing_board_id": "exempt",
-      "type": "Person",
-    },
-    {
-      "id": "floater_id",
-      "name": "floater_name_start",
-      "pairing_board_id": "-1",
-      "type": "Person",
-    },
-    {
-      "id": "red_parrit_id",
-      "name": "red_parrit",
-      "pairing_board_id": "-1",
+      "pairing_board_id": "red_id",
       "type": "Person",
     },
   ],

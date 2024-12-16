@@ -2,11 +2,11 @@ import {
   Project,
   Person,
   PairingInstance,
-  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 import {
   can_a_pairing_be_made,
   find_pairing_board_by_person,
+  floating_people,
   get_empty_pairing_board,
   unpaired_sticking_people,
 } from "./utils";
@@ -74,9 +74,11 @@ export class ProjectHelper {
   }
 
   iterateMatch(project: Project) {
-    const floatingPerson = project.people.filter(
-      ({ id }) => id === FLOATING_IDX
-    )[0];
+    const floatingPerson = floating_people(project).at(0);
+    if (!floatingPerson) {
+      console.warn("attempting no floating people, a match cannot be made");
+      return project;
+    }
     let topPair = this.pairFor(floatingPerson, project);
     for (let i = 0; topPair != undefined; i++) {
       topPair = this.pairFor(floatingPerson, project, i);
@@ -105,15 +107,19 @@ export class ProjectHelper {
   }
 
   pairFor(
-    person: Person,
+    person?: Person,
     project: Project = this.project,
     nth: number = 0
   ): Person | undefined {
+    if (!person) {
+      console.warn("attempting to find pair for nonexistant person");
+      return undefined;
+    }
     // 0-indexed number from the last most recent paired
     const allAvailable = [
-      ...project.people,
+      ...floating_people(project),
       ...unpaired_sticking_people(project),
-    ];
+    ].filter((p) => !!p);
     const partnerDates = allAvailable
       .map((p) => {
         if (person.id === p.id) {
