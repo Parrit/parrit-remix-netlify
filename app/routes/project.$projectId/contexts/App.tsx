@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
 import classNames from "classnames";
 import { ProjectView } from "../ProjectView";
-import { PairingHistory } from "../components/history/PairingHistory";
 import { Footer } from "../components/ui/Footer";
 import { ProjectProvider } from "./ProjectContext";
 import { SystemAlert } from "../components/ui/SystemAlert";
 import { Header } from "../components/ui/Header";
+import { PairingHistory } from "../components/history/PairingHistory";
 export interface IAppContext {
   pairingHistoryOpen: boolean;
   setPairingHistoryOpen: (isOpen: boolean) => void;

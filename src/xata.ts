@@ -172,8 +172,8 @@ const tables = [
   {
     name: "PairingHistory",
     checkConstraints: {
-      PairingHistory_xata_id_length_xata_id: {
-        name: "PairingHistory_xata_id_length_xata_id",
+      pairing_history_restamped_xata_id_length_xata_id: {
+        name: "pairing_history_restamped_xata_id_length_xata_id",
         columns: ["xata_id"],
         definition: "CHECK ((length(xata_id) < 256))",
       },
@@ -189,8 +189,8 @@ const tables = [
     },
     primaryKey: [],
     uniqueConstraints: {
-      _pgroll_new_PairingHistory_xata_id_key: {
-        name: "_pgroll_new_PairingHistory_xata_id_key",
+      _pgroll_new_pairing_history_restamped_xata_id_key: {
+        name: "_pgroll_new_pairing_history_restamped_xata_id_key",
         columns: ["xata_id"],
       },
     },
@@ -214,7 +214,7 @@ const tables = [
       },
       {
         name: "timestamp",
-        type: "text",
+        type: "datetime",
         notNull: false,
         unique: false,
         defaultValue: null,
@@ -255,10 +255,10 @@ const tables = [
     ],
   },
   {
-    name: "PairingHistory_Persons",
+    name: "PairingHistory_People",
     checkConstraints: {
-      pairing_history_people_xata_id_length_xata_id: {
-        name: "pairing_history_people_xata_id_length_xata_id",
+      PairingHistory_People_xata_id_length_xata_id: {
+        name: "PairingHistory_People_xata_id_length_xata_id",
         columns: ["xata_id"],
         definition: "CHECK ((length(xata_id) < 256))",
       },
@@ -281,8 +281,8 @@ const tables = [
     },
     primaryKey: [],
     uniqueConstraints: {
-      _pgroll_new_pairing_history_people_xata_id_key: {
-        name: "_pgroll_new_pairing_history_people_xata_id_key",
+      _pgroll_new_PairingHistory_People_xata_id_key: {
+        name: "_pgroll_new_PairingHistory_People_xata_id_key",
         columns: ["xata_id"],
       },
     },
@@ -514,8 +514,8 @@ export type PairingBoardsRecord = PairingBoards & XataRecord;
 export type PairingHistory = InferredTypes["PairingHistory"];
 export type PairingHistoryRecord = PairingHistory & XataRecord;
 
-export type PairingHistoryPersons = InferredTypes["PairingHistory_Persons"];
-export type PairingHistoryPersonsRecord = PairingHistoryPersons & XataRecord;
+export type PairingHistoryPeople = InferredTypes["PairingHistory_People"];
+export type PairingHistoryPeopleRecord = PairingHistoryPeople & XataRecord;
 
 export type Persons = InferredTypes["Persons"];
 export type PersonsRecord = Persons & XataRecord;
@@ -527,7 +527,7 @@ export type DatabaseSchema = {
   PairingBoardRoles: PairingBoardRolesRecord;
   PairingBoards: PairingBoardsRecord;
   PairingHistory: PairingHistoryRecord;
-  PairingHistory_Persons: PairingHistoryPersonsRecord;
+  PairingHistory_People: PairingHistoryPeopleRecord;
   Persons: PersonsRecord;
   Projects: ProjectsRecord;
 };

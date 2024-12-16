@@ -8,8 +8,9 @@ import React, {
   useState,
 } from "react";
 import {
-  PairingArrangementDTO,
+  ProjectPairingSnapshot,
   PairingBoard,
+  PairingInstance,
   Person,
   Project,
   Role,
@@ -22,11 +23,12 @@ import { recommendPairs } from "~/func/recommend_pairs";
 
 export interface IProjectContext {
   project: Project;
-  pairingHistory: PairingArrangementDTO[];
+  pairingHistory: ProjectPairingSnapshot[];
   // handleNameFormSubmit: (
   //   purpose: NameFormPurpose,
   //   event: React.FormEvent<HTMLFormElement>
   // ) => void;
+  findPerson: (id: string) => Person | undefined;
   renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
@@ -52,9 +54,10 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const location = useLocation();
   const { setSystemAlert } = useContext(AppContext);
   const projectFetcher = useFetcher<Project>({ key: PROJECT_FETCHER });
+  const historyFetcher = useFetcher<ProjectPairingSnapshot[]>();
   const mutator = useFetcher({ key: PROJECT_MUTATOR });
   const [pairingArrangements, setPairingArrangements] = useState<
-    PairingArrangementDTO[]
+    ProjectPairingSnapshot[]
   >([]);
   const [project, setProject] = useState<Project>(
     projectFetcher.data as Project
@@ -74,6 +77,21 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       setProject(projectFetcher.data);
     }
   }, [projectFetcher.data, projectFetcher.state]);
+
+  useEffect(() => {
+    try {
+      historyFetcher.load(`${location.pathname}/history`);
+    } catch (err) {
+      console.error(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (historyFetcher.data && historyFetcher.state === "idle") {
+      setPairingArrangements(historyFetcher.data);
+    }
+  });
 
   //   const {
   //     getPairingHistory,
@@ -208,6 +226,20 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
     project.pairingBoards.find((pb) => pb.roles.find((r) => r.id === role.id));
 
+  const findPerson = (id: string) => {
+    let found = project.floating.people.find((p) => p.id === id);
+    if (found) {
+      return found;
+    }
+    project.pairingBoards.forEach((pb) => {
+      const match = pb.people.find((p) => p.id === id);
+      if (match) {
+        found = match;
+      }
+    });
+    return found;
+  };
+
   const movePerson = (person: Person, position: PairingBoard) =>
     setProject((oldVal) => move_person(oldVal, person, position));
 
@@ -227,7 +259,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   const getRecommendedPairs = () => {
     const pairingHistories = pairingArrangements.flatMap((arrangement) => {
-      return arrangement.pairingHistories.map((history) => {
+      return arrangement.pairingInstances.map((history) => {
         return {
           pairingBoardName: history.pairingBoardName,
           people: history.people,
@@ -278,6 +310,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   const value = {
     // handleNameFormSubmit,
+    findPerson,
     destroyPairingBoard,
     renamePairingBoard,
     movePerson,

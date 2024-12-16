@@ -6,7 +6,7 @@ import {
 } from "~/api/common/interfaces/parrit.interfaces";
 import parritXataClient from "~/api/parritXataClient";
 import { sessionStorage } from "~/services/session.server";
-import { DropType } from "../../../api/common/interfaces/dragdrop.interface";
+import { DropType } from "../../api/common/interfaces/dragdrop.interface";
 
 /**
  * Retrieves a project with its pairing boards and people.

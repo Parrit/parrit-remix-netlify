@@ -1,0 +1,19 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctbskksh3dlodtujl3dg",
+    "operations": [
+      {
+        "rename_table": {
+          "to": "PairingHistory",
+          "from": "pairing_history_restamped"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctbskksh3dlodtujl3dg",
+  "parent": "mig_ctbsgkvgc4coe1hvheig",
+  "schema": "public",
+  "startedAt": "2024-12-10T04:57:56.069993Z"
+}

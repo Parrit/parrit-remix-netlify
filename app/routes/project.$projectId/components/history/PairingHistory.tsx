@@ -47,7 +47,7 @@ export const PairingHistory: React.FC = () => {
               </div>
             </div>
           ) : (
-            <PairingHistoryRecordList pairingHistoryList={pairingHistory} />
+            <PairingHistoryRecordList />
           )}
         </div>
       </div>

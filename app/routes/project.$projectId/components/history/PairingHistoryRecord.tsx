@@ -1,19 +1,19 @@
 import { DateTime } from "luxon";
 import React, { useContext } from "react";
-import { PairingArrangementDTO } from "~/api/common/interfaces/parrit.interfaces";
+import { ProjectPairingSnapshot } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { TrashIcon } from "~/ui/TrashIcon";
 
 interface Props {
-  pairingArrangement: PairingArrangementDTO;
+  pairingArrangement: ProjectPairingSnapshot;
 }
 
 const PairingHistoryRecord: React.FC<Props> = (props) => {
   const { pairingArrangement } = props;
   const formattedDate = DateTime.fromISO(
     pairingArrangement.pairingTime
-  ).toFormat("MMMM Do YYYY, h:mm a");
-  const { deletePairingArrangement } = useContext(ProjectContext);
+  ).toFormat("MMMM d y, h:mm a");
+  const { deletePairingArrangement, findPerson } = useContext(ProjectContext);
 
   return (
     <div className="pairing-history-record">
@@ -21,16 +21,24 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
       <h3 className="pairing-time">{formattedDate}</h3>
 
       <div className="pairing-boards-with-people">
-        {pairingArrangement.pairingHistories.map((history) => {
+        {pairingArrangement.pairingInstances.map((instance) => {
           return (
             <div
-              key={pairingArrangement.id}
+              key={`instance-${instance.pairingTime}-${instance.pairingBoardName}`}
               className="pairing-board-with-people"
             >
               <div className="pairing-board-name">
-                {history.pairingBoardName}:
+                {instance.pairingBoardName}:
               </div>
-              {history.people.map((person) => {
+              {instance.people.map((person) => {
+                if (!person) {
+                  return (
+                    <span key="null_person">
+                      <span style={{ color: "#f3736c" }}>{`Flew away`}</span>
+                      <span className="person-names-plus-sign">+</span>
+                    </span>
+                  );
+                }
                 return (
                   <span key={person.id} className="person-name">
                     {person.name}

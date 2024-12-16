@@ -29,14 +29,14 @@ export interface Role extends DragItem {
   type: "Role";
 }
 
-export interface PairingArrangementDTO {
+export interface ProjectPairingSnapshot {
   id: string;
   pairingTime: string;
-  pairingHistories: PairingHistoryDTO[];
+  pairingInstances: PairingInstance[];
 }
 
-export interface PairingHistoryDTO {
-  pairingBoardName: string;
+export interface PairingInstance {
+  pairingBoardName: string | null;
   people: Person[];
   pairingTime: string;
 }

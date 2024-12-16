@@ -1,7 +1,7 @@
 import {
   Project,
   Person,
-  PairingHistoryDTO,
+  PairingInstance,
 } from "~/api/common/interfaces/parrit.interfaces";
 import {
   can_a_pairing_be_made,
@@ -11,7 +11,7 @@ import {
 } from "./utils";
 import move_person from "./move_person";
 
-export function recommendPairs(project: Project, history: PairingHistoryDTO[]) {
+export function recommendPairs(project: Project, history: PairingInstance[]) {
   const helper = new ProjectHelper(project, history);
   return helper.recommendedConfiguration();
 }
@@ -37,7 +37,7 @@ export class ProjectHelper {
   private project: Project;
   timetable: { [key: string]: Date };
 
-  constructor(project: Project, history: PairingHistoryDTO[]) {
+  constructor(project: Project, history: PairingInstance[]) {
     this.project = project;
     this.timetable = {};
     history.forEach((item) => {

@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctbs8t11o1emn54q4130",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "PairingHistory"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctbs8t11o1emn54q4130",
+  "parent": "mig_ctbs3rvgc4coe1hvhec0",
+  "schema": "public",
+  "startedAt": "2024-12-10T04:32:52.622657Z"
+}

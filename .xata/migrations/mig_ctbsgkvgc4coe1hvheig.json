@@ -1,0 +1,81 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctbsgkvgc4coe1hvheig",
+    "operations": [
+      {
+        "create_table": {
+          "name": "pairing_history_restamped",
+          "columns": [
+            {
+              "name": "pairing_board_name",
+              "type": "text",
+              "comment": "{}",
+              "nullable": true
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamptz",
+              "comment": "{}",
+              "nullable": true
+            },
+            {
+              "name": "project_id",
+              "type": "text",
+              "comment": "{\"xata.link\":\"Projects\"}",
+              "nullable": true,
+              "references": {
+                "name": "project_id_link",
+                "table": "Projects",
+                "column": "xata_id",
+                "on_delete": "SET NULL"
+              }
+            },
+            {
+              "name": "xata_id",
+              "type": "text",
+              "check": {
+                "name": "pairing_history_restamped_xata_id_length_xata_id",
+                "constraint": "length(\"xata_id\") < 256"
+              },
+              "unique": true,
+              "default": "'rec_' || xata_private.xid()"
+            },
+            {
+              "name": "xata_version",
+              "type": "integer",
+              "default": "0"
+            },
+            {
+              "name": "xata_createdat",
+              "type": "timestamptz",
+              "default": "now()"
+            },
+            {
+              "name": "xata_updatedat",
+              "type": "timestamptz",
+              "default": "now()"
+            }
+          ]
+        }
+      },
+      {
+        "sql": {
+          "up": "ALTER TABLE \"pairing_history_restamped\" REPLICA IDENTITY FULL",
+          "onComplete": true
+        }
+      },
+      {
+        "sql": {
+          "up": "CREATE TRIGGER xata_maintain_metadata_trigger_pgroll\n  BEFORE INSERT OR UPDATE\n  ON \"pairing_history_restamped\"\n  FOR EACH ROW\n  EXECUTE FUNCTION xata_private.maintain_metadata_trigger_pgroll()",
+          "onComplete": true
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctbsgkvgc4coe1hvheig",
+  "parent": "mig_ctbs9ap1o1emn54q4140",
+  "schema": "public",
+  "startedAt": "2024-12-10T04:49:24.212818Z"
+}
