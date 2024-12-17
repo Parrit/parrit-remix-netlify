@@ -37,7 +37,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
     },
     {
       name: "<-Persons.project_id",
-      columns: ["name"],
+      columns: ["name", "pairing_board_id"],
       as: "persons",
     },
   ])
@@ -69,38 +69,53 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
 
   const hydratedPairingBoards =
     selectedPairingBoards.toSerializable() as unknown as SerializedPairingBoard[];
-  const peopleSet = new Set<Person>(
-    hydrated.persons.records.map((r) => ({
-      id: r.xata_id,
-      name: r.name,
-      pairing_board_id: r.pairing_board_id ?? FLOATING_IDX,
-      type: "Person",
-    }))
+  const peopleMap: Map<string, Person> = hydrated.persons.records.reduce(
+    (map, obj) => {
+      map.set(obj.xata_id, {
+        id: obj.xata_id,
+        name: obj.name,
+        type: "Person",
+        pairing_board_id: obj.pairing_board_id ?? FLOATING_IDX,
+      });
+      return map;
+    },
+    new Map<string, Person>()
   );
-  const roleSet = new Set<Role>();
+
+  const roleMap = new Map<string, Role>(); // no "floating" roles
 
   const pairingBoards = hydratedPairingBoards.map((obj) => ({
     id: obj.xata_id,
     name: obj.name,
     exempt: obj.exempt === "true",
     people: (obj.persons ?? { records: [] }).records.map((obj) => {
+      const existing = peopleMap.get(obj.xata_id);
+      if (existing) {
+        return existing;
+      }
       const person: Person = {
         id: obj.xata_id,
         name: obj.name,
         type: "Person",
         pairing_board_id: obj.pairing_board_id,
       };
-      peopleSet.add(person);
+
+      peopleMap.set(person.id, person);
       return person;
     }),
     roles: (obj.roles ?? { records: [] }).records.map((obj) => {
-      const role = {
+      const existing = roleMap.get(obj.xata_id);
+      if (existing) {
+        return existing;
+      }
+      const role: Role = {
         id: obj.xata_id,
         name: obj.name,
         type: "Role",
         pairing_board_id: obj.pairing_board_id,
-      } as Role;
-      roleSet.add(role);
+      };
+
+      roleMap.set(role.id, role);
       return role;
     }),
     type: DropType.PairingBoard,
@@ -115,8 +130,8 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
       name: "Floating",
       exempt: false,
     },
-    people: Array.from(peopleSet),
-    roles: Array.from(roleSet),
+    people: Array.from(peopleMap.values()),
+    roles: Array.from(roleMap.values()),
   };
 
   return project;
@@ -130,6 +145,13 @@ interface SerializedProject {
     records: { xata_id: string }[];
   };
   persons: {
+    records: {
+      xata_id: string;
+      name: string;
+      pairing_board_id: string;
+    }[];
+  };
+  roles: {
     records: {
       xata_id: string;
       name: string;

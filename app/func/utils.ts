@@ -18,7 +18,6 @@ export const can_a_pairing_be_made = (project: Project): boolean => {
   const atLeast1UnpairedSticker = unpaired_sticking_people(project).length >= 1;
   const rule1 = atLeast1Floater && atLeast1UnpairedSticker;
   const rule2 = atLeast2Floaters && atLeast1EmptyBoard;
-  console.log("pairing rules evaluate", rule1, rule2);
   return rule1 || rule2;
 };
 

@@ -11,12 +11,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         console.error("No id found in", request.url);
         throw new Response("No person id found in URL", { status: 400 });
       }
+      console.log("DELETE Person", id);
       await xata.db.Persons.delete(id);
       return null;
     }
     case "PUT": {
       const formData = await request.formData();
-      console.log("formData", formData);
       const xata_id = formData.get("id") as string;
 
       if (!xata_id) {

@@ -28,9 +28,11 @@ export const TrashBin: React.FC = () => {
       case "Person":
         console.log("about to call destroy person");
         destroyPerson(data as Person);
+        ev.stopPropagation();
         return;
       case "Role":
         destroyRole(data as Role);
+        ev.stopPropagation();
         return;
     }
   };
