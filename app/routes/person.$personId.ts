@@ -1,5 +1,4 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { PersonsRecord } from "src/xata";
 import parritXataClient from "~/api/parritXataClient";
 
 export const action = async ({ request }: ActionFunctionArgs) => {

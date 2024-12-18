@@ -31,11 +31,13 @@ export interface Role extends DragItem {
 
 export interface ProjectPairingSnapshot {
   id: string;
+  projectId: string;
   pairingTime: string;
   pairingInstances: PairingInstance[];
 }
 
 export interface PairingInstance {
+  projectId: string;
   pairingBoardName: string | null;
   people: Person[];
   pairingTime: string;

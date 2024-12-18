@@ -1,12 +1,25 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import parritXataClient from "~/api/parritXataClient";
 import {
   FLOATING_IDX,
   Person,
   ProjectPairingSnapshot,
 } from "~/api/common/interfaces/parrit.interfaces";
+import postHistory from "./post.server";
 
 type Timestamp = string;
+
+export async function action({ request }: ActionFunctionArgs) {
+  const json = await request.json();
+
+  switch (request.method) {
+    case "POST": {
+      return postHistory(json);
+    }
+    default:
+      throw new Error(`Unhandled method ${request.method}`);
+  }
+}
 
 export async function loader(
   args: LoaderFunctionArgs
@@ -91,6 +104,7 @@ export async function loader(
         pairingBoardName: serialized.pairing_board_name,
         people: [],
         pairingTime,
+        projectId: serialized.project_id,
       });
     }
 
@@ -118,6 +132,7 @@ function get30DaysAgo(): Date {
 interface SerializedPairingHistory {
   history_persons: { records: { person_id: string }[] };
   pairing_board_name: string;
+  project_id: string;
   xata_createdat: string;
   timestamp?: string;
   xata_id: string;

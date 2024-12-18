@@ -2,7 +2,6 @@
 import React, {
   createContext,
   ReactNode,
-  Suspense,
   useContext,
   useEffect,
   useState,
@@ -10,7 +9,6 @@ import React, {
 import {
   ProjectPairingSnapshot,
   PairingBoard,
-  PairingInstance,
   Person,
   Project,
   Role,
@@ -20,6 +18,9 @@ import { move_person, remove_person } from "~/func";
 import reset_pairs from "~/func/reset_pairs";
 import { useFetcher, useLocation } from "@remix-run/react";
 import { recommendPairs } from "~/func/recommend_pairs";
+import { DateTime } from "luxon";
+import { pairing_instances } from "~/func/utils";
+import { HistoryPOST } from "~/routes/project.$projectId.history/post.server";
 
 export interface IProjectContext {
   project: Project;
@@ -268,6 +269,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
           pairingBoardName: history.pairingBoardName,
           people: history.people,
           pairingTime: history.pairingTime,
+          projectId: project.id,
         };
       });
     });
@@ -276,13 +278,21 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const savePairing = () => {
-    console.error("savePairing not yet implemented");
-    // postProjectPairing(project.id).then((newPairingRecords) => {
-    //   setPairingArrangements(() => {
-    //     setSystemAlert("Hello. We just recorded your pairs.");
-    //     return newPairingRecords;
-    //   });
-    // });
+    const pairingTime = DateTime.now().toISO();
+
+    const body: HistoryPOST = {
+      snapshot: {
+        pairingTime,
+        id: "",
+        pairingInstances: pairing_instances(project, pairingTime),
+        projectId: project.id,
+      },
+    };
+    return mutator.submit(body, {
+      method: "POST",
+      action: `/project/${project.id}/history`,
+      encType: "application/json",
+    });
   };
 
   const renamePairingBoard = (

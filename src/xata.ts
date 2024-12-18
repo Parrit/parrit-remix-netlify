@@ -255,7 +255,7 @@ const tables = [
     ],
   },
   {
-    name: "PairingHistory_People",
+    name: "PairingHistory_Persons",
     checkConstraints: {
       PairingHistory_People_xata_id_length_xata_id: {
         name: "PairingHistory_People_xata_id_length_xata_id",
@@ -514,8 +514,8 @@ export type PairingBoardsRecord = PairingBoards & XataRecord;
 export type PairingHistory = InferredTypes["PairingHistory"];
 export type PairingHistoryRecord = PairingHistory & XataRecord;
 
-export type PairingHistoryPeople = InferredTypes["PairingHistory_People"];
-export type PairingHistoryPeopleRecord = PairingHistoryPeople & XataRecord;
+export type PairingHistoryPersons = InferredTypes["PairingHistory_Persons"];
+export type PairingHistoryPersonsRecord = PairingHistoryPersons & XataRecord;
 
 export type Persons = InferredTypes["Persons"];
 export type PersonsRecord = Persons & XataRecord;
@@ -527,7 +527,7 @@ export type DatabaseSchema = {
   PairingBoardRoles: PairingBoardRolesRecord;
   PairingBoards: PairingBoardsRecord;
   PairingHistory: PairingHistoryRecord;
-  PairingHistory_People: PairingHistoryPeopleRecord;
+  PairingHistory_Persons: PairingHistoryPersonsRecord;
   Persons: PersonsRecord;
   Projects: ProjectsRecord;
 };

@@ -2,12 +2,12 @@
  * These files are tested via the functionality of other tests.
  * That's what makes them utils and not their own functions
  */
-
 import {
   Project,
   Person,
   PairingBoard,
   FLOATING_IDX,
+  PairingInstance,
 } from "~/api/common/interfaces/parrit.interfaces";
 
 export const can_a_pairing_be_made = (project: Project): boolean => {
@@ -67,3 +67,41 @@ export const floating_people = (proj: Project) =>
   proj.people.filter(
     ({ pairing_board_id }) => pairing_board_id === FLOATING_IDX
   );
+
+const pairs_of_people = (proj: Project) =>
+  proj.people.reduce((acc, item) => {
+    const map = acc.get(item.pairing_board_id) ?? {};
+    map[item.id] = item;
+    acc.set(item.pairing_board_id, map);
+    return acc;
+  }, new Map<string, Record<string, Person>>());
+
+export const pairing_instances = (
+  project: Project,
+  pairingTime: string
+): PairingInstance[] => {
+  const map = pairs_of_people(project);
+  const instances: PairingInstance[] = [];
+
+  for (const [key, value] of map) {
+    if (key === FLOATING_IDX) {
+      // don't consider floating to be "PAIRED"
+      continue;
+    }
+    const pb = project.pairingBoards.find((i) => i.id === key);
+    if (!pb) {
+      console.warn("couldn't find a pairing board with id", key);
+      continue;
+    }
+
+    const instance: PairingInstance = {
+      pairingBoardName: pb.name,
+      people: Object.values(value),
+      pairingTime,
+      projectId: project.id,
+    };
+    instances.push(instance);
+  }
+
+  return instances;
+};
