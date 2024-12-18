@@ -20,7 +20,7 @@ import { useFetcher, useLocation } from "@remix-run/react";
 import { recommendPairs } from "~/func/recommend_pairs";
 import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
-import { HistoryPOST } from "~/routes/project.$projectId.history/post.server";
+import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
 
 export interface IProjectContext {
   project: Project;
