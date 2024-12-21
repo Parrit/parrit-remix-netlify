@@ -244,7 +244,11 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     setProject((oldVal) => move_person(oldVal, person, position));
     return mutator.submit(
       { ...person, project_id: project.id, pairing_board_id: position.id },
-      { method: "PUT", action: `/person/${person.id}` }
+      {
+        method: "PUT",
+        action: `/person/${person.id}`,
+        encType: "application/json",
+      }
     );
   };
 

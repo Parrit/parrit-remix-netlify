@@ -1,82 +1,84 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import classNames from "classnames";
 import { WorkspaceContext } from "../../contexts/Workspace";
 import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
+import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
 interface Props {
-  name: string;
-  exempt: boolean;
-  editMode: boolean;
-  editErrorMessage?: string;
-  renamePairingBoard: (name: string) => void;
   deletePairingBoard: VoidFunction;
-  setEditing: (editing: boolean) => void;
   pairingBoard: PairingBoard;
 }
 
 export const PairingBoardHeader: React.FC<Props> = (props) => {
-  const { name, exempt, editMode, editErrorMessage } = props;
   const { setNewRoleOpen } = useContext(WorkspaceContext);
+  const { pairingBoard, renamePairingBoard } = useContext(PairingBoardContext);
+  const { name, exempt } = pairingBoard;
+  const [editing, setEditing] = useState(false);
+  const [editingError, setEditingError] = useState<string>();
+  const [nameVal, setNameVal] = useState<string>(name);
 
-  let pairingBoardNameSection;
+  const handleSubmit = () => {
+    setEditing(false);
+    if (!nameVal) {
+      setEditingError("Name is required");
+      setNameVal(name);
+      return;
+    }
+
+    renamePairingBoard(nameVal);
+  };
 
   const onKeyDownHandler = (event: any) => {
-    if (event.key === "Enter") {
-      renamePairingBoard(event);
+    if (editing) {
+      if (event.key === "Enter") {
+        handleSubmit();
+      }
     }
   };
 
-  const renamePairingBoard = (event: any) => {
-    props.renamePairingBoard(event.target.value);
-  };
-
-  if (editMode) {
-    const nameInputClasses = classNames({
-      "editing-pairing-board-name": true,
-      error: editErrorMessage != undefined,
-    });
-
-    pairingBoardNameSection = (
-      <div className="pairing-board-name-wrapper">
-        <input
-          aria-label="pairing board name"
-          className={nameInputClasses}
-          autoFocus
-          defaultValue={name}
-          onBlur={renamePairingBoard}
-          onKeyDown={onKeyDownHandler}
-        />
-        <div className="error-message" aria-label="pairing board name error">
-          {editErrorMessage}
-        </div>
-      </div>
-    );
-  } else {
-    pairingBoardNameSection = (
-      <div
-        className="pairing-board-name-wrapper"
-        onClick={() => props.setEditing(true)}
-      >
-        <h3 aria-label="pairing board name" className="pairing-board-name">
-          {name}
-        </h3>
-        <div
-          aria-label="rename pairing board"
-          className="rename-pairing-board"
-        />
-        <div
-          aria-label="add role to pairing board"
-          className="add-role-to-pairing-board"
-          onClick={() => setNewRoleOpen(true, props.pairingBoard)}
-        />
-      </div>
-    );
-  }
+  const nameInputClasses = classNames({
+    "editing-pairing-board-name": true,
+    error: editingError != undefined,
+  });
 
   return (
     <div className="pairing-board-header">
-      {pairingBoardNameSection}
+      {editing ? (
+        <div className="pairing-board-name-wrapper">
+          <input
+            name="pairing_board_name"
+            aria-label="pairing board name"
+            value={nameVal}
+            onChange={(e) => setNameVal(e.target.value)}
+            onBlur={handleSubmit}
+            className={nameInputClasses}
+            autoFocus
+            onKeyDown={onKeyDownHandler}
+          />
+          <div className="error-message" aria-label="pairing board name error">
+            {editingError}
+          </div>
+        </div>
+      ) : (
+        <div
+          className="pairing-board-name-wrapper"
+          onClick={() => setEditing(true)}
+        >
+          <h3 aria-label="pairing board name" className="pairing-board-name">
+            {name}
+          </h3>
+          <div
+            aria-label="rename pairing board"
+            className="rename-pairing-board"
+          />
+          <div
+            aria-label="add role to pairing board"
+            className="add-role-to-pairing-board"
+            onClick={() => setNewRoleOpen(true, props.pairingBoard)}
+          />
+        </div>
+      )}
 
       {!exempt && (
         <div

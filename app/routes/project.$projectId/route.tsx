@@ -1,5 +1,4 @@
 import {
-  ActionFunction,
   ActionFunctionArgs,
   LinksFunction,
   LoaderFunctionArgs,
@@ -36,9 +35,6 @@ export const links: LinksFunction = () => [
 
 export async function action({ request }: ActionFunctionArgs) {
   switch (request.method) {
-    case "PUT":
-      console.log("PUT Project", request);
-      break;
     default:
       console.error("no handler found for method", request.method);
       throw new Response("This route doesn't know how to handle this method", {

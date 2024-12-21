@@ -1,9 +1,16 @@
-import React, { ReactNode, useContext, useMemo } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   FLOATING_IDX,
   PairingBoard,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "./ProjectContext";
+import { useFetcher } from "react-router-dom";
 
 export interface Props {
   pairingBoardId: string;
@@ -12,6 +19,7 @@ export interface Props {
 
 export interface IPairingBoardContext {
   pairingBoard: PairingBoard;
+  renamePairingBoard: (name: string) => void;
 }
 
 export const PairingBoardContext = React.createContext(
@@ -20,7 +28,7 @@ export const PairingBoardContext = React.createContext(
 
 export const PairingBoardProvider: React.FC<Props> = (props) => {
   const { project } = useContext(ProjectContext);
-  const pairingBoard = useMemo(
+  const _pairingBoard = useMemo(
     () =>
       props.pairingBoardId === FLOATING_IDX
         ? project.floating
@@ -28,13 +36,44 @@ export const PairingBoardProvider: React.FC<Props> = (props) => {
     [project.floating, project.pairingBoards, props.pairingBoardId]
   );
 
+  const [pairingBoard, setPairingBoard] = useState(_pairingBoard);
+  const pbFetcher = useFetcher<PairingBoard>();
+  const mutator = useFetcher();
+
+  useEffect(() => {
+    try {
+      pbFetcher.load(`/pairing_board/${props.pairingBoardId}`);
+    } catch (error) {
+      console.error("Failed to load pairing board", error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (pbFetcher.data && pbFetcher.state === "idle") {
+      setPairingBoard(pbFetcher.data);
+    }
+  }, [pbFetcher.data, pbFetcher.state]);
+
+  const renamePairingBoard = async (nameVal: string) => {
+    setPairingBoard((oldVal) => ({ ...oldVal!, name: nameVal }));
+    mutator.submit(
+      { name: nameVal },
+      {
+        method: "PATCH",
+        action: `/pairing_board/${pairingBoard?.id}`,
+        encType: "application/json",
+      }
+    );
+  };
+
   if (!pairingBoard) {
     throw new Error(
       "Project did not contain pairing board with id " + props.pairingBoardId
     );
   }
   return (
-    <PairingBoardContext.Provider value={{ pairingBoard }}>
+    <PairingBoardContext.Provider value={{ pairingBoard, renamePairingBoard }}>
       {props.children}
     </PairingBoardContext.Provider>
   );

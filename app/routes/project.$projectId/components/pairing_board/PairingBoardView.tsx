@@ -10,18 +10,14 @@ import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
 export const PairingBoardView: React.FC = () => {
   const { pairingBoard } = useContext(PairingBoardContext);
-  const { name, exempt } = pairingBoard;
+  const { exempt } = pairingBoard;
   const { movePerson, moveRole, project } = useContext(ProjectContext);
   const roles = project.roles.filter(
     (r) => r.pairing_board_id === pairingBoard.id
   );
   const [isOver, setIsOver] = useState(false);
 
-  const [editing, setEditing] = useState(false);
-  const [editingError, setEditingError] = useState<string>();
-
-  const { destroyPairingBoard, renamePairingBoard } =
-    useContext(ProjectContext);
+  const { destroyPairingBoard } = useContext(ProjectContext);
 
   const handleDragOver: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
@@ -49,18 +45,9 @@ export const PairingBoardView: React.FC = () => {
 
   const pairingBoardClasses = classNames({
     "pairing-board": true,
-    editing: editing,
     exempt: exempt,
     "drop-target": isOver,
   });
-
-  const handleRename = async (name: string) => {
-    setEditing(false);
-    renamePairingBoard(name, pairingBoard.id).catch((error) => {
-      console.error("rename error", error);
-      setEditingError("rename failed");
-    });
-  };
 
   return (
     <div
@@ -70,13 +57,7 @@ export const PairingBoardView: React.FC = () => {
       className={pairingBoardClasses}
     >
       <PairingBoardHeader
-        name={name}
-        exempt={exempt}
-        editMode={editing}
-        editErrorMessage={editingError}
-        renamePairingBoard={handleRename}
         deletePairingBoard={() => destroyPairingBoard(pairingBoard)}
-        setEditing={setEditing}
         pairingBoard={pairingBoard}
       />
 
