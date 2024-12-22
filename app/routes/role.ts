@@ -10,7 +10,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const form = await request.formData();
       const pairing_board_id = form.get("pairing_board_id")?.toString();
       const name = form.get("name")?.toString();
-      console.log("POST /pairing_board", { pairing_board_id, name });
+      console.log("POST /role", { pairing_board_id, name });
 
       if (!name || name.length === 0) {
         // TODO: This is an anti-pattern

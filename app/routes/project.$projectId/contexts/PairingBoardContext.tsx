@@ -20,8 +20,8 @@ export interface Props {
 
 export interface IPairingBoardContext {
   pairingBoard: PairingBoard;
-  renamePairingBoard: (name: string) => void;
-  deletePairingBoard: () => void;
+  renameObj: (name: string) => void;
+  deleteObj: () => void;
   roles: Role[];
 }
 
@@ -30,7 +30,7 @@ export const PairingBoardContext = React.createContext(
 );
 
 export const PairingBoardProvider: React.FC<Props> = (props) => {
-  const { project, optimisticDeletePairingBoard } = useContext(ProjectContext);
+  const { project, deletePairingBoard } = useContext(ProjectContext);
   const _pairingBoard = useMemo(
     () =>
       props.pairingBoardId === FLOATING_IDX
@@ -61,8 +61,7 @@ export const PairingBoardProvider: React.FC<Props> = (props) => {
     }
   }, [pbFetcher.data, pbFetcher.state]);
 
-  const renamePairingBoard = (nameVal: string) => {
-    setPairingBoard((oldVal) => ({ ...oldVal!, name: nameVal }));
+  const renameObj = (nameVal: string) => {
     mutator.submit(
       { name: nameVal },
       {
@@ -71,17 +70,11 @@ export const PairingBoardProvider: React.FC<Props> = (props) => {
         encType: "application/json",
       }
     );
+    setPairingBoard((oldVal) => ({ ...oldVal!, name: nameVal }));
   };
 
-  const deletePairingBoard = () => {
-    optimisticDeletePairingBoard(pairingBoard);
-    mutator.submit(
-      {},
-      {
-        method: "DELETE",
-        action: `/pairing_board/${pairingBoard?.id}`,
-      }
-    );
+  const deleteObj = () => {
+    deletePairingBoard(pairingBoard!.id);
   };
 
   if (!pairingBoard) {
@@ -91,7 +84,7 @@ export const PairingBoardProvider: React.FC<Props> = (props) => {
   }
   return (
     <PairingBoardContext.Provider
-      value={{ pairingBoard, renamePairingBoard, deletePairingBoard, roles }}
+      value={{ pairingBoard, renameObj, deleteObj, roles }}
     >
       {props.children}
     </PairingBoardContext.Provider>

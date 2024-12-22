@@ -12,6 +12,7 @@ import {
   Person,
   Project,
   Role,
+  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
 import { move_person, remove_person } from "~/func";
@@ -21,6 +22,7 @@ import { recommendPairs } from "~/func/recommend_pairs";
 import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
+import { set } from "node_modules/cypress/types/lodash";
 
 export interface IProjectContext {
   project: Project;
@@ -31,11 +33,11 @@ export interface IProjectContext {
   moveRole: (role: Role, position: PairingBoard) => void;
   destroyPerson: (person: Person) => void;
   destroyRole: (role: Role) => void;
-  optimisticDeletePairingBoard: (pairingBoard?: PairingBoard) => void;
   resetPairs: () => void;
   getRecommendedPairs: () => void;
   savePairing: () => void;
   deletePairingArrangement: (pairingArrangementId: string) => void;
+  deletePairingBoard: (pairingBoardId: string) => void;
 }
 
 export const ProjectContext = createContext({} as IProjectContext);
@@ -90,20 +92,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     }
   }, [historyFetcher.data, historyFetcher.state]);
 
-  const optimisticDeletePairingBoard = (pairingBoard?: PairingBoard) => {
-    if (!pairingBoard) {
-      return;
-    }
-    // optimistic update
-    setProject((oldVal) => {
-      const copy = { ...oldVal };
-      copy.pairingBoards = copy.pairingBoards.filter(
-        (pb) => pb.id !== pairingBoard.id
-      );
-      return copy;
-    });
-  };
-
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
     project.pairingBoards.find(
       (pb) =>
@@ -124,7 +112,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       {
         method: "PUT",
         action: `/person/${person.id}`,
-        encType: "application/json",
       }
     );
   };
@@ -135,6 +122,31 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     copy.roles.splice(roleIndex, 1);
     setProject(copy);
     mutator.submit({}, { method: "DELETE", action: `/role/${role.id}` });
+  };
+
+  const deletePairingBoard = (pairingBoardId: string) => {
+    // optimistic update
+    const copy = { ...project };
+    copy.pairingBoards = copy.pairingBoards.filter(
+      (pb) => pb.id !== pairingBoardId
+    );
+    // call movePerson to move all people on the pairing board to the floating board
+    copy.people
+      .filter((p) => p.pairing_board_id === pairingBoardId)
+      .forEach((p) => {
+        movePerson(p, copy.floating);
+      });
+    // delete all of the roles associated with the pairing board
+    copy.roles
+      .filter((r) => r.pairing_board_id === pairingBoardId)
+      .forEach((r) => {
+        destroyRole(r);
+      });
+    setProject(copy);
+    mutator.submit(
+      {},
+      { method: "DELETE", action: `/pairing_board/${pairingBoardId}` }
+    );
   };
 
   const moveRole = (role: Role, position: PairingBoard) => {
@@ -214,11 +226,11 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const value = {
     findPairingBoardByRole,
     findPairingBoardByPerson,
-    optimisticDeletePairingBoard,
     movePerson,
     moveRole,
     destroyPerson,
     destroyRole,
+    deletePairingBoard,
     resetPairs,
     getRecommendedPairs,
     savePairing,

@@ -6,7 +6,7 @@ import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
 export const PairingBoardHeader: React.FC = () => {
   const { setNewRoleOpen } = useContext(WorkspaceContext);
-  const { pairingBoard, renamePairingBoard, deletePairingBoard } =
+  const { pairingBoard, renameObj, deleteObj } =
     useContext(PairingBoardContext);
   const { name, exempt } = pairingBoard;
   const [editing, setEditing] = useState(false);
@@ -21,7 +21,7 @@ export const PairingBoardHeader: React.FC = () => {
       return;
     }
 
-    renamePairingBoard(nameVal);
+    renameObj(nameVal);
   };
 
   const onKeyDownHandler = (event: any) => {
@@ -83,7 +83,7 @@ export const PairingBoardHeader: React.FC = () => {
         <div
           aria-label="delete pairing board"
           className="delete-pairing-board"
-          onClick={() => deletePairingBoard()}
+          onClick={() => deleteObj()}
         />
       )}
     </div>
