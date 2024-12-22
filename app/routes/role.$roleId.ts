@@ -12,7 +12,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (request.method) {
     case "PATCH": {
       const json = await request.json();
-      return xata.db.PairingBoardRoles.update(id, { name: json.name });
+      console.log("PATCH", json);
+      return xata.db.PairingBoardRoles.update(id, {
+        name: json.name,
+        pairing_board_id: json.pairing_board_id,
+      });
     }
     case "DELETE": {
       return xata.db.PairingBoardRoles.delete(id);

@@ -30,7 +30,7 @@ export interface IProjectContext {
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
   destroyPerson: (person: Person) => void;
-  destroyRole: (role: Role) => Promise<any>;
+  destroyRole: (role: Role) => void;
   optimisticDeletePairingBoard: (pairingBoard?: PairingBoard) => void;
   resetPairs: () => void;
   getRecommendedPairs: () => void;
@@ -104,87 +104,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     });
   };
 
-  const removeRole = (
-    role: Role,
-    proj: Project,
-    position: PairingBoard
-  ): Project => {
-    throw new Error("not yet implemented");
-    // const copy = { ...proj };
-    // const arr: Role[] = [];
-    // const board = copy.pairingBoards.find((pb) => pb.id === position.id);
-    // if (!board) {
-    //   throw new Error("AWK! Totally Broken!");
-    // }
-    // const index = copy.pairingBoards.indexOf(board);
-    // position.roles.forEach((r) => {
-    //   if (r.id !== role.id) {
-    //     arr.push(r);
-    //   }
-    // });
-    // copy.pairingBoards[index] = { ...board, roles: arr };
-
-    // return copy;
-  };
-
-  const addRole = (
-    role: Role,
-    proj: Project,
-    position: PairingBoard
-  ): Project => {
-    throw new Error("not yet implemented");
-    // const copy = { ...proj };
-    // const board = copy.pairingBoards.find((pb) => pb.id === position.id);
-    // if (!board) {
-    //   throw new Error("AWK! Totally Broken!");
-    // }
-    // const index = copy.pairingBoards.indexOf(board);
-    // board.roles.push(role);
-    // copy.pairingBoards[index] = board;
-    // setProject(copy);
-
-    // return copy;
-  };
-
-  const createRole = (name: string, pairingBoard: PairingBoard) => {
-    // return postRole(project.id, pairingBoard.id, name).then((project) => {
-    //   setProject(project);
-    // });
-    return Promise.reject();
-  };
-
-  const moveRole = (role: Role, position: PairingBoard) => {
-    const currentRoleBoard = findPairingBoardByRole(role);
-    if (!currentRoleBoard) {
-      throw new Error(
-        "AWK! Totally broken, can't move role from a place it doesn't exist"
-      );
-    }
-    let proj = removeRole(role, project, currentRoleBoard);
-    proj = addRole(role, proj, position);
-    setProject(proj);
-
-    // putRolePosition(project.id, currentRoleBoard, role, position).then(
-    //   (updatedProject) => setProject(updatedProject)
-    // );
-  };
-
-  const destroyRole = (role: Role) => {
-    const currentPB = findPairingBoardByRole(role);
-
-    if (currentPB) {
-      const update = removeRole(role, project, currentPB);
-      setProject(update);
-      //   return deleteRole(project.id, currentPB, role).then((updatedProject) =>
-      //     setProject(updatedProject)
-      //   );
-    }
-
-    return Promise.reject(
-      new Error(`couldn't find role ${role.name} on any pairing board`)
-    );
-  };
-
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
     project.pairingBoards.find(
       (pb) =>
@@ -208,6 +127,28 @@ export const ProjectProvider: React.FC<Props> = (props) => {
         encType: "application/json",
       }
     );
+  };
+
+  const destroyRole = (role: Role) => {
+    const copy = { ...project };
+    const roleIndex = copy.roles.findIndex((r) => r.id === role.id);
+    copy.roles.splice(roleIndex, 1);
+    setProject(copy);
+    mutator.submit({}, { method: "DELETE", action: `/role/${role.id}` });
+  };
+
+  const moveRole = (role: Role, position: PairingBoard) => {
+    // set project to new state
+    const copy = { ...project };
+    const roleIndex = copy.roles.findIndex((r) => r.id === role.id);
+    const update = { ...role, pairing_board_id: position.id };
+    copy.roles[roleIndex] = update;
+    setProject(copy);
+    mutator.submit(update, {
+      method: "PATCH",
+      action: `/role/${role.id}`,
+      encType: "application/json",
+    });
   };
 
   const destroyPerson = (person: Person) => {
@@ -271,7 +212,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   };
 
   const value = {
-    // handleNameFormSubmit,
     findPairingBoardByRole,
     findPairingBoardByPerson,
     optimisticDeletePairingBoard,
