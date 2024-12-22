@@ -5,7 +5,7 @@ import { ProjectContext } from "../../contexts/ProjectContext";
 import ReactDOM from "react-dom";
 import { ParritError } from "~/api/common/ParritError";
 import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
-import CircularProgress from "@mui/material/CircularProgress";
+import { LoadingSpinner } from "~/ui/LoadingSpinner";
 
 export type NameFormPurpose = "Person" | "Role" | "PairingBoard";
 
@@ -129,7 +129,7 @@ export const NameForm: React.FC<Props> = (props) => {
           <button type="button" onClick={props.onClose} className="button-red">
             Cancel
           </button>
-          {isLoading && <CircularProgress size="1rem" />}
+          {isLoading && <LoadingSpinner />}
         </div>
       </mutator.Form>
     </div>,

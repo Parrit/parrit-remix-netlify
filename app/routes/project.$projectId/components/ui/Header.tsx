@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import classNames from "classnames";
 import { Form } from "@remix-run/react";
 import { AppContext } from "../../contexts/App";
-import Button from "@mui/material/Button";
+import { Button } from "~/ui/Button";
 
 export const Header: React.FC = () => {
   const { pairingHistoryOpen, setPairingHistoryOpen } = useContext(AppContext);

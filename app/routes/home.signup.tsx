@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 import {
@@ -8,6 +7,7 @@ import {
 import { ParritError } from "~/api/common/ParritError";
 
 import { NEW_PROJECT, authenticator } from "~/services/auth.server";
+import { Button } from "~/ui/Button";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -43,7 +43,7 @@ export default function Home_Signup() {
         name="password"
         placeholder="Password"
       />
-      <Button color="secondary" type="submit">
+      <Button className="button-blue" type="submit">
         Create
       </Button>
       <div className="error-message">{error?.data.server}</div>

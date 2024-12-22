@@ -7,7 +7,7 @@ import {
   LoginResult,
   LoginRequest,
 } from "~/api/common/interfaces/network.interfaces";
-import Button from "@mui/material/Button";
+import { Button } from "~/ui/Button";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -43,7 +43,9 @@ export default function Home_Login() {
         name="password"
         placeholder="Password"
       />
-      <Button type="submit">Login</Button>
+      <Button className="button-green" type="submit">
+        Login
+      </Button>
       <div className="error-message">{error?.data.server}</div>
       <Link className="button-blue" to="../signup" type="button">
         Create new project

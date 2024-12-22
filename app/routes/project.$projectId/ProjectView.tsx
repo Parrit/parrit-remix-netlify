@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { ProjectContext } from "./contexts/ProjectContext";
 import { Workspace } from "./contexts/Workspace";
-import Button from "@mui/material/Button";
-import { Tooltip } from "@mui/material";
+import { Button } from "~/ui/Button";
+import { Tooltip } from "~/ui/Tooltip";
 
 export const ProjectView: React.FC = () => {
   const { project, resetPairs, getRecommendedPairs, savePairing } =
@@ -12,17 +12,36 @@ export const ProjectView: React.FC = () => {
       <div className="project">
         <div className="sub-header">
           <h1 className="project-name">{project.name} </h1>
-          <div className="project-actions">
-            <Tooltip title="Move All Pairs to Floating">
-              <Button onClick={resetPairs}>Reset Pairs</Button>
+          <div className="project-actions flex">
+            <Button
+              className="button-blue inline-flex items-center"
+              data-tooltip-target="reset-pairs"
+              onClick={resetPairs}
+            >
+              Reset Pairs
+            </Button>
+            <Tooltip id="reset-pairs">Move All Pairs to Floating</Tooltip>
+
+            <Button
+              className="button-blue inline-flex items-center"
+              data-tooltip-target="recommend-pairs"
+              onClick={getRecommendedPairs}
+            >
+              Recommend Pairs
+            </Button>
+            <Tooltip id="recommend-pairs">
+              Automatically suggest pairings based on past paired date
             </Tooltip>
-            <Tooltip title="Automatically suggest pairings based on past paired date">
-              <Button onClick={getRecommendedPairs}>Recommend Pairs</Button>
-            </Tooltip>
-            <Tooltip title="Make note of pairings for future recommendations">
-              <Button onClick={savePairing} color="secondary">
-                Save Pairing
-              </Button>
+
+            <Button
+              className="button-green inline-flex items-center"
+              data-tooltip-target="save-pairing"
+              onClick={savePairing}
+            >
+              Save Pairing
+            </Button>
+            <Tooltip id="save-pairing">
+              Make note of pairings for future recommendations
             </Tooltip>
           </div>
         </div>
