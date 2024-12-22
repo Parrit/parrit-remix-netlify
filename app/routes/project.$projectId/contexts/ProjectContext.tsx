@@ -25,18 +25,13 @@ import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.se
 export interface IProjectContext {
   project: Project;
   pairingHistory: ProjectPairingSnapshot[];
-  // handleNameFormSubmit: (
-  //   purpose: NameFormPurpose,
-  //   event: React.FormEvent<HTMLFormElement>
-  // ) => void;
   findPairingBoardByRole: (role: Role) => PairingBoard | undefined;
   findPairingBoardByPerson: (person: Person) => PairingBoard | undefined;
-  renamePairingBoard: (name: string, pairingBoardId: string) => Promise<void>;
   movePerson: (person: Person, position: PairingBoard) => void;
   moveRole: (role: Role, position: PairingBoard) => void;
   destroyPerson: (person: Person) => void;
   destroyRole: (role: Role) => Promise<any>;
-  destroyPairingBoard: (pairingBoard: PairingBoard) => Promise<any>;
+  optimisticDeletePairingBoard: (pairingBoard?: PairingBoard) => void;
   resetPairs: () => void;
   getRecommendedPairs: () => void;
   savePairing: () => void;
@@ -95,55 +90,18 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     }
   }, [historyFetcher.data, historyFetcher.state]);
 
-  //   const {
-  //     getPairingHistory,
-  //     postPerson,
-  //     postPairingBoard,
-  //     deletePairingBoard,
-  //     putPairingBoard,
-  //     postRole,
-  //     putRolePosition,
-  //     deleteRole,
-  //     deletePerson,
-  //     postProjectPairing,
-  //     updateProject,
-  //     deletePairingArrangementRequest,
-  //   } = useContext(ApiContext);
-
-  // useEffect(() => {
-  //   getPairingHistory(project.id).then((history) => {
-  //     setPairingArrangements(history);
-  //   });
-  //   //run only once
-  // }, []);
-
-  const createPairingBoard = (name: string) => {
-    console.error("createPairingBoard not yet implemented");
-    //   return postPairingBoard(project.id, name).then((updatedProject) => {
-    //     setProject(updatedProject);
-    //   });
-    return Promise.reject();
-  };
-
-  const destroyPairingBoard = (pairingBoard: PairingBoard) => {
-    // const arr: PairingBoard[] = [];
-    // const copy = { ...project, pairingBoards: arr };
-    // project.pairingBoards.forEach((pb) => {
-    //   if (pb.id === pairingBoard.id) {
-    //     // this is the one we want to delete
-    //     copy.people = [...copy.people, ...pb.people];
-    //   } else {
-    //     copy.pairingBoards.push(pb);
-    //   }
-    // });
-    // console.log("setting project post deletion", copy);
-    // setProject(copy);
-    // return deletePairingBoard(project.id, pairingBoard.id).then(
-    //   (updatedProject) => {
-    //     setProject(updatedProject);
-    //   }
-    // );
-    return Promise.reject("destroyPairingBoard not implemented");
+  const optimisticDeletePairingBoard = (pairingBoard?: PairingBoard) => {
+    if (!pairingBoard) {
+      return;
+    }
+    // optimistic update
+    setProject((oldVal) => {
+      const copy = { ...oldVal };
+      copy.pairingBoards = copy.pairingBoards.filter(
+        (pb) => pb.id !== pairingBoard.id
+      );
+      return copy;
+    });
   };
 
   const removeRole = (
@@ -299,20 +257,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     });
   };
 
-  const renamePairingBoard = (
-    name: string,
-    pairingBoardId: string
-  ): Promise<void> => {
-    console.error("renamePairingBoard not yet implemented");
-    return Promise.reject("renamePairingBoard not yet implemented");
-    // setProject(renameBoard(name, pairingBoardId, project));
-    // return putPairingBoard(project.id, pairingBoardId, name).then(
-    //   (updatedProject) => {
-    //     setProject(updatedProject);
-    //   }
-    // );
-  };
-
   const deletePairingArrangement = (pairingArrangementId: string): void => {
     console.error("deletePairingArrangement not yet implemented");
     // setPairingArrangements(
@@ -330,8 +274,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     // handleNameFormSubmit,
     findPairingBoardByRole,
     findPairingBoardByPerson,
-    destroyPairingBoard,
-    renamePairingBoard,
+    optimisticDeletePairingBoard,
     movePerson,
     moveRole,
     destroyPerson,

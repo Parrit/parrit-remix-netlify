@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import classNames from "classnames";
 import { Form } from "@remix-run/react";
-import { Button } from "~/ui/Button";
 import { AppContext } from "../../contexts/App";
+import Button from "@mui/material/Button";
 
 export const Header: React.FC = () => {
   const { pairingHistoryOpen, setPairingHistoryOpen } = useContext(AppContext);
@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
       <a href="/" className="header-logo" />
       <div className="links">
         <Form method="DELETE" action="/logout">
-          <Button name="LOGOUT" type="submit" />
+          <Button type="submit">LOGOUT</Button>
         </Form>
         <h3 className="feedback">
           <a

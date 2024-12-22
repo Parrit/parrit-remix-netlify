@@ -1,8 +1,7 @@
 ## Parrit Styles
 
-As of this writing, Parrit styles are generated using SASS.
+As of this writing, Parrit styles are static CSS
 
-You can generate them using npm
+We are not sure what we want our UI to be at this moment in time.
 
-- `npm dev:css`
-- `npm build:css`
+There is some progress towards MUI

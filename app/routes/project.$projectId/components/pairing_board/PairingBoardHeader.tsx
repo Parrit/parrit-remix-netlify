@@ -2,17 +2,12 @@
 import React, { useContext, useState } from "react";
 import classNames from "classnames";
 import { WorkspaceContext } from "../../contexts/Workspace";
-import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
-interface Props {
-  deletePairingBoard: VoidFunction;
-  pairingBoard: PairingBoard;
-}
-
-export const PairingBoardHeader: React.FC<Props> = (props) => {
+export const PairingBoardHeader: React.FC = () => {
   const { setNewRoleOpen } = useContext(WorkspaceContext);
-  const { pairingBoard, renamePairingBoard } = useContext(PairingBoardContext);
+  const { pairingBoard, renamePairingBoard, deletePairingBoard } =
+    useContext(PairingBoardContext);
   const { name, exempt } = pairingBoard;
   const [editing, setEditing] = useState(false);
   const [editingError, setEditingError] = useState<string>();
@@ -35,6 +30,10 @@ export const PairingBoardHeader: React.FC<Props> = (props) => {
         handleSubmit();
       }
     }
+  };
+
+  const handleAddNewRole = () => {
+    setNewRoleOpen(true, pairingBoard);
   };
 
   const nameInputClasses = classNames({
@@ -75,7 +74,7 @@ export const PairingBoardHeader: React.FC<Props> = (props) => {
           <div
             aria-label="add role to pairing board"
             className="add-role-to-pairing-board"
-            onClick={() => setNewRoleOpen(true, props.pairingBoard)}
+            onClick={handleAddNewRole}
           />
         </div>
       )}
@@ -84,7 +83,7 @@ export const PairingBoardHeader: React.FC<Props> = (props) => {
         <div
           aria-label="delete pairing board"
           className="delete-pairing-board"
-          onClick={props.deletePairingBoard}
+          onClick={() => deletePairingBoard()}
         />
       )}
     </div>

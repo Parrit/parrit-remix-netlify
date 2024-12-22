@@ -15,7 +15,7 @@ interface IWorkspaceContext {
   newRoleOpen: boolean;
   setNewPersonOpen: (isOpen: boolean) => void;
   setNewPairingBoardOpen: (isOpen: boolean) => void;
-  setNewRoleOpen: (isOpen: boolean, pairingBoard?: PairingBoard) => void;
+  setNewRoleOpen: (isOpen: boolean, pairingBoard: PairingBoard) => void;
   newPersonError?: Error;
   newPairingBoardError?: Error;
   newRoleError?: Error;
@@ -26,15 +26,13 @@ export const WorkspaceContext = React.createContext({} as IWorkspaceContext);
 export const Workspace: React.FC = () => {
   const [newPersonOpen, setNewPersonOpen] = useState(false);
   const [newPairingBoardOpen, setNewPairingBoardOpen] = useState(false);
-  const [newRoleOpen, setNewRoleOpen] = useState(false);
+  const [newRoleOpen, _setNewRoleOpen] = useState(false);
   const [newRoleBoard, setNewRoleBoard] = useState<PairingBoard>();
 
-  const handleSetNewRoleOpen = (open: boolean, pairingBoard?: PairingBoard) => {
-    if (open && !pairingBoard) {
-      throw new Error("opening a new role dialog without a pairing board");
-    }
-    setNewRoleOpen(open);
+  const handleSetNewRoleOpen = (open: boolean, pairingBoard: PairingBoard) => {
+    console.log("handleSetNewRoleOpen", open, pairingBoard);
     setNewRoleBoard(pairingBoard);
+    _setNewRoleOpen(open);
   };
 
   const value = {
@@ -77,7 +75,11 @@ export const Workspace: React.FC = () => {
             />
           )}
           {newRoleOpen && (
-            <NameForm purpose="Role" onClose={() => setNewRoleOpen(false)} />
+            <NameForm
+              purpose="Role"
+              pairingBoard={newRoleBoard}
+              onClose={() => _setNewRoleOpen(false)}
+            />
           )}
         </div>
       </DragProvider>

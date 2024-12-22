@@ -1,7 +1,8 @@
-import { Button } from "~/ui/Button";
 import { useContext } from "react";
 import { ProjectContext } from "./contexts/ProjectContext";
 import { Workspace } from "./contexts/Workspace";
+import Button from "@mui/material/Button";
+import { Tooltip } from "@mui/material";
 
 export const ProjectView: React.FC = () => {
   const { project, resetPairs, getRecommendedPairs, savePairing } =
@@ -12,27 +13,17 @@ export const ProjectView: React.FC = () => {
         <div className="sub-header">
           <h1 className="project-name">{project.name} </h1>
           <div className="project-actions">
-            <Button
-              onClick={resetPairs}
-              className="button-blue"
-              name="Reset Pairs"
-              shortName="reset"
-              tooltip="Move All Pairs to Floating"
-            />
-            <Button
-              onClick={getRecommendedPairs}
-              className="button-blue"
-              name="Recommend Pairs"
-              shortName="reset"
-              tooltip="Automatically suggest pairings based on past paired date"
-            />
-            <Button
-              onClick={savePairing}
-              className="button-green"
-              name="Record Pairs"
-              shortName="reset"
-              tooltip="Make note of pairings for future recommendations"
-            />
+            <Tooltip title="Move All Pairs to Floating">
+              <Button onClick={resetPairs}>Reset Pairs</Button>
+            </Tooltip>
+            <Tooltip title="Automatically suggest pairings based on past paired date">
+              <Button onClick={getRecommendedPairs}>Recommend Pairs</Button>
+            </Tooltip>
+            <Tooltip title="Make note of pairings for future recommendations">
+              <Button onClick={savePairing} color="secondary">
+                Save Pairing
+              </Button>
+            </Tooltip>
           </div>
         </div>
         <Workspace />

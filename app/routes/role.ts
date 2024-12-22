@@ -8,9 +8,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (request.method) {
     case "POST": {
       const form = await request.formData();
-      const project_id = form.get("project_id")?.toString();
+      const pairing_board_id = form.get("pairing_board_id")?.toString();
       const name = form.get("name")?.toString();
-      console.log("POST /pairing_board", { project_id, name });
+      console.log("POST /pairing_board", { pairing_board_id, name });
 
       if (!name || name.length === 0) {
         // TODO: This is an anti-pattern
@@ -19,28 +19,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         // Within an <Outlet> as a child route.
         // For the sake of expediency we're accepting this tech debt for the moment
         return new ParritError({
-          fields: { name: "Person Name is required" },
+          fields: { name: "Role Name is required" },
         }).toResponse();
       }
 
-      if (!project_id) {
-        return new ParritError({
-          fields: { project_id: "Project ID is required" },
-        }).toResponse();
-      }
+      const record = (
+        await xata.db.PairingBoardRoles.create({
+          name,
+          pairing_board_id,
+        })
+      ).toSerializable();
 
-      const record = await xata.db.PairingBoards.create({
-        name,
-        project_id,
-        exempt: false,
-      });
       return {
         id: record.xata_id,
         name: record.name ?? "ERROR",
-        exempt: record.exempt,
+        pairing_board_id: record.pairing_board_id,
       };
     }
-    default:
-      throw new Error(`Unhandled Method ${request.method}`);
   }
 };

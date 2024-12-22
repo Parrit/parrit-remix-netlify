@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RoleView } from "./RoleView";
-import { Role } from "~/api/common/interfaces/parrit.interfaces";
+import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 
-interface Props {
-  roles: Role[];
-}
-
-export const RoleList: React.FC<Props> = (props) => {
+export const RoleList: React.FC = () => {
+  const { roles } = useContext(PairingBoardContext);
   return (
     <div className="role-list">
-      {props.roles.map((role) => {
+      {roles.map((role) => {
         return <RoleView key={`role-${role.id}`} role={role} />;
       })}
     </div>

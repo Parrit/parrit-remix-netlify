@@ -1,3 +1,5 @@
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -8,6 +10,7 @@ import {
 } from "@remix-run/react";
 
 import layoutStyles from "~/styles/layout.css?url";
+import theme from "./styles/theme";
 
 export const meta: MetaFunction = () => [
   {
@@ -29,9 +32,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );

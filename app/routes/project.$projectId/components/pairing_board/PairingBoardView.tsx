@@ -11,13 +11,8 @@ import { PairingBoardContext } from "../../contexts/PairingBoardContext";
 export const PairingBoardView: React.FC = () => {
   const { pairingBoard } = useContext(PairingBoardContext);
   const { exempt } = pairingBoard;
-  const { movePerson, moveRole, project } = useContext(ProjectContext);
-  const roles = project.roles.filter(
-    (r) => r.pairing_board_id === pairingBoard.id
-  );
+  const { movePerson, moveRole } = useContext(ProjectContext);
   const [isOver, setIsOver] = useState(false);
-
-  const { destroyPairingBoard } = useContext(ProjectContext);
 
   const handleDragOver: React.DragEventHandler<HTMLDivElement> = (ev) => {
     ev.preventDefault();
@@ -56,13 +51,8 @@ export const PairingBoardView: React.FC = () => {
       onDrop={handleDrop}
       className={pairingBoardClasses}
     >
-      <PairingBoardHeader
-        deletePairingBoard={() => destroyPairingBoard(pairingBoard)}
-        pairingBoard={pairingBoard}
-      />
-
-      <RoleList roles={roles} />
-
+      <PairingBoardHeader />
+      <RoleList />
       <PersonList />
     </div>
   );

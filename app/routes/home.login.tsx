@@ -2,12 +2,12 @@ import React from "react";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 import { PROJECT_PASS, authenticator } from "~/services/auth.server";
-import { Button } from "~/ui/Button";
 import { ParritError } from "~/api/common/ParritError";
 import {
   LoginResult,
   LoginRequest,
 } from "~/api/common/interfaces/network.interfaces";
+import Button from "@mui/material/Button";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -43,7 +43,7 @@ export default function Home_Login() {
         name="password"
         placeholder="Password"
       />
-      <Button className="button-green" name="Login" type="submit" />
+      <Button type="submit">Login</Button>
       <div className="error-message">{error?.data.server}</div>
       <Link className="button-blue" to="../signup" type="button">
         Create new project

@@ -4,12 +4,15 @@ import { useFetcher } from "@remix-run/react";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import ReactDOM from "react-dom";
 import { ParritError } from "~/api/common/ParritError";
+import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export type NameFormPurpose = "Person" | "Role" | "PairingBoard";
 
 interface Props {
   purpose: NameFormPurpose;
   onClose: VoidFunction;
+  pairingBoard?: PairingBoard;
 }
 
 interface NameFormData {
@@ -105,6 +108,13 @@ export const NameForm: React.FC<Props> = (props) => {
           readOnly
         />
         <input
+          hidden
+          type="text"
+          name="pairing_board_id"
+          value={props.pairingBoard?.id}
+          readOnly
+        />
+        <input
           className={inputClasses}
           autoFocus
           type="text"
@@ -119,6 +129,7 @@ export const NameForm: React.FC<Props> = (props) => {
           <button type="button" onClick={props.onClose} className="button-red">
             Cancel
           </button>
+          {isLoading && <CircularProgress size="1rem" />}
         </div>
       </mutator.Form>
     </div>,
