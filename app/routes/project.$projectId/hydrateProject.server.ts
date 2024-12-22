@@ -87,7 +87,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
   const pairingBoards = hydratedPairingBoards.map((obj) => ({
     id: obj.xata_id,
     name: obj.name,
-    exempt: obj.exempt === "true",
+    exempt: obj.exempt,
     people: (obj.persons ?? { records: [] }).records.map((obj) => {
       const existing = peopleMap.get(obj.xata_id);
       if (existing) {
@@ -163,7 +163,7 @@ interface SerializedProject {
 interface SerializedPairingBoard {
   xata_id: string;
   name: string;
-  exempt: string;
+  exempt: boolean;
   persons?: {
     records: {
       xata_id: string;
