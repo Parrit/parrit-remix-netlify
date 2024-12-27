@@ -12,7 +12,6 @@ import {
   Person,
   Project,
   Role,
-  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { AppContext } from "./App";
 import { move_person, remove_person } from "~/func";
@@ -22,7 +21,6 @@ import { recommendPairs } from "~/func/recommend_pairs";
 import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
-import { set } from "node_modules/cypress/types/lodash";
 import { BulkPersonUpdate } from "~/routes/person.bulk";
 
 export interface IProjectContext {

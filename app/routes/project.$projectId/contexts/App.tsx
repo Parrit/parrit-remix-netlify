@@ -36,12 +36,16 @@ export const App: React.FC = () => {
     <div className={classes}>
       <AppContext.Provider value={value}>
         <ProjectProvider>
-          <SystemAlert />
-          <Header />
-          <ProjectView />
-          <Footer />
-          <PairingHistory />
-          <div id="modal-root" />
+          <div className="app-container flex flex-col min-h-screen">
+            <Header />
+            <div className="flex-grow flex flex-col">
+              <SystemAlert />
+              <ProjectView />
+              <Footer />
+              <PairingHistory />
+              <div id="modal-root" />
+            </div>
+          </div>
         </ProjectProvider>
       </AppContext.Provider>
     </div>

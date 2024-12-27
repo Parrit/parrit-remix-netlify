@@ -13,12 +13,13 @@ export const ProjectView: React.FC = () => {
     savePairing,
     pairingHistoryWorking,
   } = useContext(ProjectContext);
+
   return (
-    <div className="project-page-container">
-      <div className="project">
+    <div className="project-page-container flex-grow flex flex-col">
+      <div className="project flex-grow flex flex-col">
         <div className="sub-header">
-          <h1 className="project-name">{project.name} </h1>
-          <div className="project-actions flex">
+          <h1 className="project-name">{project.name}</h1>
+          <div className="project-actions flex space-x-4">
             <Button
               className="button-blue inline-flex items-center"
               data-tooltip-target="reset-pairs"
