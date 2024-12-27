@@ -12,6 +12,7 @@ export const FRIZZLE: Person = {
   name: "Ms. Frizzle",
   type: "Person",
   pairing_board_id: "brand new individual",
+  project_id: "20232",
 };
 
 export const RED_PERSON: Person = {
@@ -19,6 +20,7 @@ export const RED_PERSON: Person = {
   name: "red_parrit",
   type: "Person",
   pairing_board_id: "red_id",
+  project_id: "20232",
 };
 
 export const OOO_Person: Person = {
@@ -26,6 +28,7 @@ export const OOO_Person: Person = {
   name: "Permanent Vacation",
   type: "Person",
   pairing_board_id: "exempt",
+  project_id: "20232",
 };
 
 export const OOO_Role: Role = {
@@ -33,6 +36,7 @@ export const OOO_Role: Role = {
   name: "OOOROLE",
   type: "Role",
   pairing_board_id: "exempt",
+  project_id: "20232",
 };
 
 export const BLUE_Role: Role = {
@@ -40,6 +44,7 @@ export const BLUE_Role: Role = {
   name: "Blue Role",
   type: "Role",
   pairing_board_id: "blue_id",
+  project_id: "20232",
 };
 
 export const PB_RED: PairingBoard = {
@@ -59,6 +64,7 @@ export const FLOATING_PERSON: Person = {
   name: "floater_name_start",
   type: "Person",
   pairing_board_id: FLOATING_IDX,
+  project_id: "20232",
 };
 
 export const PB_BLUE: PairingBoard = {

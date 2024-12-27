@@ -25,7 +25,7 @@ export const NameForm: React.FC<Props> = (props) => {
   const [error, setError] = useState<ParritError<NameFormData>>();
   const modalRoot = document.getElementById("modal-root");
   const mutator = useFetcher();
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   let action;
   let formTitle;
@@ -126,10 +126,20 @@ export const NameForm: React.FC<Props> = (props) => {
           <button type="submit" className="button-blue" disabled={isLoading}>
             OK
           </button>
-          <button type="button" onClick={props.onClose} className="button-red">
+          <button
+            type="button"
+            onClick={props.onClose}
+            className="button-red"
+            disabled={isLoading}
+          >
             Cancel
           </button>
-          {isLoading && <LoadingSpinner />}
+
+          {isLoading && (
+            <div style={{ marginLeft: "auto" }}>
+              <LoadingSpinner />
+            </div>
+          )}
         </div>
       </mutator.Form>
     </div>,

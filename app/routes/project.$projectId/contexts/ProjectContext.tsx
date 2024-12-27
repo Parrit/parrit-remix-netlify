@@ -23,10 +23,12 @@ import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
 import { set } from "node_modules/cypress/types/lodash";
+import { BulkPersonUpdate } from "~/routes/person.bulk";
 
 export interface IProjectContext {
   project: Project;
   pairingHistory: ProjectPairingSnapshot[];
+  pairingHistoryWorking: boolean;
   findPairingBoardByRole: (role: Role) => PairingBoard | undefined;
   findPairingBoardByPerson: (person: Person) => PairingBoard | undefined;
   movePerson: (person: Person, position: PairingBoard) => void;
@@ -61,6 +63,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const [project, setProject] = useState<Project>(
     projectFetcher.data as Project
   );
+  const [pairingHistoryWorking, setPairingHistoryWorking] = useState(false);
 
   useEffect(() => {
     try {
@@ -89,6 +92,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   useEffect(() => {
     if (historyFetcher.data && historyFetcher.state === "idle") {
       setPairingArrangements(historyFetcher.data);
+      setPairingHistoryWorking(false);
     }
   }, [historyFetcher.data, historyFetcher.state]);
 
@@ -110,7 +114,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     return mutator.submit(
       { ...person, project_id: project.id, pairing_board_id: position.id },
       {
-        method: "PUT",
+        method: "PATCH",
         action: `/person/${person.id}`,
       }
     );
@@ -189,10 +193,19 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       });
     });
     const recommendedConfiguration = recommendPairs(project, pairingHistories);
+    const request: BulkPersonUpdate = {
+      persons: recommendedConfiguration.people,
+    };
+    mutator.submit(request, {
+      method: "PUT",
+      action: `/person/bulk`,
+      encType: "application/json",
+    });
     setProject(recommendedConfiguration);
   };
 
   const savePairing = () => {
+    setPairingHistoryWorking(true);
     const pairingTime = DateTime.now().toISO();
 
     const body: HistoryPOST = {
@@ -235,6 +248,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     getRecommendedPairs,
     savePairing,
     pairingHistory: pairingArrangements,
+    pairingHistoryWorking,
     deletePairingArrangement,
     project,
   };

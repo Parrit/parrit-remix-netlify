@@ -3,10 +3,16 @@ import { ProjectContext } from "./contexts/ProjectContext";
 import { Workspace } from "./contexts/Workspace";
 import { Button } from "~/ui/Button";
 import { Tooltip } from "~/ui/Tooltip";
+import { LoadingSpinner } from "~/ui/LoadingSpinner";
 
 export const ProjectView: React.FC = () => {
-  const { project, resetPairs, getRecommendedPairs, savePairing } =
-    useContext(ProjectContext);
+  const {
+    project,
+    resetPairs,
+    getRecommendedPairs,
+    savePairing,
+    pairingHistoryWorking,
+  } = useContext(ProjectContext);
   return (
     <div className="project-page-container">
       <div className="project">
@@ -34,11 +40,18 @@ export const ProjectView: React.FC = () => {
             </Tooltip>
 
             <Button
-              className="button-green inline-flex items-center"
+              className="button-green inline-flex items-center space-x-2"
               data-tooltip-target="save-pairing"
               onClick={savePairing}
             >
-              Save Pairing
+              {pairingHistoryWorking ? (
+                <div className="flex items-center space-x-2">
+                  <LoadingSpinner />
+                  <span>Saving...</span>
+                </div>
+              ) : (
+                <span>Save Pairing</span>
+              )}
             </Button>
             <Tooltip id="save-pairing">
               Make note of pairings for future recommendations

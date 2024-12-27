@@ -11,6 +11,7 @@ export interface DragItem {
   name: string;
   type: DragType;
   pairing_board_id: string;
+  project_id: string;
 }
 
 export interface DropItem {

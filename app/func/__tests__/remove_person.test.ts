@@ -1,4 +1,4 @@
-import { expect, fit } from "@jest/globals";
+import { expect } from "@jest/globals";
 import { RED_PERSON, PROJECT_START, FLOATING_PERSON } from "./common";
 import remove_person from "../remove_person";
 import { can_a_pairing_be_made } from "../utils";
@@ -28,37 +28,49 @@ describe("remove_person", () => {
           name: "David",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
         {
           id: "19093",
           name: "Billy",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
-        { id: "19092", name: "John", type: "Person", pairing_board_id: "-1" },
+        {
+          id: "19092",
+          name: "John",
+          type: "Person",
+          pairing_board_id: "-1",
+          project_id: "20232",
+        },
         {
           id: "rec_ct6kg2ve4lpv8v5i3200",
           name: "Mario",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
         {
           id: "rec_ct8k0bfhvh3f7vsh7050",
           name: "jimbo",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
         {
           id: "rec_ct8k0bvhvh3f7vsh705g",
           name: "jimbo",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
         {
           id: "rec_ct8k0bu44ggk3j1pqng0",
           name: "jimbo",
           type: "Person",
           pairing_board_id: "-1",
+          project_id: "20232",
         },
       ],
       floating: {
@@ -78,6 +90,7 @@ describe("remove_person", () => {
         name: "jimbo",
         type: "Person",
         pairing_board_id: "-1",
+        project_id: "20232",
       },
       before
     );

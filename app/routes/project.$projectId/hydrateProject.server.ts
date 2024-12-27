@@ -76,6 +76,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
         name: obj.name,
         type: "Person",
         pairing_board_id: obj.pairing_board_id ?? FLOATING_IDX,
+        project_id: hydrated.xata_id,
       });
       return map;
     },
@@ -98,6 +99,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
         name: obj.name,
         type: "Person",
         pairing_board_id: obj.pairing_board_id,
+        project_id: hydrated.xata_id,
       };
 
       peopleMap.set(person.id, person);
@@ -113,6 +115,7 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
         name: obj.name,
         type: "Role",
         pairing_board_id: obj.pairing_board_id,
+        project_id: hydrated.xata_id,
       };
 
       roleMap.set(role.id, role);

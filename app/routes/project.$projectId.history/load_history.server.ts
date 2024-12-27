@@ -53,7 +53,7 @@ export default async (
             id: val.xata_id,
             name: val.name,
             pairing_board_id: val.pairing_board_id?.xata_id ?? FLOATING_IDX,
-            project_id: val.project_id?.xata_id,
+            project_id: val.project_id?.xata_id ?? "-1",
             type: "Person",
           };
         })

@@ -13,7 +13,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       await xata.db.Persons.delete(id);
       return null;
     }
-    case "PUT": {
+    case "PATCH": {
       const formData = await request.formData();
       return xata.db.Persons.update(id, {
         name: formData.get("name") as string,
