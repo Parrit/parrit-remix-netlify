@@ -30,7 +30,6 @@ export const Workspace: React.FC = () => {
   const [newRoleBoard, setNewRoleBoard] = useState<PairingBoard>();
 
   const handleSetNewRoleOpen = (open: boolean, pairingBoard: PairingBoard) => {
-    console.log("handleSetNewRoleOpen", open, pairingBoard);
     setNewRoleBoard(pairingBoard);
     _setNewRoleOpen(open);
   };
