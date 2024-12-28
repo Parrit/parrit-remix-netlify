@@ -58,8 +58,4 @@ describe("move_person", () => {
     expect(result).toMatchSnapshot();
     expect(can_a_pairing_be_made(result)).toBe(true); // 2 floating
   });
-
-  xit("does not move a person that doesn't exist in the project", () => {
-    throw "not yet written";
-  });
 });

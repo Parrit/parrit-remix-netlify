@@ -18,12 +18,14 @@ describe("add_person", () => {
         id: "red_parrit_id",
         name: "red_parrit",
         pairing_board_id: "red_id",
+        project_id: "20232",
         type: "Person",
       },
       {
         id: "99",
         name: "Ms. Frizzle",
         pairing_board_id: "red_id",
+        project_id: "20232",
         type: "Person",
       },
     ]);

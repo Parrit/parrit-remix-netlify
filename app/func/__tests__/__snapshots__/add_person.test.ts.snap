@@ -6,12 +6,14 @@ exports[`add_person add to floating 1`] = `
     "id": "floater_id",
     "name": "floater_name_start",
     "pairing_board_id": "-1",
+    "project_id": "20232",
     "type": "Person",
   },
   {
     "id": "99",
     "name": "Ms. Frizzle",
     "pairing_board_id": "-1",
+    "project_id": "20232",
     "type": "Person",
   },
 ]
