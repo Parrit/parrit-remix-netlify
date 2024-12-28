@@ -1,13 +1,6 @@
-import { Outlet, useActionData } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import { LoaderFunctionArgs, LinksFunction } from "@remix-run/node";
 import { Footer } from "~/routes/project.$projectId/components/ui/Footer";
-
-import { ErrorResponse } from "~/models/Error.model";
-
-type ActionData = {
-  action: string;
-  error: ErrorResponse;
-};
 
 import homeStyles from "~/styles/home.css?url";
 import { authenticator } from "~/services/auth.server";
@@ -24,19 +17,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Home() {
-  let signUpErrorResponse: ErrorResponse = {};
-  let loginErrorResponse: ErrorResponse = {};
-
-  const actionData = useActionData<ActionData>();
-
-  if (actionData?.error && actionData?.action == "sign-up") {
-    signUpErrorResponse = actionData?.error;
-  }
-
-  if (actionData?.error && actionData?.action == "login") {
-    loginErrorResponse = actionData?.error;
-  }
-
   return (
     <div className="layout-wrapper dashboard-container">
       <main className="dashboard-content-container">

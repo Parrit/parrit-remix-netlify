@@ -1,4 +1,3 @@
-import React from "react";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 import { PROJECT_PASS, authenticator } from "~/services/auth.server";

@@ -49,9 +49,9 @@ module.exports = {
       },
       rules: {
         // Leave these off, they're dumb
-        "react/display-name": "off",
         "react/prop-types": "off",
-      }
+        "import/namespace": "off",
+      },
     },
 
     // Typescript
@@ -77,8 +77,9 @@ module.exports = {
       ],
 
       rules: {
-        "@typescript-eslint/no-unused-vars": "warn"
-      }
+        "@typescript-eslint/no-unused-vars": "warn",
+        "import/namespace": "off",
+      },
     },
 
     // Node

@@ -1,4 +1,4 @@
-import { expect, fit } from "@jest/globals";
+import { expect } from "@jest/globals";
 import add_person from "../add_person";
 import { FRIZZLE, PB_RED, PROJECT_START } from "./common";
 import { can_a_pairing_be_made, floating_people } from "../utils";

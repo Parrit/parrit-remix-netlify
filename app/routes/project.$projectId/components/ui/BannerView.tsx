@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import ReactDOM from "react-dom";
 import parritIcon from "~/styles/images/parrit-head.svg";

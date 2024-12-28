@@ -2,7 +2,6 @@ import {
   ActionFunctionArgs,
   LinksFunction,
   LoaderFunctionArgs,
-  redirect,
 } from "@remix-run/node";
 
 import hydrateProjectServer from "./hydrateProject.server";
@@ -48,6 +47,5 @@ export async function loader(args: LoaderFunctionArgs) {
   return await hydrateProjectServer(args);
 }
 
-export default function () {
-  return <App />;
-}
+const ProjectPage = () => <App />;
+export default ProjectPage;
