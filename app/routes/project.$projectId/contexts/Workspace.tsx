@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   FLOATING_IDX,
   PairingBoard,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { FloatingParrits } from "../components/people/FloatingParrits";
 import { PairingBoardList } from "../components/pairing_board/PairingBoardList";
-import { NameForm } from "../components/people/NameForm";
+import { NameForm } from "../components/ui/NameForm";
 import { DragProvider } from "./DragContext";
 import { PairingBoardProvider } from "./PairingBoardContext";
+import { BannerView } from "../components/ui/BannerView";
+import { ProjectContext } from "./ProjectContext";
 
 interface IWorkspaceContext {
   newPersonOpen: boolean;
@@ -33,6 +35,8 @@ export const Workspace: React.FC = () => {
     setNewRoleBoard(pairingBoard);
     _setNewRoleOpen(open);
   };
+
+  const { nextBanner } = useContext(ProjectContext);
 
   const value = {
     newPersonOpen,
@@ -80,6 +84,7 @@ export const Workspace: React.FC = () => {
               onClose={() => _setNewRoleOpen(false)}
             />
           )}
+          {nextBanner && <BannerView />}
         </div>
       </DragProvider>
     </WorkspaceContext.Provider>

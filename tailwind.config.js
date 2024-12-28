@@ -6,7 +6,15 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        2: 2,
+      },
+      fontFamily: {
+        raleway: ["Raleway", "sans-serif"],
+        overlock: ["Overlock", "serif"],
+      },
+    },
   },
   plugins: [],
 };

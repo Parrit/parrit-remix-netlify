@@ -13,6 +13,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@fontsource/overlock": "^5.1.0",
+    "@fontsource/raleway": "^5.1.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@netlify/functions": "^2.6.0",

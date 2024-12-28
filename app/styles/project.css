@@ -62,11 +62,7 @@ h3 {
   margin-right: 15px;
 }
 
-.project-page-container
-  .project
-  .sub-header
-  .project-actions
-  button:last-child {
+.project-page-container .project .sub-header .project-actions button:last-child {
   margin-right: 0;
 }
 
@@ -120,11 +116,7 @@ h3 {
     margin-bottom: 32px;
   }
 
-  .project-page-container
-    .project
-    .workspace
-    .floating-parrits
-    .floating-parrit-actions {
+  .project-page-container .project .workspace .floating-parrits .floating-parrit-actions {
     display: none;
   }
 
@@ -134,11 +126,7 @@ h3 {
     background-image: url("./images/dot-light.svg");
   }
 
-  .project-page-container
-    .project
-    .workspace
-    .pairing-boards-container
-    .add-board-button {
+  .project-page-container .project .workspace .pairing-boards-container .add-board-button {
     display: none;
   }
 }
@@ -185,11 +173,7 @@ h3 {
     bottom: 0;
   }
 
-  .project
-    .workspace
-    .floating-parrits
-    .floating-parrit-actions
-    .add-parrit-button {
+  .project .workspace .floating-parrits .floating-parrit-actions .add-parrit-button {
     display: inline-block;
     width: 80px;
     height: 80px;
@@ -199,11 +183,7 @@ h3 {
     margin-right: 26px;
   }
 
-  .project
-    .workspace
-    .floating-parrits
-    .floating-parrit-actions
-    .add-parrit-button:hover {
+  .project .workspace .floating-parrits .floating-parrit-actions .add-parrit-button:hover {
     opacity: 1;
   }
 
@@ -215,11 +195,7 @@ h3 {
     opacity: 0.6;
   }
 
-  .project
-    .workspace
-    .floating-parrits
-    .floating-parrit-actions
-    .trash-bin.drop-target {
+  .project .workspace .floating-parrits .floating-parrit-actions .trash-bin.drop-target {
     opacity: 1;
   }
 

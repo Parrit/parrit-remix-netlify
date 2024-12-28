@@ -1,0 +1,24 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctn1ov9901h3pf6vjh1g",
+    "operations": [
+      {
+        "add_column": {
+          "up": "''",
+          "table": "Banners",
+          "column": {
+            "name": "title",
+            "type": "text",
+            "comment": ""
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctn1ov9901h3pf6vjh1g",
+  "parent": "mig_ctn1o29901h3pf6vjh0g",
+  "schema": "public",
+  "startedAt": "2024-12-27T03:18:22.024318Z"
+}

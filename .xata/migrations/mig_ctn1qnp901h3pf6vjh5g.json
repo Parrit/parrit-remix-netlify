@@ -1,0 +1,24 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctn1qnp901h3pf6vjh5g",
+    "operations": [
+      {
+        "add_column": {
+          "table": "Project_Banners",
+          "column": {
+            "name": "seen_at",
+            "type": "timestamptz",
+            "comment": "",
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctn1qnp901h3pf6vjh5g",
+  "parent": "mig_ctn1qgb2vtkja3ivej7g",
+  "schema": "public",
+  "startedAt": "2024-12-27T03:22:07.645022Z"
+}

@@ -1,0 +1,22 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctn1qgb2vtkja3ivej7g",
+    "operations": [
+      {
+        "alter_column": {
+          "up": "(SELECT CASE WHEN \"project_id\" IS NULL THEN '' ELSE \"project_id\" END)",
+          "down": "(SELECT CASE WHEN \"project_id\" IS NULL THEN '' ELSE \"project_id\" END)",
+          "table": "Project_Banners",
+          "column": "project_id",
+          "nullable": false
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctn1qgb2vtkja3ivej7g",
+  "parent": "mig_ctn1q8j2vtkja3ivej6g",
+  "schema": "public",
+  "startedAt": "2024-12-27T03:21:38.295909Z"
+}

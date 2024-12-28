@@ -1,0 +1,30 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_ctn1q132vtkja3ivej5g",
+    "operations": [
+      {
+        "add_column": {
+          "table": "Project_Banners",
+          "column": {
+            "name": "project_id",
+            "type": "text",
+            "comment": "{\"xata.link\":\"Projects\"}",
+            "nullable": true,
+            "references": {
+              "name": "project_id_link",
+              "table": "Projects",
+              "column": "xata_id",
+              "on_delete": "SET NULL"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_ctn1q132vtkja3ivej5g",
+  "parent": "mig_ctn1pi9901h3pf6vjh4g",
+  "schema": "public",
+  "startedAt": "2024-12-27T03:20:37.60729Z"
+}

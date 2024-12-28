@@ -3,14 +3,14 @@ import classNames from "classnames";
 import { ProjectView } from "../ProjectView";
 import { Footer } from "../components/ui/Footer";
 import { ProjectProvider } from "./ProjectContext";
-import { SystemAlert } from "../components/ui/SystemAlert";
 import { Header } from "../components/ui/Header";
 import { PairingHistory } from "../components/history/PairingHistory";
+import "@fontsource/raleway";
+import "@fontsource/overlock";
+
 export interface IAppContext {
   pairingHistoryOpen: boolean;
   setPairingHistoryOpen: (isOpen: boolean) => void;
-  systemAlert?: string;
-  setSystemAlert: (value?: string) => void;
 }
 
 export const AppContext = createContext({} as IAppContext);
@@ -39,7 +39,6 @@ export const App: React.FC = () => {
           <div className="app-container flex flex-col min-h-screen">
             <Header />
             <div className="flex-grow flex flex-col">
-              <SystemAlert />
               <ProjectView />
               <Footer />
               <PairingHistory />

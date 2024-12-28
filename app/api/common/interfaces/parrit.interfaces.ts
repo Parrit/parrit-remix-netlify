@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { DragItem } from "~/api/common/interfaces/dragdrop.interface";
 
 export interface Project {
@@ -41,4 +42,13 @@ export interface PairingInstance {
   pairingBoardName: string | null;
   people: Person[];
   pairingTime: string;
+}
+
+export interface Banner {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  action_text: string;
+  action_url: string;
+  seen_at?: string;
 }

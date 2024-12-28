@@ -2,8 +2,8 @@
 import React, {
   createContext,
   ReactNode,
-  useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import {
@@ -12,8 +12,8 @@ import {
   Person,
   Project,
   Role,
+  Banner,
 } from "~/api/common/interfaces/parrit.interfaces";
-import { AppContext } from "./App";
 import { move_person, remove_person } from "~/func";
 import reset_pairs from "~/func/reset_pairs";
 import { useFetcher, useLocation } from "@remix-run/react";
@@ -22,6 +22,7 @@ import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
 import { BulkPersonUpdate } from "~/routes/person.bulk";
+import { useMemoDebugger } from "~/debug/UseDebug";
 
 export interface IProjectContext {
   project: Project;
@@ -38,12 +39,11 @@ export interface IProjectContext {
   savePairing: () => void;
   deletePairingArrangement: (pairingArrangementId: string) => void;
   deletePairingBoard: (pairingBoardId: string) => void;
+  nextBanner?: Banner;
+  acknowledgeBanner: (banner: Banner) => void;
 }
 
 export const ProjectContext = createContext({} as IProjectContext);
-
-export const PROJECT_FETCHER = "PROJECT_FETCHER";
-export const PROJECT_MUTATOR = "PROJECT_MUTATOR";
 
 interface Props {
   children: ReactNode;
@@ -51,10 +51,10 @@ interface Props {
 
 export const ProjectProvider: React.FC<Props> = (props) => {
   const location = useLocation();
-  const { setSystemAlert } = useContext(AppContext);
-  const projectFetcher = useFetcher<Project>({ key: PROJECT_FETCHER });
+  const projectFetcher = useFetcher<Project>();
   const historyFetcher = useFetcher<ProjectPairingSnapshot[]>();
-  const mutator = useFetcher({ key: PROJECT_MUTATOR });
+  const bannersFetcher = useFetcher<Banner[]>();
+  const mutator = useFetcher();
   const [pairingArrangements, setPairingArrangements] = useState<
     ProjectPairingSnapshot[]
   >([]);
@@ -62,6 +62,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     projectFetcher.data as Project
   );
   const [pairingHistoryWorking, setPairingHistoryWorking] = useState(false);
+  const [banners, setBanners] = useState<Banner[]>([]);
 
   useEffect(() => {
     try {
@@ -93,6 +94,32 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       setPairingHistoryWorking(false);
     }
   }, [historyFetcher.data, historyFetcher.state]);
+
+  useEffect(() => {
+    try {
+      bannersFetcher.load(`${location.pathname}/banner`);
+    } catch (err) {
+      console.error(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (bannersFetcher.data && bannersFetcher.state === "idle") {
+      const banners = bannersFetcher.data;
+      const bannersToShow = banners.filter((banner) => {
+        let shouldShow = !banner.seen_at;
+        if (!shouldShow) {
+          const seenAt = DateTime.fromISO(banner.seen_at as string);
+          shouldShow = seenAt.plus({ days: 1 }).toMillis() < Date.now();
+        }
+        return shouldShow;
+      });
+      setBanners(bannersToShow);
+    }
+  }, [bannersFetcher.data, bannersFetcher.state]);
+
+  const nextBanner = useMemo(() => banners.at(0), [banners]);
 
   const findPairingBoardByRole = (role: Role): PairingBoard | undefined =>
     project.pairingBoards.find(
@@ -234,6 +261,22 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     // );
   };
 
+  const acknowledgeBanner = (banner: Banner) => {
+    // optimistic update
+    const copy = [...banners];
+    const bannerIndex = copy.findIndex((b) => b.id === banner.id);
+    copy.splice(bannerIndex, 1);
+    setBanners(copy);
+    mutator.submit(
+      { project_id: project.id },
+      {
+        method: "POST",
+        action: `/banner/${banner.id}/acknowledge`,
+        encType: "application/json",
+      }
+    );
+  };
+
   const value = {
     findPairingBoardByRole,
     findPairingBoardByPerson,
@@ -249,6 +292,8 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     pairingHistoryWorking,
     deletePairingArrangement,
     project,
+    nextBanner,
+    acknowledgeBanner,
   };
 
   if (!project) {

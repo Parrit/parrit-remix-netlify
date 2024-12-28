@@ -8,6 +8,90 @@ import type {
 
 const tables = [
   {
+    name: "Banners",
+    checkConstraints: {
+      Banners_xata_id_length_xata_id: {
+        name: "Banners_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {},
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_Banners_xata_id_key: {
+        name: "_pgroll_new_Banners_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "action_text",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "action_url",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "paragraphs",
+        type: "multiple",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "title",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
     name: "PairingBoardRoles",
     checkConstraints: {
       PairingBoardRoles_xata_id_length_xata_id: {
@@ -433,6 +517,99 @@ const tables = [
     ],
   },
   {
+    name: "Project_Banners",
+    checkConstraints: {
+      Project_Banners_xata_id_length_xata_id: {
+        name: "Project_Banners_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {
+      bann_id_link: {
+        name: "bann_id_link",
+        columns: ["banner_id"],
+        referencedTable: "Banners",
+        referencedColumns: ["xata_id"],
+        onDelete: "SET NULL",
+      },
+      project_id_link: {
+        name: "project_id_link",
+        columns: ["project_id"],
+        referencedTable: "Projects",
+        referencedColumns: ["xata_id"],
+        onDelete: "SET NULL",
+      },
+    },
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_Project_Banners_xata_id_key: {
+        name: "_pgroll_new_Project_Banners_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "banner_id",
+        type: "link",
+        link: { table: "Banners" },
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"Banners"}',
+      },
+      {
+        name: "project_id",
+        type: "link",
+        link: { table: "Projects" },
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"Projects"}',
+      },
+      {
+        name: "seen_at",
+        type: "datetime",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
     name: "Projects",
     checkConstraints: {
       Projects_xata_id_length_xata_id: {
@@ -505,6 +682,9 @@ const tables = [
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
+export type Banners = InferredTypes["Banners"];
+export type BannersRecord = Banners & XataRecord;
+
 export type PairingBoardRoles = InferredTypes["PairingBoardRoles"];
 export type PairingBoardRolesRecord = PairingBoardRoles & XataRecord;
 
@@ -520,15 +700,20 @@ export type PairingHistoryPersonsRecord = PairingHistoryPersons & XataRecord;
 export type Persons = InferredTypes["Persons"];
 export type PersonsRecord = Persons & XataRecord;
 
+export type ProjectBanners = InferredTypes["Project_Banners"];
+export type ProjectBannersRecord = ProjectBanners & XataRecord;
+
 export type Projects = InferredTypes["Projects"];
 export type ProjectsRecord = Projects & XataRecord;
 
 export type DatabaseSchema = {
+  Banners: BannersRecord;
   PairingBoardRoles: PairingBoardRolesRecord;
   PairingBoards: PairingBoardsRecord;
   PairingHistory: PairingHistoryRecord;
   PairingHistory_Persons: PairingHistoryPersonsRecord;
   Persons: PersonsRecord;
+  Project_Banners: ProjectBannersRecord;
   Projects: ProjectsRecord;
 };
 
