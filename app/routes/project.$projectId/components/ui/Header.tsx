@@ -15,8 +15,21 @@ export const Header: React.FC = () => {
     <header>
       <a href="/" className="header-logo" />
       <div className="links">
+        <h3>
+          <a
+            href="https://www.gofundme.com/f/rescueparrit"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            DONATE
+          </a>
+        </h3>
         <Form method="DELETE" action="/logout">
-          <Button type="submit">LOGOUT</Button>
+          <h3>
+            <Button className="font-overlock font" type="submit">
+              LOGOUT
+            </Button>
+          </h3>
         </Form>
         <h3 className="feedback">
           <a

@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
+import { FLOATING_IDX, PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 import parritXataClient from "~/api/parritXataClient";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -16,6 +16,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return xata.db.PairingBoards.update(id, { name: json.name });
     }
     case "DELETE": {
+      // move all marooned people to floating pairing board
+      const people = await xata.db.Persons.filter({ pairing_board_id: id }).getAll();
+      await Promise.all(people.map((p) => xata.db.Persons.update(p.xata_id, { pairing_board_id: FLOATING_IDX})));
+      // delete all roles associated with pairing board
+      const roles = await xata.db.PairingBoardRoles.filter({ pairing_board_id: id }).getAll();
+      await Promise.all(roles.map((r) => xata.db.PairingBoardRoles.delete(r.xata_id)));
       return xata.db.PairingBoards.delete(id);
     }
     default:

@@ -13,6 +13,7 @@ import {
   Project,
   Role,
   Banner,
+  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 import { move_person, remove_person } from "~/func";
 import reset_pairs from "~/func/reset_pairs";
@@ -21,8 +22,7 @@ import { recommendPairs } from "~/func/recommend_pairs";
 import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
-import { BulkPersonUpdate } from "~/routes/person.bulk";
-import { useMemoDebugger } from "~/debug/UseDebug";
+import { BulkPersonUpdate } from "~/routes/person.bulk";``
 
 export interface IProjectContext {
   project: Project;
@@ -159,18 +159,13 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     copy.pairingBoards = copy.pairingBoards.filter(
       (pb) => pb.id !== pairingBoardId
     );
-    // call movePerson to move all people on the pairing board to the floating board
-    copy.people
-      .filter((p) => p.pairing_board_id === pairingBoardId)
-      .forEach((p) => {
-        movePerson(p, copy.floating);
-      });
-    // delete all of the roles associated with the pairing board
-    copy.roles
-      .filter((r) => r.pairing_board_id === pairingBoardId)
-      .forEach((r) => {
-        destroyRole(r);
-      });
+    // move all of the marooned people to the floating pairing board
+    copy.people = copy.people.map((p) => {
+      if (p.pairing_board_id === pairingBoardId) {
+        return { ...p, pairing_board_id: FLOATING_IDX };
+      }
+      return p;
+    });
     setProject(copy);
     mutator.submit(
       {},

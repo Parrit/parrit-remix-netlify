@@ -4,6 +4,9 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "firsttris.vscode-jest-runner",
-        "humao.rest-client"
+        "humao.rest-client",
+        "github.copilot",
+        "bradlc.vscode-tailwindcss",
+        "github.copilot-chat"
     ]
 }
