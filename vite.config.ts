@@ -8,9 +8,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["bcrypt"],
   },
-  resolve: {
-    alias: {
-      "@mui/styled-engine": "@mui/styled-engine-sc",
-    },
-  },
+  resolve: {},
 });
