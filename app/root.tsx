@@ -53,14 +53,13 @@ export function ErrorBoundary() {
       </head>
       <body>
         <div className="p-10 bg-yellow-100 layout-wrapper error-container">
-          <div className="error-image-wrapper w-full">
+          <div className="error-image-wrapper w-full flex flex-col items-center space-y-4">
             <div className="parrit-talk-bubble">
               <h1 className="error-message w-64">{`RAWWWK! What the heck!`}</h1>
             </div>
-
-            <pre>{`${error}`}</pre>
+            <pre className="error-details">{`${error}`}</pre>
             <button
-              className="button-red px-10"
+              className="error-button button-red px-10"
               onClick={() => window.location.replace("/logout")}
             >
               Get me out of here
