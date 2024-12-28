@@ -22,7 +22,9 @@ import { recommendPairs } from "~/func/recommend_pairs";
 import { DateTime } from "luxon";
 import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
-import { BulkPersonUpdate } from "~/routes/person.bulk";``
+import { BulkPersonUpdate } from "~/routes/person.bulk";
+import { HistoryDELETE } from "~/routes/project.$projectId.history/route";
+``;
 
 export interface IProjectContext {
   project: Project;
@@ -37,7 +39,7 @@ export interface IProjectContext {
   resetPairs: () => void;
   getRecommendedPairs: () => void;
   savePairing: () => void;
-  deletePairingArrangement: (pairingArrangementId: string) => void;
+  deletePairingArrangement: (snapshot: ProjectPairingSnapshot) => void;
   deletePairingBoard: (pairingBoardId: string) => void;
   nextBanner?: Banner;
   acknowledgeBanner: (banner: Banner) => void;
@@ -205,6 +207,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     const pairingHistories = pairingArrangements.flatMap((arrangement) => {
       return arrangement.pairingInstances.map((history) => {
         return {
+          id: history.id,
           pairingBoardName: history.pairingBoardName,
           people: history.people,
           pairingTime: history.pairingTime,
@@ -231,7 +234,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     const body: HistoryPOST = {
       snapshot: {
         pairingTime,
-        id: "",
         pairingInstances: pairing_instances(project, pairingTime),
         projectId: project.id,
       },
@@ -243,17 +245,25 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     });
   };
 
-  const deletePairingArrangement = (pairingArrangementId: string): void => {
-    console.error("deletePairingArrangement not yet implemented");
-    // setPairingArrangements(
-    //   pairingArrangements.filter((pa) => pa.id != pairingArrangementId)
-    // );
-
-    // deletePairingArrangementRequest(project.id, pairingArrangementId).then(
-    //   (updatedPairingArrangement) => {
-    //     setPairingArrangements(updatedPairingArrangement);
-    //   }
-    // );
+  const deletePairingArrangement = (
+    pairingArrangement: ProjectPairingSnapshot
+  ): void => {
+    const idsToDelete = pairingArrangement.pairingInstances
+      .map((instance) => instance.id)
+      .filter(Boolean) as string[];
+    // optimistic update
+    const copy = [...pairingArrangements];
+    const pairingIndex = copy.findIndex((p) =>
+      p.pairingInstances.map((i) => i.id).includes(idsToDelete[0])
+    );
+    copy.splice(pairingIndex, 1);
+    setPairingArrangements(copy);
+    const request: HistoryDELETE = { delete_ids: idsToDelete };
+    mutator.submit(request, {
+      method: "DELETE",
+      action: `history`,
+      encType: "application/json",
+    });
   };
 
   const acknowledgeBanner = (banner: Banner) => {

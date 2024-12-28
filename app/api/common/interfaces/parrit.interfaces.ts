@@ -1,4 +1,3 @@
-import { DateTime } from "luxon";
 import { DragItem } from "~/api/common/interfaces/dragdrop.interface";
 
 export interface Project {
@@ -31,13 +30,13 @@ export interface Role extends DragItem {
 }
 
 export interface ProjectPairingSnapshot {
-  id: string;
   projectId: string;
   pairingTime: string;
   pairingInstances: PairingInstance[];
 }
 
 export interface PairingInstance {
+  id?: string; // if id is undefined that means this isn't persisted yet
   projectId: string;
   pairingBoardName: string | null;
   people: Person[];

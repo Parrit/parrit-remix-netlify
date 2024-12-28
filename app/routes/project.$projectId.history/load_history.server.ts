@@ -86,6 +86,7 @@ export default async (
     if (idx === -1) {
       idx = snapshot.pairingInstances.length;
       snapshot.pairingInstances.push({
+        id: serialized.xata_id,
         pairingBoardName: serialized.pairing_board_name,
         people: [],
         pairingTime,

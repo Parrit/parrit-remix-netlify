@@ -53,7 +53,7 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
       <div
         className="delete-pairing-arrangement"
         onClick={() => {
-          deletePairingArrangement(pairingArrangement.id);
+          deletePairingArrangement(pairingArrangement);
         }}
       >
         <TrashIcon />

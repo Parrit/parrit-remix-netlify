@@ -13,6 +13,7 @@ Visit the app: https://parrit.io/
 - React
 - Xata.io
 - Netlify
+- Sentry (for bug detection)
 
 ## Core Contributors
 
