@@ -45,6 +45,9 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
     .getFirstOrThrow();
 
   const hydrated = selected.toSerializable() as unknown as SerializedProject;
+  hydrated.persons = hydrated.persons ?? { records: [] };
+  hydrated.roles = hydrated.roles ?? { records: [] };
+  hydrated.pairingBoards = hydrated.pairingBoards ?? { records: [] };
 
   const selectedPairingBoards = await xata.db.PairingBoards.select([
     "name",

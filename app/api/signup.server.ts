@@ -35,5 +35,13 @@ export default async ({
     password: hashedPassword,
   });
 
+  const serializedProject = project.toSerializable();
+
+  await xata.db.PairingBoards.create({
+    name: "Out of office",
+    project_id: serializedProject.xata_id,
+    exempt: true,
+  });
+
   return project;
 };
