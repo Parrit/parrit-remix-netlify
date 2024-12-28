@@ -10,6 +10,7 @@ import {
 
 import "~/styles/global.css";
 import layoutStyles from "~/styles/layout.css?url";
+import errorStyles from "~/styles/error.css?url";
 
 export const meta: MetaFunction = () => [
   {
@@ -21,6 +22,7 @@ export const meta: MetaFunction = () => [
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: layoutStyles },
+  { rel: "stylesheet", href: errorStyles },
 ];
 
 export default function App() {
@@ -50,20 +52,20 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body>
-        <div className="p-10 bg-yellow-100">
-          <h1>RAWWWK! Polly's in trouble!</h1>
-          <p>
-            We apologize for the inconvenience. Our team is working to fix the
-            issue.
-          </p>
-          <button
-            className="button-red px-10"
-            onClick={() => window.location.replace("/logout")}
-          >
-            Start over
-          </button>
-          {/* Optionally, display some debugging information for developers */}
-          <pre>{`${error}`}</pre>
+        <div className="p-10 bg-yellow-100 layout-wrapper error-container">
+          <div className="error-image-wrapper w-full">
+            <div className="parrit-talk-bubble">
+              <h1 className="error-message w-64">{`RAWWWK! What the heck!`}</h1>
+            </div>
+
+            <pre>{`${error}`}</pre>
+            <button
+              className="button-red px-10"
+              onClick={() => window.location.replace("/logout")}
+            >
+              Get me out of here
+            </button>
+          </div>
         </div>
         <Scripts />
       </body>
