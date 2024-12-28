@@ -1,4 +1,4 @@
-import "~/styles/inputs.css?url";
+import "~/styles/inputs.css";
 
 import React, { ReactNode } from "react";
 
