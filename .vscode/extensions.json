@@ -1,12 +1,13 @@
 {
-    "recommendations": [
-        "rvest.vs-code-prettier-eslint",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "firsttris.vscode-jest-runner",
-        "humao.rest-client",
-        "github.copilot",
-        "bradlc.vscode-tailwindcss",
-        "github.copilot-chat"
-    ]
+  "recommendations": [
+    "rvest.vs-code-prettier-eslint",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "firsttris.vscode-jest-runner",
+    "humao.rest-client",
+    "github.copilot",
+    "bradlc.vscode-tailwindcss",
+    "github.copilot-chat",
+    "yzhang.markdown-all-in-one"
+  ]
 }

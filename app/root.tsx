@@ -1,3 +1,4 @@
+import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -25,7 +26,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: errorStyles },
 ];
 
-export default function App() {
+function App() {
   return (
     <html lang="en">
       <head>
@@ -41,9 +42,12 @@ export default function App() {
   );
 }
 
+export default withSentry(App);
+
 export function ErrorBoundary() {
   const error = useRouteError();
   console.error(error);
+  captureRemixErrorBoundaryError(error);
   return (
     <html>
       <head>
