@@ -4,10 +4,7 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import * as isbotModule from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-
-// export const handleError = Sentry.wrapHandleErrorWithSentry((error, { request }) => {
-//   // Custom handleError implementation
-// });
+import * as Sentry from "@sentry/node";
 
 const ABORT_DELAY = 5_000;
 
@@ -83,6 +80,7 @@ function handleBotRequest(
           reject(error);
         },
         onError(error: unknown) {
+          Sentry.captureException(error);
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll
@@ -133,6 +131,7 @@ function handleBrowserRequest(
           reject(error);
         },
         onError(error: unknown) {
+          Sentry.captureException(error);
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll
