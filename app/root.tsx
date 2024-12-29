@@ -6,8 +6,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
   useRouteError,
 } from "@remix-run/react";
+import ReactGA from "react-ga4";
+import { useEffect } from "react";
 
 import "~/styles/global.css";
 import layoutStyles from "~/styles/layout.css?url";
@@ -24,9 +27,55 @@ export const meta: MetaFunction = () => [
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: layoutStyles },
   { rel: "stylesheet", href: errorStyles },
+  { rel: "icon", href: "/favicon.ico" },
 ];
 
+export const initGA = () => {
+  ReactGA.initialize("G-SS06K698MP"); // Replace with your Measurement ID
+};
+
+export const logPageView = (path: string) => {
+  ReactGA.send({ hitType: "pageview", page: path });
+};
+
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!document.getElementById("Cookiebot")) {
+      const script = document.createElement("script");
+      script.src = "https://consent.cookiebot.com/uc.js";
+      script.id = "Cookiebot";
+      script.setAttribute("data-cbid", "5c963d7c-d540-4606-b8f7-b1618d8c8fb4");
+      script.type = "text/javascript";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+    return () => {
+      const script = document.getElementById("Cookiebot");
+      if (script) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const Cookiebot = window.Cookiebot;
+
+    // Listen for Cookiebot consent changes
+    window.addEventListener("CookieConsentDeclaration", () => {
+      if (Cookiebot?.consents.given.includes("statistics")) {
+        // Enable Google Analytics if consent is given
+        initGA();
+        logPageView(location.pathname);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("CookieConsentDeclaration", () => {});
+    };
+  }, [location.pathname]);
+
   return (
     <html lang="en">
       <head>
