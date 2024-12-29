@@ -51,12 +51,6 @@ function App() {
       script.async = true;
       document.head.appendChild(script);
     }
-    return () => {
-      const script = document.getElementById("Cookiebot");
-      if (script) {
-        document.head.removeChild(script);
-      }
-    };
   }, []);
 
   useEffect(() => {
@@ -65,9 +59,6 @@ function App() {
     script.type = "text/javascript";
     script.src = "https://www.googletagmanager.com/gtag/js?id=G-SS06K698MP";
     document.head.appendChild(script);
-    return () => {
-      document.head.removeChild(script);
-    };
   }, []);
 
   useEffect(() => {
@@ -81,9 +72,6 @@ function App() {
       gtag('config', 'G-SS06K698MP');
     `;
     document.head.appendChild(script);
-    return () => {
-      document.head.removeChild(script);
-    };
   }, []);
 
   useEffect(() => {
