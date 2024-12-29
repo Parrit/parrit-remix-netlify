@@ -61,7 +61,10 @@ function App() {
 
   useEffect(() => {
     const script = document.createElement("script");
+    script.id = "GoogleTagManager";
+    script.type = "text/javascript";
     script.src = "https://www.googletagmanager.com/gtag/js?id=G-SS06K698MP";
+    document.head.appendChild(script);
     return () => {
       document.head.removeChild(script);
     };
@@ -69,12 +72,15 @@ function App() {
 
   useEffect(() => {
     const script = document.createElement("script");
+    script.id = "GoogleAnalytics";
+    script.type = "text/javascript";
     script.innerHTML = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-SS06K698MP');
     `;
+    document.head.appendChild(script);
     return () => {
       document.head.removeChild(script);
     };
