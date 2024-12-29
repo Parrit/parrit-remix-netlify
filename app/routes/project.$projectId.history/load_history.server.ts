@@ -46,7 +46,17 @@ export default async (
     ser.history_persons.records.forEach(({ person_id }) =>
       localPeoplePromises.push(
         xata.db.Persons.read(person_id).then((val) => {
+          if (val === null) {
+            return {
+              id: "-1",
+              name: "Flew the Coop",
+              pairing_board_id: FLOATING_IDX,
+              project_id: "-1",
+              type: "Person",
+            };
+          }
           if (!val?.xata_id || !val.name) {
+            console.error(val);
             throw new Error("retrieved person record missing critical data");
           }
           return {
