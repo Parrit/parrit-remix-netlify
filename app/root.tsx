@@ -6,11 +6,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
   useRouteError,
 } from "@remix-run/react";
-import ReactGA from "react-ga4";
-import { useEffect } from "react";
 
 import "~/styles/global.css";
 import layoutStyles from "~/styles/layout.css?url";
@@ -30,66 +27,66 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.ico" },
 ];
 
-export const initGA = () => {
-  ReactGA.initialize("G-SS06K698MP"); // Replace with your Measurement ID
-};
+// export const initGA = () => {
+//   ReactGA.initialize("G-SS06K698MP"); // Replace with your Measurement ID
+// };
 
-export const logPageView = (path: string) => {
-  ReactGA.send({ hitType: "pageview", page: path });
-};
+// export const logPageView = (path: string) => {
+//   ReactGA.send({ hitType: "pageview", page: path });
+// };
 
 function App() {
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    if (!document.getElementById("Cookiebot")) {
-      const script = document.createElement("script");
-      script.src = "https://consent.cookiebot.com/uc.js";
-      script.id = "Cookiebot";
-      script.setAttribute("data-cbid", "5c963d7c-d540-4606-b8f7-b1618d8c8fb4");
-      script.type = "text/javascript";
-      script.async = true;
-      document.head.appendChild(script);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!document.getElementById("Cookiebot")) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://consent.cookiebot.com/uc.js";
+  //     script.id = "Cookiebot";
+  //     script.setAttribute("data-cbid", "5c963d7c-d540-4606-b8f7-b1618d8c8fb4");
+  //     script.type = "text/javascript";
+  //     script.async = true;
+  //     document.head.appendChild(script);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.id = "GoogleTagManager";
-    script.type = "text/javascript";
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-SS06K698MP";
-    document.head.appendChild(script);
-  }, []);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.id = "GoogleTagManager";
+  //   script.type = "text/javascript";
+  //   script.src = "https://www.googletagmanager.com/gtag/js?id=G-SS06K698MP";
+  //   document.head.appendChild(script);
+  // }, []);
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.id = "GoogleAnalytics";
-    script.type = "text/javascript";
-    script.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-SS06K698MP');
-    `;
-    document.head.appendChild(script);
-  }, []);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.id = "GoogleAnalytics";
+  //   script.type = "text/javascript";
+  //   script.innerHTML = `
+  //     window.dataLayer = window.dataLayer || [];
+  //     function gtag(){dataLayer.push(arguments);}
+  //     gtag('js', new Date());
+  //     gtag('config', 'G-SS06K698MP');
+  //   `;
+  //   document.head.appendChild(script);
+  // }, []);
 
-  useEffect(() => {
-    const Cookiebot = window.Cookiebot;
+  // useEffect(() => {
+  //   const Cookiebot = window.Cookiebot;
 
-    // Listen for Cookiebot consent changes
-    window.addEventListener("CookieConsentDeclaration", () => {
-      if (Cookiebot?.consents.given.includes("statistics")) {
-        // Enable Google Analytics if consent is given
-        initGA();
-        logPageView(location.pathname);
-      }
-    });
+  //   // Listen for Cookiebot consent changes
+  //   window.addEventListener("CookieConsentDeclaration", () => {
+  //     if (Cookiebot?.consents.given.includes("statistics")) {
+  //       // Enable Google Analytics if consent is given
+  //       initGA();
+  //       logPageView(location.pathname);
+  //     }
+  //   });
 
-    return () => {
-      window.removeEventListener("CookieConsentDeclaration", () => {});
-    };
-  }, [location.pathname]);
+  //   return () => {
+  //     window.removeEventListener("CookieConsentDeclaration", () => {});
+  //   };
+  // }, [location.pathname]);
 
   return (
     <html lang="en">
