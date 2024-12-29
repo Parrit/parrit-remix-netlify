@@ -60,6 +60,27 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-SS06K698MP";
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SS06K698MP');
+    `;
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
     const Cookiebot = window.Cookiebot;
 
     // Listen for Cookiebot consent changes
