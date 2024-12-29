@@ -10,6 +10,7 @@ import { DragProvider } from "./DragContext";
 import { PairingBoardProvider } from "./PairingBoardContext";
 import { BannerView } from "../components/ui/BannerView";
 import { ProjectContext } from "./ProjectContext";
+import { Outlet } from "@remix-run/react";
 
 interface IWorkspaceContext {
   newPersonOpen: boolean;
@@ -59,18 +60,18 @@ export const Workspace: React.FC = () => {
             <h2 className="pairing-boards-title">Pairing Boards</h2>
             <PairingBoardList />
             <div
+              data-testid="addBoardButton"
               className="add-board-button"
               onClick={() => setNewPairingBoardOpen(true)}
             />
           </div>
-
+          <Outlet />
           {newPersonOpen && (
             <NameForm
               purpose="Person"
               onClose={() => setNewPersonOpen(false)}
             />
           )}
-
           {newPairingBoardOpen && (
             <NameForm
               purpose="PairingBoard"

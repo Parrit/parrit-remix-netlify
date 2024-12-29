@@ -120,6 +120,7 @@ export const NameForm: React.FC<Props> = (props) => {
           type="text"
           name="name"
           placeholder="Name"
+          data-testid="name-form-name-input"
         />
 
         <div className="buttons">

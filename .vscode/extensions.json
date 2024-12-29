@@ -8,6 +8,7 @@
     "github.copilot",
     "bradlc.vscode-tailwindcss",
     "github.copilot-chat",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "ms-playwright.playwright"
   ]
 }

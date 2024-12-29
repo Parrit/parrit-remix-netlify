@@ -4,6 +4,7 @@ import { Workspace } from "./contexts/Workspace";
 import { Button } from "~/ui/Button";
 import { Tooltip } from "~/ui/Tooltip";
 import { LoadingSpinner } from "~/ui/LoadingSpinner";
+import { Outlet } from "@remix-run/react";
 
 export const ProjectView: React.FC = () => {
   const {
@@ -18,9 +19,12 @@ export const ProjectView: React.FC = () => {
     <div className="project-page-container flex-grow flex flex-col">
       <div className="project flex-grow flex flex-col">
         <div className="sub-header">
-          <h1 className="project-name">{project.name}</h1>
+          <h1 data-testid="project-name" className="project-name">
+            {project.name}
+          </h1>
           <div className="project-actions flex space-x-4">
             <Button
+              data-testid="resetPairs"
               className="button-blue inline-flex items-center"
               data-tooltip-target="reset-pairs"
               onClick={resetPairs}
@@ -30,6 +34,7 @@ export const ProjectView: React.FC = () => {
             <Tooltip id="reset-pairs">Move All Pairs to Floating</Tooltip>
 
             <Button
+              data-testid="recommendPairs"
               className="button-blue inline-flex items-center"
               data-tooltip-target="recommend-pairs"
               onClick={getRecommendedPairs}
@@ -41,6 +46,7 @@ export const ProjectView: React.FC = () => {
             </Tooltip>
 
             <Button
+              data-testid="savePairing"
               className="button-green inline-flex items-center space-x-2"
               data-tooltip-target="save-pairing"
               onClick={savePairing}
