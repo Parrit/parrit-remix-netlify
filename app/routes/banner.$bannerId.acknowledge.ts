@@ -25,7 +25,6 @@ export const action: ActionFunction = async ({ request }) => {
           banner_id,
           seen_at: new Date().toISOString(),
         };
-        console.log("Creating new banner", newBanner);
         return await xata.db.Project_Banners.create(newBanner);
       }
     }

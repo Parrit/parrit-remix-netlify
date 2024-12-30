@@ -34,6 +34,7 @@ export default function Home_Login() {
         type="text"
         name="projectName"
         placeholder="Project Name"
+        data-cy="projectName"
       />
       <div className="error-message">{error?.data.fields?.password}</div>
       <input
@@ -41,12 +42,13 @@ export default function Home_Login() {
         type="password"
         name="password"
         placeholder="Password"
+        data-cy="password"
       />
-      <Button className="button-green" type="submit">
+      <Button className="button-green" type="submit" data-cy="submit">
         Login
       </Button>
       <div className="error-message">{error?.data.server}</div>
-      <Link className="button-blue" to="../signup" type="button">
+      <Link className="button-blue" to="../signup" type="button" data-cy="goToSignup">
         Create new project
       </Link>
     </Form>

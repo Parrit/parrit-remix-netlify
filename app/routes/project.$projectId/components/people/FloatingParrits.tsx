@@ -27,6 +27,7 @@ export const FloatingParrits: React.FC = () => {
 
   return (
     <div
+      data-cy="floatingParrits"
       onDrop={handleDrop}
       onDragOver={(event) => event.preventDefault()}
       className="floating-parrits"
@@ -35,6 +36,7 @@ export const FloatingParrits: React.FC = () => {
       <PersonList />
       <div className="floating-parrit-actions">
         <div
+          data-cy="addParritButton"
           className="add-parrit-button"
           onClick={() => setNewPersonOpen(true)}
         />

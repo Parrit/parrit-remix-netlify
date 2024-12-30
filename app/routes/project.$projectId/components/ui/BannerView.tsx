@@ -48,11 +48,14 @@ export const BannerView: React.FC = () => {
             ))}
           </div>
           <button
+            data-cy="banner-action"
             className="button-red mt-6 px-20 py-4 float-left font-overlock text-2xl font-bold"
             onClick={() => {
-              // open window to nextBanner.action_url
-              window.open(nextBanner.action_url, "_blank");
               acknowledgeBanner(nextBanner);
+              if (nextBanner.action_url) {
+                console.log("Opening", nextBanner.action_url);
+                window.open(nextBanner.action_url, "_blank");
+              }
             }}
           >
             {nextBanner.action_text}

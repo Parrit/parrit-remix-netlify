@@ -51,17 +51,20 @@ export const get_empty_pairing_board = (
   const populatedBoardIds = new Set<string>();
   project.people.forEach((p) => populatedBoardIds.add(p.pairing_board_id));
   const list = Array.from(populatedBoardIds);
-  return project.pairingBoards.find((pb) => !list.includes(pb.id));
+  const empty = project.pairingBoards.find(
+    (pb) => !list.includes(pb.id) && !pb.exempt
+  );
+  return empty;
 };
 
-export const find_pairing_board_by_person = (
-  project: Project,
-  person: Person
-): PairingBoard | undefined =>
-  project.pairingBoards.find(
-    (pb) =>
-      pb.id === project.people.find((p) => p.id === person.id)?.pairing_board_id
-  );
+// export const find_pairing_board_by_person = (
+//   project: Project,
+//   person: Person
+// ): PairingBoard | undefined =>
+//   project.pairingBoards.find(
+//     (pb) =>
+//       pb.id === project.people.find((p) => p.id === person.id)?.pairing_board_id
+//   );
 
 export const floating_people = (proj: Project) =>
   proj.people.filter(

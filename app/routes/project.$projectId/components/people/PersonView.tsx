@@ -7,6 +7,7 @@ interface Props {
 
 export const PersonView: React.FC<Props> = ({ person }) => (
   <div
+    data-cy={`person-${person.name}`}
     draggable
     role="Box"
     className="person"

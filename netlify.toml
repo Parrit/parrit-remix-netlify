@@ -6,11 +6,6 @@ publish = "build/client"
 command = "npm run dev"
 framework = "vite"
 
-[[plugins]]
-package = "netlify-plugin-cypress"
-[plugins.inputs]
-    record = false
-
 # Set immutable caching for static files, because they have fingerprinted filenames
 
 [[headers]]

@@ -10,6 +10,8 @@ import parritXataClient from "~/api/parritXataClient";
 import { sessionStorage } from "~/services/session.server";
 import { DropType } from "../../api/common/interfaces/dragdrop.interface";
 
+const PROJECT_RE = /\/project\/([^/]+)/;
+
 /**
  * Retrieves a project with its pairing boards and people.
  * @throws {typeof redirect} redirects to login if user is not found.
@@ -22,7 +24,10 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
   const record: ProjectsRecord = session.get("user");
   if (!record) throw redirect("/home/login");
 
-  if (!request.url.endsWith(record.xata_id)) {
+  const match = request.url.match(PROJECT_RE);
+  const projectId = match?.[1];
+
+  if (projectId !== record.xata_id) {
     // we can't look at other groups projects
     throw redirect(`/project/${record.xata_id}`);
   }

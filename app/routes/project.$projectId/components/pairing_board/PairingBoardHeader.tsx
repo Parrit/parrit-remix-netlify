@@ -81,6 +81,7 @@ export const PairingBoardHeader: React.FC = () => {
 
       {!exempt && (
         <div
+          data-cy={`delete-pairing-board-${name.toLowerCase}`}
           aria-label="delete pairing board"
           className="delete-pairing-board"
           onClick={() => deleteObj()}

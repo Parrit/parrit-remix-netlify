@@ -2,10 +2,10 @@ import {
   Project,
   Person,
   PairingInstance,
+  FLOATING_IDX,
 } from "~/api/common/interfaces/parrit.interfaces";
 import {
   can_a_pairing_be_made,
-  find_pairing_board_by_person,
   floating_people,
   get_empty_pairing_board,
   unpaired_sticking_people,
@@ -82,23 +82,27 @@ export class ProjectHelper {
     let topPair = this.pairFor(floatingPerson, project);
     for (let i = 0; topPair != undefined; i++) {
       topPair = this.pairFor(floatingPerson, project, i);
-
       if (topPair) {
-        const targetPairingBoard = find_pairing_board_by_person(
-          project,
-          topPair
-        );
-        if (targetPairingBoard) {
-          return move_person(project, floatingPerson, targetPairingBoard);
+        const targetPairingBoard = topPair.pairing_board_id;
+        if (targetPairingBoard !== FLOATING_IDX) {
+          const proj = move_person(project, floatingPerson, targetPairingBoard);
+          console.log("proj AA", proj);
+          return proj;
         } else {
           // we know top pair is floating because they have no pairing board
           const emptyPairingBoard = get_empty_pairing_board(project);
           if (emptyPairingBoard && !emptyPairingBoard.exempt) {
-            let proj = move_person(project, floatingPerson, emptyPairingBoard);
-            proj = move_person(proj, topPair, emptyPairingBoard);
+            let proj = move_person(
+              project,
+              floatingPerson,
+              emptyPairingBoard.id
+            );
+            proj = move_person(proj, topPair, emptyPairingBoard.id);
+            console.log("proj", proj);
             return proj;
+          } else {
+            // found 2 unmatched pairs but no empty pairing board
           }
-          // found 2 unmatched pairs but no empty pairing board
         }
       }
     }
@@ -119,7 +123,7 @@ export class ProjectHelper {
     const allAvailable = [
       ...floating_people(project),
       ...unpaired_sticking_people(project),
-    ].filter((p) => !!p);
+    ].filter((p) => !!p && p.id !== person.id);
     const partnerDates = allAvailable
       .map((p) => {
         if (person.id === p.id) {

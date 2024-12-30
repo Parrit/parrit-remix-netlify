@@ -46,6 +46,7 @@ export const PairingBoardView: React.FC = () => {
 
   return (
     <div
+      data-cy={`pairingBoard-${pairingBoard.name.toLowerCase()}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
