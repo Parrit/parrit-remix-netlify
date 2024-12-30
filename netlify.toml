@@ -7,7 +7,9 @@ command = "npm run dev"
 framework = "vite"
 
 [[plugins]]
-package = "@xata.io/netlify"
+package = "netlify-plugin-cypress"
+[plugins.inputs]
+    record = false
 
 # Set immutable caching for static files, because they have fingerprinted filenames
 

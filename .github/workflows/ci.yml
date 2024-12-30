@@ -9,30 +9,148 @@ on:
       - main
 
 jobs:
-  test:
+  setup:
     runs-on: ubuntu-latest
-
+    outputs:
+      node_version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Read Node.js version from .nvmrc
         id: nvmrc
-        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV && echo "::set-output name=NODE_VERSION::$(cat .nvmrc)"
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ steps.nvmrc.outputs.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.nvmrc.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: npm install
 
+      - name: Compress node_modules
+        run: tar -czf node_modules.tar.gz node_modules
+
+      - name: Save node_modules
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules.tar.gz
+
+  unit-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.setup.outputs.node_version }}
+
+      - name: Download and decompress node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: .
+      - run: tar -xzf node_modules.tar.gz
+
       - name: Run unit tests
         run: npm test
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.setup.outputs.node_version }}
+
+      - name: Download and decompress node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: .
+      - run: tar -xzf node_modules.tar.gz
 
       - name: Lint code
         run: npm run lint
 
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.setup.outputs.node_version }}
+
+      - name: Download and decompress node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: .
+      - run: tar -xzf node_modules.tar.gz
+
       - name: Build project
         run: npm run build
+
+  cypress-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.setup.outputs.node_version }}
+
+      - name: Download and decompress node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: .
+      - run: tar -xzf node_modules.tar.gz
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
+      - name: Install Cypress binary if not cached
+        run: npx cypress install
+
+      - name: Wait for Netlify Deploy
+        uses: jakepartusch/wait-for-netlify-action@v1
+        id: netlify
+        with:
+          site_name: "parrit"
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npx cypress run
+          config: baseUrl=${{ steps.netlify.outputs.url }}
