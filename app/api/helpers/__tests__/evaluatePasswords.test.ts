@@ -1,5 +1,5 @@
 import { evaluatePassword } from "../evaluatePassword";
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 
 describe("evaluatePasswords", () => {
   describe("salted sha256", () => {

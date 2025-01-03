@@ -21,7 +21,11 @@ module.exports = {
   },
 
   // Base config
-  extends: ["eslint:recommended"],
+  extends: ["eslint:recommended", "plugin:jest/recommended"],
+  plugins: ["jest"],
+  rules: {
+    "jest/prefer-importing-jest-globals": "error",
+  },
 
   overrides: [
     // React

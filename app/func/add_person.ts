@@ -1,7 +1,6 @@
 import { curry, over, lensProp, append, set } from "ramda";
 import {
   Person,
-  PairingBoard,
   Project,
 } from "~/api/common/interfaces/parrit.interfaces";
 

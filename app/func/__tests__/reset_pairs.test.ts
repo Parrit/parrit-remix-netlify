@@ -1,6 +1,6 @@
 import reset_pairs from "../reset_pairs";
 import { PROJECT_START } from "./common";
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 
 describe("reset_pairs", () => {
   it("moves everything from non-exempt PBs to floating", () => {

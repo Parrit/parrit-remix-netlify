@@ -1,5 +1,5 @@
 import { parseHashedPassword } from "../parseHashedPassword";
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 
 describe("parseHashedPasswords", () => {
   it("salted", () => {

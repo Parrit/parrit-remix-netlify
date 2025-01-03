@@ -5,5 +5,5 @@ export default {
   moduleNameMapper: {
     "^~(.*)$": "<rootDir>/app/$1",
   },
-  testMatch: ["**/?(*.)+(spec|test).+(ts|tsx|js)"],
+  testMatch: ["**/?(*.)+(test).+(ts|tsx|js)"],
 };

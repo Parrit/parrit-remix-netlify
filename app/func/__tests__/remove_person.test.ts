@@ -1,4 +1,4 @@
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 import { RED_PERSON, PROJECT_START, FLOATING_PERSON } from "./common";
 import remove_person from "../remove_person";
 import { can_a_pairing_be_made } from "../utils";

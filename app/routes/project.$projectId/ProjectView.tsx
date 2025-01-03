@@ -4,7 +4,6 @@ import { Workspace } from "./contexts/Workspace";
 import { Button } from "~/ui/Button";
 import { Tooltip } from "~/ui/Tooltip";
 import { LoadingSpinner } from "~/ui/LoadingSpinner";
-import { Outlet } from "@remix-run/react";
 
 export const ProjectView: React.FC = () => {
   const {

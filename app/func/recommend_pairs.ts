@@ -86,7 +86,6 @@ export class ProjectHelper {
         const targetPairingBoard = topPair.pairing_board_id;
         if (targetPairingBoard !== FLOATING_IDX) {
           const proj = move_person(project, floatingPerson, targetPairingBoard);
-          console.log("proj AA", proj);
           return proj;
         } else {
           // we know top pair is floating because they have no pairing board
@@ -98,7 +97,6 @@ export class ProjectHelper {
               emptyPairingBoard.id
             );
             proj = move_person(proj, topPair, emptyPairingBoard.id);
-            console.log("proj", proj);
             return proj;
           } else {
             // found 2 unmatched pairs but no empty pairing board
