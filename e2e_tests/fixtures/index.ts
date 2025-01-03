@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProjectPage } from "./ProjectPage";
 import { test as base, expect as baseExpect, Page } from "@playwright/test";
+import { v4 as uuidv4 } from "uuid";
 
 const UI_DELAY = 2000;
 
@@ -19,7 +20,7 @@ export const test = base.extend<ParritFixtures>({
     await page.close();
   },
   cleanProject: async ({ freshPage }, use) => {
-    const projectName = "playwright-" + new Date().getTime();
+    const projectName = "playwright-" + uuidv4();
     const password = "parrit";
 
     // create a project
