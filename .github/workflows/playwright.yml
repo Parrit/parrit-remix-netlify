@@ -31,9 +31,6 @@ jobs:
       - name: Run Playwright tests
         run: URL=${{steps.netlify.outputs.url}} npx playwright test
 
-      - name: Generate Playwright HTML Report
-        run: npx playwright show-report
-
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
