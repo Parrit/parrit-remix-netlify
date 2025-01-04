@@ -41,6 +41,7 @@ export const Header: React.FC = () => {
           </a>
         </h3>
         <h3
+          data-testid="historyButton"
           className={classes}
           onClick={() => {
             setPairingHistoryOpen(!pairingHistoryOpen);

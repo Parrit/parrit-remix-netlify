@@ -36,7 +36,6 @@ export const loader: LoaderFunction = async ({ request }) => {
           title: banner.title ?? "ERR",
           paragraphs: banner.paragraphs ?? [],
           action_text: banner.action_text ?? "ERR",
-          action_url: banner.action_url ?? "ERR",
           seen_at,
         };
       });

@@ -48,6 +48,6 @@ export interface Banner {
   title: string;
   paragraphs: string[];
   action_text: string;
-  action_url: string;
+  action_url?: string;
   seen_at?: string;
 }

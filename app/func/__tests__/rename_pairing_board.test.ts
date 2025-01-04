@@ -1,4 +1,4 @@
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 import { FLOATING_IDX } from "~/api/common/interfaces/parrit.interfaces";
 import { PROJECT_START, PB_RED } from "./common";
 import rename_pairing_board from "../rename_pairing_board";

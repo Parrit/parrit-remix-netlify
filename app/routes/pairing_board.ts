@@ -10,7 +10,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const form = await request.formData();
       const project_id = form.get("project_id")?.toString();
       const name = form.get("name")?.toString();
-      console.log("POST /pairing_board", { project_id, name });
 
       if (!name || name.length === 0) {
         // TODO: This is an anti-pattern

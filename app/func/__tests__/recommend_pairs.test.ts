@@ -2,7 +2,7 @@ import { Person } from "~/api/common/interfaces/parrit.interfaces";
 import { recommendPairs } from "../recommend_pairs";
 import { can_a_pairing_be_made } from "../utils";
 import { PROJECT_START } from "./common";
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 
 describe("recommend_pairs", () => {
   it("recommends pairs", () => {

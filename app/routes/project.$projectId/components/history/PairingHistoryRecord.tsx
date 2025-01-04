@@ -15,8 +15,22 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
   ).toFormat("MMMM d y, h:mm a");
   const { deletePairingArrangement } = useContext(ProjectContext);
 
+  // generate a deterministic test id based on first 3 letters of each person's name and the first 3 letters of the board name
+  const testId = pairingArrangement.pairingInstances
+    .map((instance) => {
+      const pbName = instance.pairingBoardName ?? "null";
+      // get the first 3 letters of each person's name
+      const names = instance.people.map((person) => person.name.slice(0, 3));
+      names.push(pbName.slice(0, 3));
+      // alphabetize the names
+      names.sort();
+      return names.join("-");
+    })
+    .join("-")
+    .toLowerCase();
+
   return (
-    <div className="pairing-history-record">
+    <div data-testid={`record-${testId}`} className="pairing-history-record">
       <div className="pairing-history-record-clock" />
       <h3 className="pairing-time">{formattedDate}</h3>
 
@@ -51,6 +65,7 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
         })}
       </div>
       <div
+        data-testid={`delete-pairing-arrangement-${testId}`}
         className="delete-pairing-arrangement"
         onClick={() => {
           deletePairingArrangement(pairingArrangement);

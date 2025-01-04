@@ -1,6 +1,6 @@
 import { evaluatePassword } from "../evaluatePassword";
 import hashPassword from "../hashPassword";
-import { expect } from "@jest/globals";
+import { describe, expect, it } from '@jest/globals';
 
 describe("hashPassword", () => {
   it("is under test", () => {

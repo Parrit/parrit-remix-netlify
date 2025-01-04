@@ -82,6 +82,22 @@ module.exports = {
       },
     },
 
+    // Jest
+    {
+      files: ["**/*.test.{js,ts,jsx,tsx}"],
+      plugins: ["jest"],
+      extends: ["plugin:jest/recommended"],
+      rules: {
+        "jest/prefer-importing-jest-globals": "error",
+      },
+    },
+
+    // Playwright
+    {
+      files: ["**/*.spec.{js,ts,jsx,tsx}"],
+      plugins: ["playwright"],
+      extends: ["plugin:playwright/recommended"],
+    },
     // Node
     {
       files: [".eslintrc.js"],

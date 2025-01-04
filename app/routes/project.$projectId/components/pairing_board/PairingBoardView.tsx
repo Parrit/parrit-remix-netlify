@@ -46,6 +46,7 @@ export const PairingBoardView: React.FC = () => {
 
   return (
     <div
+      data-testid={`pairingBoard-${pairingBoard.name}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

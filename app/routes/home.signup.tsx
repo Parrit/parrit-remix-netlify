@@ -35,6 +35,7 @@ export default function Home_Signup() {
         type="text"
         name="projectName"
         placeholder="Project Name"
+        data-testid="projectName"
       />
       <div className="error-message">{error?.data.fields?.password}</div>
       <input
@@ -42,12 +43,18 @@ export default function Home_Signup() {
         type="password"
         name="password"
         placeholder="Password"
+        data-testid="password"
       />
-      <Button className="button-blue" type="submit">
+      <Button className="button-blue" type="submit" data-testid="submit">
         Create
       </Button>
       <div className="error-message">{error?.data.server}</div>
-      <Link className="button-blue" to="../login" type="button">
+      <Link
+        className="button-blue"
+        to="../login"
+        type="button"
+        data-testid="goToLogin"
+      >
         Login to existing project
       </Link>
     </Form>

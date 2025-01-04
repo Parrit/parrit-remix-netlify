@@ -1,4 +1,4 @@
-import { expect } from "@jest/globals";
+import { expect, it } from '@jest/globals';
 import { PROJECT_START } from "./common";
 import {
   can_a_pairing_be_made,

@@ -24,7 +24,8 @@ import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
 import { BulkPersonUpdate } from "~/routes/person.bulk";
 import { HistoryDELETE } from "~/routes/project.$projectId.history/route";
-``;
+
+const PROJECT_RE = /\/project\/([^/]+)/;
 
 export interface IProjectContext {
   project: Project;
@@ -66,9 +67,14 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const [pairingHistoryWorking, setPairingHistoryWorking] = useState(false);
   const [banners, setBanners] = useState<Banner[]>([]);
 
+  const projectId = useMemo(() => {
+    const pathmatch = location.pathname.match(PROJECT_RE);
+    return pathmatch?.[1];
+  }, [location.pathname]);
+
   useEffect(() => {
     try {
-      projectFetcher.load(location.pathname);
+      projectFetcher.load(`/project/${projectId}`);
     } catch (err) {
       console.error(err);
     }
@@ -83,7 +89,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   useEffect(() => {
     try {
-      historyFetcher.load(`${location.pathname}/history`);
+      historyFetcher.load(`/project/${projectId}/history`);
     } catch (err) {
       console.error(err);
     }
@@ -99,7 +105,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
 
   useEffect(() => {
     try {
-      bannersFetcher.load(`${location.pathname}/banner`);
+      bannersFetcher.load(`/project/${projectId}/banner`);
     } catch (err) {
       console.error(err);
     }
@@ -137,7 +143,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     );
 
   const movePerson = (person: Person, position: PairingBoard) => {
-    setProject((oldVal) => move_person(oldVal, person, position));
+    setProject((oldVal) => move_person(oldVal, person, position.id));
     return mutator.submit(
       { ...person, project_id: project.id, pairing_board_id: position.id },
       {
@@ -201,7 +207,25 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     );
   };
 
-  const resetPairs = () => setProject(reset_pairs(project));
+  const resetPairs = () => {
+    // get the exempt boards
+    const exemptBoards = project.pairingBoards.filter((pb) => pb.exempt);
+    // get the people not on an exempt board
+    const people = project.people.filter(
+      (person) => !exemptBoards.find((pb) => pb.id === person.pairing_board_id)
+    );
+    const request: BulkPersonUpdate = {
+      persons: people.map((person) => {
+        return { ...person, pairing_board_id: FLOATING_IDX };
+      }),
+    };
+    mutator.submit(request, {
+      method: "PUT",
+      action: `/person/bulk`,
+      encType: "application/json",
+    });
+    setProject(reset_pairs(project));
+  };
 
   const getRecommendedPairs = () => {
     const pairingHistories = pairingArrangements.flatMap((arrangement) => {

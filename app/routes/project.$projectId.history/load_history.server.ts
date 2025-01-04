@@ -18,21 +18,22 @@ export default async (
   }
   const project_id = idMatch[1];
   const xata = parritXataClient();
-  const selected = await xata.db.PairingHistory.select([
-    "pairing_board_name",
-    "timestamp",
-    "project_id",
-    {
-      name: "<-PairingHistory_Persons.pairing_history_id",
-      columns: ["person_id"],
-      as: "history_persons",
-    },
-  ])
-    .filter({
-      $all: [{ project_id }, { xata_createdat: { $ge: get30DaysAgo() } }],
-    })
-    .sort("timestamp", "desc")
-    .getPaginated({ pagination: { size: 25 } });
+  const selected =
+    (await xata.db.PairingHistory.select([
+      "pairing_board_name",
+      "timestamp",
+      "project_id",
+      {
+        name: "<-PairingHistory_Persons.pairing_history_id",
+        columns: ["person_id"],
+        as: "history_persons",
+      },
+    ])
+      .filter({
+        $all: [{ project_id }, { xata_createdat: { $ge: get30DaysAgo() } }],
+      })
+      .sort("timestamp", "desc")
+      .getPaginated({ pagination: { size: 25 } })) ?? [];
 
   const serializedPairingHistory = selected.records.map((record) =>
     record.toSerializable()
@@ -43,7 +44,7 @@ export default async (
 
   const localPeoplePromises: Promise<Person>[] = [];
   serializedPairingHistory.forEach((ser) => {
-    ser.history_persons.records.forEach(({ person_id }) =>
+    ser.history_persons?.records.forEach(({ person_id }) =>
       localPeoplePromises.push(
         xata.db.Persons.read(person_id).then((val) => {
           if (val === null) {
@@ -108,7 +109,7 @@ export default async (
 
     const peopleSet = new Set<Person>(instance.people);
 
-    serialized.history_persons.records.forEach((r) =>
+    serialized.history_persons?.records.forEach((r) =>
       peopleSet.add(localPeople[r.person_id])
     );
 
@@ -126,7 +127,7 @@ function get30DaysAgo(): Date {
 }
 
 interface SerializedPairingHistory {
-  history_persons: { records: { person_id: string }[] };
+  history_persons?: { records: { person_id: string }[] };
   pairing_board_name: string;
   project_id: string;
   xata_createdat: string;

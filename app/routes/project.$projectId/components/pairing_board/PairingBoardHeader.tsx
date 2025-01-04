@@ -46,6 +46,7 @@ export const PairingBoardHeader: React.FC = () => {
       {editing ? (
         <div className="pairing-board-name-wrapper">
           <input
+            data-testid="pairingBoardNameInput"
             name="pairing_board_name"
             aria-label="pairing board name"
             value={nameVal}
@@ -61,6 +62,7 @@ export const PairingBoardHeader: React.FC = () => {
         </div>
       ) : (
         <div
+          data-testid={`rename-pairing-board-${name.toLowerCase()}`}
           className="pairing-board-name-wrapper"
           onClick={() => setEditing(true)}
         >
@@ -81,6 +83,7 @@ export const PairingBoardHeader: React.FC = () => {
 
       {!exempt && (
         <div
+          data-testid={`delete-pairing-board-${name.toLowerCase()}`}
           aria-label="delete pairing board"
           className="delete-pairing-board"
           onClick={() => deleteObj()}

@@ -1,10 +1,9 @@
-import { expect } from "@jest/globals";
+import { describe, expect, it } from "@jest/globals";
 import {
   PROJECT_START,
   FLOATING_PERSON,
   PB_BLUE,
   RED_PERSON,
-  FLOATING_PARRITS,
   PB_RED,
 } from "./common";
 import move_person from "../move_person";
@@ -13,7 +12,7 @@ import { FLOATING_IDX } from "~/api/common/interfaces/parrit.interfaces";
 
 describe("move_person", () => {
   it("moving from floating to blue", () => {
-    const result = move_person(PROJECT_START, FLOATING_PERSON, PB_BLUE);
+    const result = move_person(PROJECT_START, FLOATING_PERSON, PB_BLUE.id);
     const floating = result.people.filter(
       (p) => p.pairing_board_id === FLOATING_IDX
     );
@@ -28,7 +27,7 @@ describe("move_person", () => {
   });
 
   it("moving from red to floating", () => {
-    const result = move_person(PROJECT_START, RED_PERSON, FLOATING_PARRITS);
+    const result = move_person(PROJECT_START, RED_PERSON, FLOATING_IDX);
     const floating = result.people.filter(
       (p) => p.pairing_board_id === FLOATING_IDX
     );
@@ -42,11 +41,7 @@ describe("move_person", () => {
   });
 
   it("handles copies of objects", () => {
-    const result = move_person(
-      PROJECT_START,
-      { ...RED_PERSON },
-      FLOATING_PARRITS
-    );
+    const result = move_person(PROJECT_START, { ...RED_PERSON }, FLOATING_IDX);
     const floating = result.people.filter(
       (p) => p.pairing_board_id === FLOATING_IDX
     );

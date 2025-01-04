@@ -22,7 +22,7 @@ export const PairingHistory: React.FC = () => {
   }
 
   return (
-    <div className={classes}>
+    <div data-testid="pairingHistoryPanel" className={classes}>
       <div className="inner-pairing-history-wrapper">
         <div className="header">
           <div className="header-text">
@@ -30,6 +30,7 @@ export const PairingHistory: React.FC = () => {
             <h3>History is stored for 30 days.</h3>
           </div>
           <div
+            data-testid="closeHistory"
             aria-label="close history"
             className="cancel"
             onClick={() => {
