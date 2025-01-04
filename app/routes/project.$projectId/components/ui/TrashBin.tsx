@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import classNames from "classnames";
+import { clsy } from "~/func/clsy";
 import { Person, Role } from "~/api/common/interfaces/parrit.interfaces";
 import { DragItem } from "~/api/common/interfaces/dragdrop.interface";
 import { ProjectContext } from "../../contexts/ProjectContext";
@@ -35,7 +35,7 @@ export const TrashBin: React.FC = () => {
     }
   };
 
-  const classes = classNames({
+  const classes = clsy({
     "trash-bin": true,
     "drop-target": isOver,
   });

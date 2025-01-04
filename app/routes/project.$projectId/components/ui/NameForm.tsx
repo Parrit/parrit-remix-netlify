@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import classNames from "classnames";
+import { clsy } from "~/func/clsy";
 import { useFetcher } from "@remix-run/react";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import ReactDOM from "react-dom";
 import { ParritError } from "~/api/common/ParritError";
 import { PairingBoard } from "~/api/common/interfaces/parrit.interfaces";
 import { LoadingSpinner } from "~/ui/LoadingSpinner";
+import { Button } from "~/ui/Button";
 
 export type NameFormPurpose = "Person" | "Role" | "PairingBoard";
 
@@ -78,7 +79,7 @@ export const NameForm: React.FC<Props> = (props) => {
     throw new Error("Cannot render NameForm without #modal-root");
   }
 
-  const inputClasses = classNames({
+  const inputClasses = clsy({
     "form-control": true,
     error: error !== undefined,
   });
@@ -121,20 +122,21 @@ export const NameForm: React.FC<Props> = (props) => {
           name="name"
           placeholder="Name"
           data-testid="name-form-name-input"
+          autoComplete="off"
         />
 
         <div className="buttons">
-          <button type="submit" className="button-blue" disabled={isLoading}>
+          <Button type="submit" className="button-blue" disabled={isLoading}>
             OK
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={props.onClose}
             className="button-red"
             disabled={isLoading}
           >
             Cancel
-          </button>
+          </Button>
 
           {isLoading && (
             <div style={{ marginLeft: "auto" }}>

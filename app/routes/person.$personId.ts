@@ -10,7 +10,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   switch (request.method) {
     case "DELETE": {
-      console.log("deleting person", id);
       await xata.db.Persons.update(id, {
         project_id: null,
         pairing_board_id: null,

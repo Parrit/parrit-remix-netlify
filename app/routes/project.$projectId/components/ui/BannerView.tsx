@@ -3,6 +3,7 @@ import { ProjectContext } from "../../contexts/ProjectContext";
 import ReactDOM from "react-dom";
 import parritIcon from "~/styles/images/parrit-head.svg";
 import closeSytemIcon from "~/styles/images/close-modal-dark.svg";
+import { Button } from "~/ui/Button";
 
 export const BannerView: React.FC = () => {
   const { nextBanner, acknowledgeBanner } = useContext(ProjectContext);
@@ -47,19 +48,18 @@ export const BannerView: React.FC = () => {
               </p>
             ))}
           </div>
-          <button
+          <Button
             data-testid="banner-action"
             className="button-red mt-6 px-20 py-4 float-left font-overlock text-2xl font-bold"
             onClick={() => {
               acknowledgeBanner(nextBanner);
               if (nextBanner.action_url) {
-                console.log("Opening", nextBanner.action_url);
                 window.open(nextBanner.action_url, "_blank");
               }
             }}
           >
             {nextBanner.action_text}
-          </button>
+          </Button>
           <p className="mt-4 float-left">
             Have questions or interested in volunteering? Send a note to:{" "}
             <a

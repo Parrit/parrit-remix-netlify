@@ -38,7 +38,7 @@ h3 {
   line-height: 18px;
 }
 
-button {
+.button {
   cursor: pointer;
   min-height: 50px;
   border: none;
@@ -47,33 +47,42 @@ button {
   font-size: 18px;
   color: white;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button.button-blue {
+.button.button-blue {
   background-color: #89d4e5;
 }
 
-button.button-blue:hover {
+.button.button-blue:hover {
   background-color: #9ef1ff;
 }
 
-button.button-green {
+.button.button-green {
   background-color: #bdd63e;
 }
 
-button.button-green:hover {
+.button.button-green:hover {
   background-color: #d4f338;
 }
 
-button.button-red {
+.button.button-red {
   background-color: #f3736c;
 }
 
-button.button-red:hover {
+.button.button-red:hover {
   background-color: #ef3e33;
 }
 
-button:disabled {
+.button.disabled {
+  background-color: #b3b3b3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.button.disabled:hover {
   background-color: #b3b3b3;
 }
 

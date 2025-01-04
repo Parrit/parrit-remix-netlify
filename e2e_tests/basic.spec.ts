@@ -39,8 +39,8 @@ test("basic login form validation", async ({ loginInfo, freshPage }) => {
 
 test("basic signup form validation", async ({ loginInfo, freshPage }) => {
   await freshPage.goto("/");
-  await freshPage.getByTestId("goToSignup").click();
-
+  await freshPage.getByTestId("change-form").click();
+  await freshPage.waitForURL("/home/signup");
   await freshPage.getByTestId("submit").click();
   await expect(freshPage.getByTestId("project_name_error")).toContainText(
     "Project Name is required."
@@ -72,23 +72,26 @@ test("advanced form validation", async ({ loginInfo, cleanProject }) => {
   await page.getByTestId("password").click();
   await page.getByTestId("password").fill("NOPE_CHUCK_TESTA");
   await page.getByTestId("submit").click();
+  await cleanProject.waitForUIUpdate();
   await expect(page.getByTestId("server_error")).toContainText(
     "Incorrect password"
   );
 
-  await page.getByTestId("goToSignup").click();
+  await page.getByTestId("change-form").click();
   await page.getByTestId("projectName").click();
   await page.getByTestId("projectName").fill(loginInfo.projectName);
   await page.getByTestId("password").click();
   await page.getByTestId("password").fill(loginInfo.password);
   await page.getByTestId("submit").click();
+  await cleanProject.waitForUIUpdate();
 
   await expect(page.getByTestId("server_error")).toContainText(
     "A project with this name already exists."
   );
 
   // log in for real so that we can delete the project
-  await page.getByTestId("goToLogin").click();
+  await page.getByTestId("change-form").click();
+  await page.waitForURL("/home/login");
   await page.getByTestId("projectName").click();
   await page.getByTestId("projectName").fill(loginInfo.projectName);
   await page.getByTestId("password").click();

@@ -37,12 +37,14 @@ export const test = base.extend<ParritFixtures>({
 
     // create a project
     await freshPage.goto("/");
-    await freshPage.getByTestId("goToSignup").click();
+    await freshPage.getByTestId("change-form").click();
+    await freshPage.waitForURL("/home/signup");
     await freshPage.getByTestId("projectName").click();
     await freshPage.getByTestId("projectName").fill(projectName);
     await freshPage.getByTestId("projectName").press("Tab");
     await freshPage.getByTestId("password").fill(password);
     await freshPage.getByTestId("submit").click();
+    await freshPage.waitForTimeout(UI_DELAY);
     await freshPage.getByTestId("banner-action").click();
     // get the project id from the url
     const url = freshPage.url();

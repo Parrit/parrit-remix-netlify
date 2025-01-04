@@ -36,6 +36,10 @@ export class ProjectPage {
     await this.page.waitForTimeout(UI_DELAY);
   }
 
+  async waitForUIUpdate() {
+    await this.page.waitForTimeout(UI_DELAY);
+  }
+
   async dragParritToBoard(parritName: string, boardName: string) {
     const dragTarget = this.page.getByTestId(`person-${parritName}`);
     const dropTarget = this.page.getByTestId(`pairingBoard-${boardName}`);

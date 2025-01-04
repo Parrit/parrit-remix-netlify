@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { useActionData, useNavigation } from "@remix-run/react";
 import {
   LoginResult,
   LoginRequest,
@@ -7,7 +7,7 @@ import {
 import { ParritError } from "~/api/common/ParritError";
 
 import { NEW_PROJECT, authenticator } from "~/services/auth.server";
-import { Button } from "~/ui/Button";
+import { ProjectForm } from "~/ui/ProjectForm";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -25,44 +25,18 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Home_Signup() {
   const data = useActionData<typeof action>() as LoginResult | undefined;
   const error = ParritError.fromString<LoginRequest>(data?.message);
+  const navigation = useNavigation();
+  const submitting = navigation.formAction === "/home/signup";
 
   return (
-    <Form className="form new-form" method="post">
-      <h2 className="form-label">Create a project</h2>
-      <div data-testid="project_name_error" className="error-message">
-        {error?.data.fields?.projectName}
-      </div>
-      <input
-        className={error?.data.fields?.projectName ? "error" : ""}
-        type="text"
-        name="projectName"
-        placeholder="Project Name"
-        data-testid="projectName"
-      />
-      <div data-testid="password_error" className="error-message">
-        {error?.data.fields?.password}
-      </div>
-      <input
-        className={error?.data.fields?.password ? "error" : ""}
-        type="password"
-        name="password"
-        placeholder="Password"
-        data-testid="password"
-      />
-      <Button className="button-blue" type="submit" data-testid="submit">
-        Create
-      </Button>
-      <div data-testid="server_error" className="error-message">
-        {error?.data.server}
-      </div>
-      <Link
-        className="button-blue"
-        to="../login"
-        type="button"
-        data-testid="goToLogin"
-      >
-        Login to existing project
-      </Link>
-    </Form>
+    <ProjectForm
+      submitting={submitting}
+      error={error}
+      strings={{
+        title: "Create a new project",
+        actionButton: "Create",
+        linkButton: { href: "/home/login", text: "Login to existing project" },
+      }}
+    />
   );
 }

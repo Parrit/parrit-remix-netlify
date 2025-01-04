@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useState } from "react";
-import classNames from "classnames";
 import { WorkspaceContext } from "../../contexts/Workspace";
 import { PairingBoardContext } from "../../contexts/PairingBoardContext";
+import { clsy } from "~/func/clsy";
 
 export const PairingBoardHeader: React.FC = () => {
   const { setNewRoleOpen } = useContext(WorkspaceContext);
@@ -36,7 +36,7 @@ export const PairingBoardHeader: React.FC = () => {
     setNewRoleOpen(true, pairingBoard);
   };
 
-  const nameInputClasses = classNames({
+  const nameInputClasses = clsy({
     "editing-pairing-board-name": true,
     error: editingError != undefined,
   });
