@@ -26,7 +26,11 @@ export const Header: React.FC = () => {
         </h3>
         <Form method="DELETE" action="/logout">
           <h3>
-            <Button className="font-overlock font" type="submit">
+            <Button
+              data-testid="logout-button"
+              className="font-overlock font"
+              type="submit"
+            >
               LOGOUT
             </Button>
           </h3>

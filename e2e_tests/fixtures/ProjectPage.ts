@@ -3,7 +3,7 @@ import { Page } from "playwright/test";
 const UI_DELAY = 2000;
 
 export class ProjectPage {
-  constructor(public readonly page: Page) {}
+  constructor(public readonly page: Page, public readonly projectId: string) {}
 
   async createParrit(name: string) {
     await this.page.getByTestId("addParritButton").click();
