@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProjectPage } from "./ProjectPage";
 import { test as base, expect as baseExpect, Page } from "@playwright/test";
-import { v4 as uuidv4 } from "uuid";
 
 const UI_DELAY = 2000;
 
@@ -20,7 +19,9 @@ export const test = base.extend<ParritFixtures>({
     await page.close();
   },
   cleanProject: async ({ freshPage }, use) => {
-    const projectName = "playwright-" + uuidv4();
+    // random integer to make project name unique
+    const random = Math.floor(Math.random() * 1000);
+    const projectName = "playwright-" + new Date().getTime() + `_${random}`;
     const password = "parrit";
 
     // create a project
