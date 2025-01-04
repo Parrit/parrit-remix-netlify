@@ -13,6 +13,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@estruyf/github-actions-reporter": "^1.9.2",
     "@fontsource/overlock": "^5.1.0",
     "@fontsource/raleway": "^5.1.0",
     "@heroicons/react": "^2.2.0",
