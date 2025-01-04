@@ -5,24 +5,35 @@ import { test as base, expect as baseExpect, Page } from "@playwright/test";
 
 const UI_DELAY = 2000;
 
+export interface LoginInfo {
+  projectName: string;
+  password: string;
+}
+
 type ParritFixtures = {
   freshPage: Page;
+  loginInfo: LoginInfo;
   cleanProject: ProjectPage;
   withPairingHistory: ProjectPage;
 };
 
 export const test = base.extend<ParritFixtures>({
+  // eslint-disable-next-line no-empty-pattern
+  loginInfo: async ({}, use) => {
+    const random = Math.floor(Math.random() * 1000);
+    const projectName = "playwright-" + new Date().getTime() + `_${random}`;
+    const password = "parrit";
+    await use({ projectName, password });
+  },
   freshPage: async ({ context }, use) => {
     const page = await context.newPage();
     await page.context().clearCookies();
     await use(page);
     await page.close();
   },
-  cleanProject: async ({ freshPage }, use) => {
-    // random integer to make project name unique
-    const random = Math.floor(Math.random() * 1000);
-    const projectName = "playwright-" + new Date().getTime() + `_${random}`;
-    const password = "parrit";
+
+  cleanProject: async ({ freshPage, loginInfo }, use) => {
+    const { projectName, password } = loginInfo;
 
     // create a project
     await freshPage.goto("/");
@@ -41,7 +52,7 @@ export const test = base.extend<ParritFixtures>({
     }
     const projectId = match[1];
 
-    const projectPage = new ProjectPage(freshPage);
+    const projectPage = new ProjectPage(freshPage, projectId);
 
     // setup baseline parrits
     await projectPage.createParrit("Alice");

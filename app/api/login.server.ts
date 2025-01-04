@@ -21,7 +21,13 @@ export default async ({
   const xata = parritXataClient();
   const project = await xata.db.Projects.filter({
     name: projectName,
-  }).getFirstOrThrow();
+  }).getFirst();
+
+  if (!project) {
+    throw new ParritError({
+      server: "Project not found.",
+    });
+  }
 
   if (!project.password) {
     throw new ParritError({
