@@ -14,6 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       successRedirect: "/project",
     });
   } catch (error) {
+    console.error(error);
     if (error instanceof Response) {
       return error;
     }
@@ -28,7 +29,9 @@ export default function Home_Login() {
   return (
     <Form className="form login-form" method="post">
       <h2 className="form-label">Login to your project</h2>
-      <div className="error-message">{error?.data.fields?.projectName}</div>
+      <div data-testid="project_name_error" className="error-message">
+        {error?.data.fields?.projectName}
+      </div>
       <input
         className={error?.data.fields?.projectName ? "error" : ""}
         type="text"
@@ -36,7 +39,9 @@ export default function Home_Login() {
         placeholder="Project Name"
         data-testid="projectName"
       />
-      <div className="error-message">{error?.data.fields?.password}</div>
+      <div data-testid="password_error" className="error-message">
+        {error?.data.fields?.password}
+      </div>
       <input
         className={error?.data.fields?.password ? "error" : ""}
         type="password"
@@ -47,7 +52,9 @@ export default function Home_Login() {
       <Button className="button-green" type="submit" data-testid="submit">
         Login
       </Button>
-      <div className="error-message">{error?.data.server}</div>
+      <div data-testid="server_error" className="error-message">
+        {error?.data.server}
+      </div>
       <Link
         className="button-blue"
         to="../signup"
