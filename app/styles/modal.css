@@ -96,7 +96,7 @@ h3 {
   width: 100%;
 }
 
-.ReactModal__Content .buttons button {
+.ReactModal__Content .buttons .button {
   margin-right: 5px;
   min-width: 4em;
 }

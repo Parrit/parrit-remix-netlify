@@ -6,9 +6,7 @@ import { FLOATING_IDX } from "~/api/common/interfaces/parrit.interfaces";
 
 describe("add_person", () => {
   it("adding to a pb", () => {
-    console.log("before", PROJECT_START.people);
     const result = add_person(FRIZZLE, PB_RED.id, PROJECT_START);
-    console.log("after", result.people);
     expect(
       result.people.filter(
         ({ pairing_board_id }) => pairing_board_id === PB_RED.id

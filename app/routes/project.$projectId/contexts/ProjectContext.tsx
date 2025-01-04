@@ -2,6 +2,7 @@
 import React, {
   createContext,
   ReactNode,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -24,6 +25,7 @@ import { pairing_instances } from "~/func/utils";
 import { HistoryPOST } from "~/routes/project.$projectId.history/record_pairs.server";
 import { BulkPersonUpdate } from "~/routes/person.bulk";
 import { HistoryDELETE } from "~/routes/project.$projectId.history/route";
+import { AppContext } from "./App";
 
 const PROJECT_RE = /\/project\/([^/]+)/;
 
@@ -57,7 +59,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   const projectFetcher = useFetcher<Project>();
   const historyFetcher = useFetcher<ProjectPairingSnapshot[]>();
   const bannersFetcher = useFetcher<Banner[]>();
-  const mutator = useFetcher();
+  const mutator = useFetcher<object>();
   const [pairingArrangements, setPairingArrangements] = useState<
     ProjectPairingSnapshot[]
   >([]);
@@ -66,6 +68,7 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   );
   const [pairingHistoryWorking, setPairingHistoryWorking] = useState(false);
   const [banners, setBanners] = useState<Banner[]>([]);
+  const { setSystemAlert } = useContext(AppContext);
 
   const projectId = useMemo(() => {
     const pathmatch = location.pathname.match(PROJECT_RE);
@@ -126,6 +129,22 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       setBanners(bannersToShow);
     }
   }, [bannersFetcher.data, bannersFetcher.state]);
+
+  useEffect(() => {
+    if (
+      mutator.formAction === `/project/${projectId}/history` &&
+      mutator.data &&
+      mutator.state !== "submitting"
+    ) {
+      setSystemAlert("Hello. We just recorded your pairs.");
+    }
+  }, [
+    mutator.data,
+    mutator.formAction,
+    mutator.state,
+    projectId,
+    setSystemAlert,
+  ]);
 
   const nextBanner = useMemo(() => banners.at(0), [banners]);
 

@@ -21,7 +21,7 @@ export const ProjectView: React.FC = () => {
           <h1 data-testid="project-name" className="project-name">
             {project.name}
           </h1>
-          <div className="project-actions flex space-x-4">
+          <div className="project-actions flex">
             <Button
               data-testid="resetPairs"
               className="button-blue inline-flex items-center"

@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { useContext, useState } from "react";
 import { Person, Role } from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
@@ -7,6 +6,7 @@ import { PersonList } from "../people/PersonList";
 import { PairingBoardHeader } from "./PairingBoardHeader";
 import { RoleList } from "./RoleList";
 import { PairingBoardContext } from "../../contexts/PairingBoardContext";
+import { clsy } from "~/func/clsy";
 
 export const PairingBoardView: React.FC = () => {
   const { pairingBoard } = useContext(PairingBoardContext);
@@ -38,7 +38,7 @@ export const PairingBoardView: React.FC = () => {
     }
   };
 
-  const pairingBoardClasses = classNames({
+  const pairingBoardClasses = clsy({
     "pairing-board": true,
     exempt: exempt,
     "drop-target": isOver,
