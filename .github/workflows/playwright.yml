@@ -1,14 +1,16 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 jobs:
   playwright-tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
+      - name: Check if Pull Request
+        if: github.event_name != 'pull_request'
+        run: echo "Not a pull request, exiting early." && exit 0
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -28,9 +30,26 @@ jobs:
 
       - name: Run Playwright tests
         run: URL=${{steps.netlify.outputs.url}} npx playwright test
-      - uses: actions/upload-artifact@v4
+
+      - name: Generate Playwright HTML Report
+        run: npx playwright show-report
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Deploy to GitHub Pages
+        run: |
+          BRANCH_NAME=$(echo ${{ github.head_ref }} | sed 's/\//-/g')
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          mkdir -p test_runs/$BRANCH_NAME/playwright-report
+          cp -r playwright-report/* test_runs/$BRANCH_NAME/playwright-report/
+          touch test_runs/.nojekyll
+          git add test_runs
+          git commit -m 'Deploy Playwright report to GitHub Pages'
+          git push origin HEAD:gh-pages
