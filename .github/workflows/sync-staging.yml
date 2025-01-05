@@ -13,21 +13,18 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: staging
 
       - name: Setup Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Fetch all branches
-        run: git fetch --all
-
-      - name: Checkout staging branch
-        run: git checkout staging
+      - name: Fetch main branch
+        run: git fetch origin main
 
       - name: Merge main into staging
-        run: git merge main --no-ff --no-edit
+        run: git merge origin/main --no-ff --no-edit
 
       - name: Push changes to staging
         run: git push origin staging
