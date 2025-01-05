@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
-import classNames from "classnames";
 import { Form } from "@remix-run/react";
 import { AppContext } from "../../contexts/App";
-import { Button } from "~/ui/Button";
+import { clsy } from "~/func/clsy";
 
 export const Header: React.FC = () => {
   const { pairingHistoryOpen, setPairingHistoryOpen } = useContext(AppContext);
-  const classes = classNames({
+  const classes = clsy({
     history: true,
     open: pairingHistoryOpen,
   });
@@ -26,9 +25,13 @@ export const Header: React.FC = () => {
         </h3>
         <Form method="DELETE" action="/logout">
           <h3>
-            <Button className="font-overlock font" type="submit">
+            <button
+              data-testid="logout-button"
+              className="font-overlock font"
+              type="submit"
+            >
               LOGOUT
-            </Button>
+            </button>
           </h3>
         </Form>
         <h3 className="feedback">

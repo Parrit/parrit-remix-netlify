@@ -2,153 +2,204 @@
 @import url(https://fonts.googleapis.com/css?family=Overlock:700,900);
 
 body {
-    font: normal normal 300 30px Raleway;
-    font-size: 18px;
-    line-height: 28px;
-    color: #8d9096
+  font: normal normal 300 30px Raleway;
+  font-size: 18px;
+  line-height: 28px;
+  color: #8d9096;
 }
 
 h1 {
-    font: normal normal 900 30px Overlock;
-    font-size: 36px;
-    line-height: 44px;
-    color: #58595b
+  font: normal normal 900 30px Overlock;
+  font-size: 36px;
+  line-height: 44px;
+  color: #58595b;
 }
 
 h2 {
-    font: normal normal 500 30px Raleway;
-    font-size: 22px;
-    line-height: 26px;
-    color: #8d9096;
-    margin-top: 0
+  font: normal normal 500 30px Raleway;
+  font-size: 22px;
+  line-height: 26px;
+  color: #8d9096;
+  margin-top: 0;
 }
 
 h3 {
-    font: normal normal 900 30px Overlock;
-    font-size: 15px;
-    line-height: 18px;
-    color: #8d9096;
-    letter-spacing: 0.5px;
-    margin-top: 0;
-    text-transform: uppercase
+  font: normal normal 900 30px Overlock;
+  font-size: 15px;
+  line-height: 18px;
+  color: #8d9096;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  text-transform: uppercase;
 }
 
 .caption {
-    font-size: 15px;
-    line-height: 18px
+  font-size: 15px;
+  line-height: 18px;
 }
 
 .dashboard-container {
-    background-color: #e8f7fa
+  background-color: #e8f7fa;
 }
 
 .dashboard-container .dashboard-content-container {
-    display: flex;
-    flex-flow: column;
-    justify-content: center
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .dashboard-container .dashboard-content-container .dashboard-content {
-    padding-bottom: 46px
+  padding-bottom: 46px;
 }
 
 .dashboard-container .dashboard-content-container .dashboard-content .logo {
-    margin: 0 auto 52px auto;
-    background-image: url("./images/parrit-logo-with-tag.svg")
+  margin: 0 auto 52px auto;
+  background-image: url("./images/parrit-logo-with-tag.svg");
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .description {
-    margin: 0 auto 62px auto;
-    text-align: center
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .description {
+  margin: 0 auto 62px auto;
+  text-align: center;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .forms-container .form {
-    width: 325px
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .forms-container
+  .form {
+  width: 325px;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .forms-container .form .form-label {
-    text-align: center
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .forms-container
+  .form
+  .form-label {
+  text-align: center;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .forms-container .form input {
-    margin-bottom: 10px
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .forms-container
+  .form
+  .button {
+  width: 100%;
+  margin-bottom: 12px;
+  margin-top: 1px;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .forms-container .form button {
-    width: 100%;
-    margin-bottom: 7px
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .forms-container
+  .form
+  .error-message {
+  height: 15px;
+  font: normal normal 600 30px Raleway;
+  font-size: 12px;
+  color: #f3736c;
+  text-align: left;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .forms-container .form .error-message {
-    height: 15px;
-    font: normal normal 600 30px Raleway;
-    font-size: 12px;
-    color: #f3736c;
-    text-align: left
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .feedback-container {
+  text-align: center;
+  margin-top: 62px;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content .feedback-container {
-    text-align: center;
-    margin-top: 62px
-}
-
-.dashboard-container .dashboard-content-container .dashboard-content .feedback-container>* {
-    margin: 4px auto
+.dashboard-container
+  .dashboard-content-container
+  .dashboard-content
+  .feedback-container
+  > * {
+  margin: 4px auto;
 }
 
 @media (max-width: 875px) {
-    .dashboard-container .dashboard-content-container .dashboard-content {
-        margin: 0 10px;
-        padding-top: 30px
-    }
+  .dashboard-container .dashboard-content-container .dashboard-content {
+    margin: 0 10px;
+    padding-top: 30px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .logo {
-        width: 325px;
-        height: 91px
-    }
+  .dashboard-container .dashboard-content-container .dashboard-content .logo {
+    width: 325px;
+    height: 91px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .description {
-        max-width: 400px
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .description {
+    max-width: 400px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .forms-container .form {
-        margin: auto
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .forms-container
+    .form {
+    margin: auto;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .forms-container .form.new-form {
-        margin-bottom: 30px
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .forms-container
+    .form.new-form {
+    margin-bottom: 30px;
+  }
 }
 
 @media (min-width: 875px) {
-    .dashboard-container .dashboard-content-container .dashboard-content {
-        margin: 0 50px
-    }
+  .dashboard-container .dashboard-content-container .dashboard-content {
+    margin: 0 50px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .logo {
-        width: 400px;
-        height: 112px
-    }
+  .dashboard-container .dashboard-content-container .dashboard-content .logo {
+    width: 400px;
+    height: 112px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .description {
-        width: 538px
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .description {
+    width: 538px;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .forms-container {
-        text-align: center
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .forms-container {
+    text-align: center;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .forms-container .form {
-        display: inline-block;
-        vertical-align: middle
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .forms-container
+    .form {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
-    .dashboard-container .dashboard-content-container .dashboard-content .forms-container .dotted-line {
-        display: inline-block;
-        vertical-align: middle;
-        width: 5px;
-        height: 240px;
-        background-image: url("./images/dot-dark.svg");
-        margin-right: 50px
-    }
+  .dashboard-container
+    .dashboard-content-container
+    .dashboard-content
+    .forms-container
+    .dotted-line {
+    display: inline-block;
+    vertical-align: middle;
+    width: 5px;
+    height: 240px;
+    background-image: url("./images/dot-dark.svg");
+    margin-right: 50px;
+  }
 }
