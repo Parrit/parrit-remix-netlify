@@ -92,6 +92,6 @@ jobs:
           done
       - name: Output Report URL as Workflow Annotation
         run: |
-          FULL_HTML_REPORT_URL=https://parrit.github.io/playwright-gh-actions-gh-pages/$HTML_REPORT_URL_PATH
+          FULL_HTML_REPORT_URL=https://parrit.github.io/parrit-remix-netlify/$HTML_REPORT_URL_PATH
 
           echo "::notice title=📋 Published Playwright Test Report::$FULL_HTML_REPORT_URL"
