@@ -14,6 +14,13 @@ Visit the app: https://parrit.io/
 - Xata.io
 - Netlify
 - Sentry (for bug detection)
+- Playwright (unit tests)
+- GithubActions (general automation)
+
+## Playwright
+
+1. **Screenshots** of test runs are published to our [github pages site](https://parrit.github.io/parrit-remix-netlify/)
+2. Detailed run success/failure information can be found in each task execution [action ref](https://github.com/Parrit/parrit-remix-netlify/actions/workflows/playwright.yml)
 
 ## Core Contributors
 
