@@ -20,6 +20,9 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Fetch all branches
+        run: git fetch --all
+
       - name: Checkout staging branch
         run: git checkout staging
 
