@@ -1,12 +1,19 @@
+import * as Sentry from "@sentry/remix";
 import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useLocation,
+  useMatches,
   useRouteError,
 } from "@remix-run/react";
 import ReactGA from "react-ga4";
@@ -38,8 +45,52 @@ export const logPageView = (path: string) => {
   ReactGA.send({ hitType: "pageview", page: path });
 };
 
+export const loader: LoaderFunction = async () => {
+  return { SENTRY_ENVIRONMENT: process.env.SENTRY_ENVIRONMENT };
+};
+
+const InitializeSentry = (environment: string) => {
+  Sentry.init({
+    dsn: "https://c8a47fcd86fce0c2b5913396f6b08533@o4508546853830656.ingest.us.sentry.io/4508546855272448",
+    tracesSampleRate: 1,
+    environment,
+
+    integrations: [
+      Sentry.browserTracingIntegration({
+        useEffect,
+        useLocation,
+        useMatches,
+      }),
+      Sentry.replayIntegration({
+        maskAllText: true,
+        blockAllMedia: true,
+      }),
+    ],
+
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1,
+    beforeSend(event) {
+      if (window.location.hostname === "localhost") {
+        return null;
+      }
+      return event;
+    },
+  });
+};
+
 function App() {
+  const { SENTRY_ENVIRONMENT } = useLoaderData<{
+    SENTRY_ENVIRONMENT: string;
+  }>();
   const location = useLocation();
+
+  useEffect(() => {
+    if (!SENTRY_ENVIRONMENT) {
+      return;
+    }
+
+    InitializeSentry(SENTRY_ENVIRONMENT);
+  }, [SENTRY_ENVIRONMENT]);
 
   useEffect(() => {
     if (!document.getElementById("Cookiebot")) {
