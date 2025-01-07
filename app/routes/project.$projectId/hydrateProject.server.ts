@@ -141,8 +141,8 @@ export default async ({ request }: LoaderFunctionArgs): Promise<Project> => {
       name: "Floating",
       exempt: false,
     },
-    people: Array.from(peopleMap.values()),
-    roles: Array.from(roleMap.values()),
+    people: Array.from(peopleMap.values()).filter((v) => v !== null),
+    roles: Array.from(roleMap.values()).filter((v) => v !== null),
   };
 
   return project;

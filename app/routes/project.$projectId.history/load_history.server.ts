@@ -113,7 +113,7 @@ export default async (
       peopleSet.add(localPeople[r.person_id])
     );
 
-    instance.people = Array.from(peopleSet);
+    instance.people = Array.from(peopleSet).filter((p) => p !== null);
     snapshot.pairingInstances[idx] = instance;
     snapshots[pairingTime] = snapshot;
   });
