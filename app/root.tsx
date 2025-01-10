@@ -126,21 +126,28 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const Cookiebot = window.Cookiebot;
-
-    // Listen for Cookiebot consent changes
-    window.addEventListener("CookieConsentDeclaration", () => {
-      if (Cookiebot?.consents.given.includes("statistics")) {
-        // Enable Google Analytics if consent is given
-        initGA();
-        logPageView(location.pathname);
+    switch (SENTRY_ENVIRONMENT) {
+      case "production": {
+        const Cookiebot = window.Cookiebot;
+        // Listen for Cookiebot consent changes
+        window.addEventListener("CookieConsentDeclaration", () => {
+          if (Cookiebot?.consents.given.includes("statistics")) {
+            // Enable Google Analytics if consent is given
+            initGA();
+            logPageView(location.pathname);
+          }
+        });
+        return () => {
+          window.removeEventListener("CookieConsentDeclaration", () => {});
+        };
       }
-    });
-
-    return () => {
-      window.removeEventListener("CookieConsentDeclaration", () => {});
-    };
-  }, [location.pathname]);
+      default:
+        console.warn(
+          "Google Analytics is disabled in non-production environments"
+        );
+        break;
+    }
+  }, [location.pathname, SENTRY_ENVIRONMENT]);
 
   return (
     <html lang="en">
