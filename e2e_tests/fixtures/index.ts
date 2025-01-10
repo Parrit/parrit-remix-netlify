@@ -3,7 +3,7 @@
 import { ProjectPage } from "./ProjectPage";
 import { test as base, expect as baseExpect, Page } from "@playwright/test";
 
-const UI_DELAY = 2000;
+const UI_DELAY = 2500;
 
 export interface LoginInfo {
   projectName: string;
@@ -44,7 +44,7 @@ export const test = base.extend<ParritFixtures>({
     await freshPage.getByTestId("projectName").press("Tab");
     await freshPage.getByTestId("password").fill(password);
     await freshPage.getByTestId("submit").click();
-    await freshPage.waitForTimeout(UI_DELAY);
+    await freshPage.waitForURL(/project/, { timeout: 30000 });
     await freshPage.getByTestId("banner-action").click();
     // get the project id from the url
     const url = freshPage.url();
