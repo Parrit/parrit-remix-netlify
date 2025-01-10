@@ -1,12 +1,22 @@
 import { DateTime } from "luxon";
 import React, { useContext } from "react";
-import { ProjectPairingSnapshot } from "~/api/common/interfaces/parrit.interfaces";
+import {
+  Person,
+  ProjectPairingSnapshot,
+} from "~/api/common/interfaces/parrit.interfaces";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { TrashIcon } from "~/ui/TrashIcon";
 
 interface Props {
   pairingArrangement: ProjectPairingSnapshot;
 }
+
+const snip = (person?: Person): string => {
+  if (!person) {
+    return "null";
+  }
+  return person.name.slice(0, 3);
+};
 
 const PairingHistoryRecord: React.FC<Props> = (props) => {
   const { pairingArrangement } = props;
@@ -20,7 +30,7 @@ const PairingHistoryRecord: React.FC<Props> = (props) => {
     .map((instance) => {
       const pbName = instance.pairingBoardName ?? "null";
       // get the first 3 letters of each person's name
-      const names = instance.people.map((person) => person.name.slice(0, 3));
+      const names = instance.people.map(snip);
       names.push(pbName.slice(0, 3));
       // alphabetize the names
       names.sort();

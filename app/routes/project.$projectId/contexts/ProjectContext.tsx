@@ -325,6 +325,8 @@ export const ProjectProvider: React.FC<Props> = (props) => {
     );
   };
 
+  console.log("Project", project);
+
   const value = {
     findPairingBoardByRole,
     findPairingBoardByPerson,
