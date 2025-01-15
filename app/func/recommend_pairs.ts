@@ -21,9 +21,13 @@ class Pair {
   private person1;
   private person2;
 
-  constructor(person1: Person, person2: Person) {
+  constructor(person1?: Person, person2?: Person) {
     // guarantee that this pair will be formed the same no matter the order
     // that the people are input
+    if (!person1 || !person2) {
+      console.error(person1, person2);
+      throw new Error("Pair must be initialized with two people");
+    }
     const arr = [person1, person2].sort((a, b) => a.id.localeCompare(b.id));
     this.person1 = arr[0];
     this.person2 = arr[1];
@@ -47,16 +51,20 @@ export class ProjectHelper {
           for (let j = i + 1; j < item.people.length; j++) {
             const p1 = item.people[i];
             const p2 = item.people[j];
-            const pair = new Pair(p1, p2);
-            const hash = pair.hashcode;
-            const extant = this.timetable[hash];
-            const pairDate = new Date(item.pairingTime);
-            if (!extant) {
-              this.timetable[hash] = pairDate; // create date from timestamp
-            } else {
-              if (extant.getTime() < pairDate.getTime()) {
-                this.timetable[hash] = pairDate;
+            try {
+              const pair = new Pair(p1, p2);
+              const hash = pair.hashcode;
+              const extant = this.timetable[hash];
+              const pairDate = new Date(item.pairingTime);
+              if (!extant) {
+                this.timetable[hash] = pairDate; // create date from timestamp
+              } else {
+                if (extant.getTime() < pairDate.getTime()) {
+                  this.timetable[hash] = pairDate;
+                }
               }
+            } catch (e) {
+              console.error(e);
             }
           }
         }
