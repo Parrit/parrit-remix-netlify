@@ -22,7 +22,10 @@ export const BannerView: React.FC = () => {
     <div>
       <div className="ReactModal__Overlay" />
       <div className="fixed inset-0 flex items-center justify-center z-2">
-        <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-3xl mx-auto">
+        <div
+          className="relative rounded-lg shadow-lg p-8 max-w-3xl mx-auto"
+          style={{ backgroundColor: "#E8F7FA" }}
+        >
           <div className="form-header">
             <button
               className="form-cancel float-right"
@@ -32,7 +35,10 @@ export const BannerView: React.FC = () => {
             </button>
           </div>
           <div className="flex items-center justify-center space-x-4">
-            <div className="flex items-center justify-center w-3/4 h-48 border-4 border-yellow-200 rounded-full">
+            <div
+              className="flex items-center justify-center w-3/4 h-48 border-4 border-yellow-200 bg-white"
+              style={{ borderRadius: "100%" }}
+            >
               <h2 className="text-5xl font-extrabold text-gray-600 text-center font-overlock">
                 {nextBanner.title}
               </h2>
@@ -50,7 +56,7 @@ export const BannerView: React.FC = () => {
           </div>
           <Button
             data-testid="banner-action"
-            className="button-red mt-6 px-20 py-4 float-left font-overlock text-2xl font-bold"
+            className="button-green mt-6 px-20 py-4 float-left font-overlock text-2xl font-extrabold"
             onClick={() => {
               acknowledgeBanner(nextBanner);
               if (nextBanner.action_url) {
@@ -60,7 +66,7 @@ export const BannerView: React.FC = () => {
           >
             {nextBanner.action_text}
           </Button>
-          <p className="mt-4 float-left">
+          <p className="mt-4 float-left text-xs">
             Have questions or interested in volunteering? Send a note to:{" "}
             <a
               href="mailto:parrithelp@gmail.com"

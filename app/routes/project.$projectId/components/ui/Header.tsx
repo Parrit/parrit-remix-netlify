@@ -23,6 +23,16 @@ export const Header: React.FC = () => {
             DONATE
           </a>
         </h3>
+
+        <h3 className="feedback">
+          <a
+            href="https://goo.gl/forms/ZGqUyZDEDSWqZVBP2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            feedback
+          </a>
+        </h3>
         <Form method="DELETE" action="/logout">
           <h3>
             <button
@@ -34,15 +44,6 @@ export const Header: React.FC = () => {
             </button>
           </h3>
         </Form>
-        <h3 className="feedback">
-          <a
-            href="https://goo.gl/forms/ZGqUyZDEDSWqZVBP2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            feedback
-          </a>
-        </h3>
         <h3
           data-testid="historyButton"
           className={classes}
