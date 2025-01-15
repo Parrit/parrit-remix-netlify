@@ -127,7 +127,7 @@ header .links > * {
     margin-left: 20px;
   }
 
-  header .links > *:hover {
+  header h3 *:hover {
     color: #58595b;
   }
 

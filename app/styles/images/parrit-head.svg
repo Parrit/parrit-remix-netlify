@@ -1,16 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="67px" height="80px" viewBox="0 0 67 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
-    <title>parrit head</title>
-    <desc>Created with sketchtool.</desc>
-    <defs></defs>
-    <g id="Wireframes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Error-Page" transform="translate(-869.000000, -480.000000)" fill="#4A4A4A">
-            <g id="parrit-head" transform="translate(902.500000, 520.000000) scale(-1, 1) translate(-902.500000, -520.000000) translate(869.000000, 480.000000)">
-                <path d="M53.44,14 L53,14 L53,44.1 C57.66,44.01 59.08,41.77 60.84,38.1 L66.97,38.1 C66.87,25.67 62.3,19.36 53.44,14 L53.44,14 Z" id="Shape"></path>
-                <path d="M47.08,63.11 C44.36,46.67 19.18,28.18 39.68,10.11 C36.68,9.18 7.54,0 7.54,0 C5.76,4 7.28,6 12.93,10.14 L0,10.14 C0,15.88 5.49,18.92 10.52,20.54 C1.26,28.92 1.95,35.82 2.08,66.89 C14.1453213,77.3840394 30.4340556,81.6117063 46.08,78.31 C47.552484,73.3830641 47.8943052,68.1873825 47.08,63.11 L47.08,63.11 Z M41.31,50.98 C41.302216,50.9992426 41.302216,51.0207574 41.31,51.04 C41.302216,51.0207574 41.302216,50.9992426 41.31,50.98 L41.31,50.98 Z" id="Shape"></path>
-                <ellipse id="Oval" cx="44.66" cy="21.38" rx="4.66" ry="4.38"></ellipse>
-            </g>
-        </g>
-    </g>
+<svg width="67" height="80" viewBox="0 0 67 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.53 14H13.97V44.1C9.30997 44.01 7.88997 41.77 6.12997 38.1H-2.95639e-05C0.0999704 25.67 4.66997 19.36 13.53 14V14Z" fill="#F3736C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.89 63.11C22.61 46.67 47.79 28.18 27.29 10.11C30.29 9.18 59.43 0 59.43 0C61.21 4 59.69 6 54.04 10.14H66.97C66.97 15.88 61.48 18.92 56.45 20.54C65.71 28.92 65.02 35.82 64.89 66.89C52.8246 77.384 36.5359 81.6117 20.89 78.31C19.4175 73.3831 19.0757 68.1874 19.89 63.11V63.11ZM25.66 50.98C25.6678 50.9992 25.6678 51.0208 25.66 51.04C25.6678 51.0208 25.6678 50.9992 25.66 50.98V50.98Z" fill="#89D4E5"/>
+<ellipse cx="4.66" cy="4.38" rx="4.66" ry="4.38" transform="matrix(-1 0 0 1 26.97 17)" fill="black"/>
 </svg>

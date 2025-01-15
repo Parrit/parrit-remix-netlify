@@ -30,15 +30,10 @@ jobs:
         id: netlify
         with:
           site_name: "parrit"
+          max_timeout: 180
 
       - name: Run Playwright tests
         run: URL=${{steps.netlify.outputs.url}} npx playwright test
-
-      # - name: Check filesystem for test results
-      #   if: ${{ !cancelled() }}
-      #   run: |
-      #     ls -ls
-      #     ls -la playwright-report/
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4

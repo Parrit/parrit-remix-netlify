@@ -102,8 +102,12 @@ export const ProjectProvider: React.FC<Props> = (props) => {
   useEffect(() => {
     if (historyFetcher.data && historyFetcher.state === "idle") {
       setPairingArrangements(historyFetcher.data);
+      if (pairingHistoryWorking) {
+        setSystemAlert("Hello. We just recorded your pairs.");
+      }
       setPairingHistoryWorking(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historyFetcher.data, historyFetcher.state]);
 
   useEffect(() => {
@@ -129,22 +133,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       setBanners(bannersToShow);
     }
   }, [bannersFetcher.data, bannersFetcher.state]);
-
-  useEffect(() => {
-    if (
-      mutator.formAction === `/project/${projectId}/history` &&
-      mutator.data &&
-      mutator.state !== "submitting"
-    ) {
-      setSystemAlert("Hello. We just recorded your pairs.");
-    }
-  }, [
-    mutator.data,
-    mutator.formAction,
-    mutator.state,
-    projectId,
-    setSystemAlert,
-  ]);
 
   const nextBanner = useMemo(() => banners.at(0), [banners]);
 
@@ -324,8 +312,6 @@ export const ProjectProvider: React.FC<Props> = (props) => {
       }
     );
   };
-
-  console.log("Project", project);
 
   const value = {
     findPairingBoardByRole,
