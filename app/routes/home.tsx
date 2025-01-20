@@ -37,7 +37,7 @@ export default function Home() {
             today is (sort of) a new Parrit. We have rebuilt the app to help us
             scale, if you see anything that is awry we want to hear about it.
           </div>
-          <div className="realease feedback my-3">
+          <div className="release feedback">
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfOLPi4_5lNng5eMZJtmUmPzsCFfusFwQcetBqsxWEXjWr5og/viewform?usp=preview"
               target="_blank"
@@ -45,7 +45,18 @@ export default function Home() {
               rel="noreferrer"
             >
               <span>Share release feedback here</span>
-              <img src={caret_right} />
+              <img className="caret" src={caret_right} />
+            </a>
+          </div>
+          <div className="release notes">
+            <a
+              href="https://github.com/Parrit/parrit-remix-netlify/blob/main/REWRITE.md"
+              target="_blank"
+              className="release link flex items-center space-x-2"
+              rel="noreferrer"
+            >
+              <span>Read our release statement here</span>
+              <img className="caret" src={caret_right} />
             </a>
           </div>
           <div>

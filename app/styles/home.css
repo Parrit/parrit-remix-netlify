@@ -116,10 +116,28 @@ h3 {
   margin: 4px auto;
 }
 
-.feedback.link {
-  color: #f3736c;
+.release .link {
   font: normal normal 600 15px Raleway;
   text-transform: uppercase;
+}
+
+/* Here is a pen to compute the filter value for #000 fill SVG
+ * https://codepen.io/sosuke/pen/Pjoqqp
+  */
+.feedback {
+  color: #f3736c;
+  .caret {
+    filter: invert(69%) sepia(15%) saturate(7330%) hue-rotate(316deg)
+      brightness(97%) contrast(97%);
+  }
+}
+
+.notes {
+  color: #89d4e5;
+  .caret {
+    filter: invert(77%) sepia(58%) saturate(295%) hue-rotate(152deg)
+      brightness(95%) contrast(87%);
+  }
 }
 
 @media (max-width: 875px) {
