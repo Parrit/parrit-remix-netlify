@@ -10,6 +10,7 @@ interface Props {
 export const YellowCircle: React.FC<Props> = (props) => {
   let sizeClass = "text-5xl";
   let heightClass = "h-48";
+  let maxWidthClass: string | null = null;
   switch (props.size) {
     case "medium":
       sizeClass = "text-3xl";
@@ -17,11 +18,13 @@ export const YellowCircle: React.FC<Props> = (props) => {
     case "small":
       sizeClass = "text-xl";
       heightClass = "h-36";
+      maxWidthClass = "max-w-60";
       break;
     case "large":
     default:
       sizeClass = "text-5xl";
       heightClass = "h-48";
+      maxWidthClass = null;
       break;
   }
   const textClassName = clsx(
@@ -35,6 +38,7 @@ export const YellowCircle: React.FC<Props> = (props) => {
 
   const divClassname = clsx(
     heightClass,
+    maxWidthClass,
     "flex",
     "items-center",
     "justify-center",
