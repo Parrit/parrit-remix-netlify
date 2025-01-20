@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import parritIcon from "~/styles/images/parrit-head.svg";
 import closeSytemIcon from "~/styles/images/close-modal-dark.svg";
 import { Button } from "~/ui/Button";
+import { YellowCircle } from "./YellowCircle";
 
 export const BannerView: React.FC = () => {
   const { nextBanner, acknowledgeBanner } = useContext(ProjectContext);
@@ -35,14 +36,7 @@ export const BannerView: React.FC = () => {
             </button>
           </div>
           <div className="flex items-center justify-center space-x-4">
-            <div
-              className="flex items-center justify-center w-3/4 h-48 border-4 border-yellow-200 bg-white"
-              style={{ borderRadius: "100%" }}
-            >
-              <h2 className="text-5xl font-extrabold text-gray-600 text-center font-overlock">
-                {nextBanner.title}
-              </h2>
-            </div>
+            <YellowCircle size="large" text={nextBanner.title} />
             <div className="add-parrit-icon mt-4">
               <img src={parritIcon} alt="Sad Parrit" />
             </div>

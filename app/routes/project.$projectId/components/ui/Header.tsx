@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
 
         <h3 className="feedback">
           <a
-            href="https://goo.gl/forms/ZGqUyZDEDSWqZVBP2"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfOLPi4_5lNng5eMZJtmUmPzsCFfusFwQcetBqsxWEXjWr5og/viewform?usp=preview"
             target="_blank"
             rel="noopener noreferrer"
           >
