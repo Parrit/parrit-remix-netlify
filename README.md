@@ -1,11 +1,23 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6f43fea8-e2ed-4356-823e-66607621761d/deploy-status)](https://app.netlify.com/sites/parrit/deploys)
 
-# 📣 UPDATE: The default hosted Parrit instance has changed addresses. We're now at https://parrit.io
-
 # Parrit
 
 A historical recommendation engine for daily pair rotation management, with an interactive visual aide of each pairing team.
 Visit the app: https://parrit.io/
+
+## Links
+
+### [Live Site](https://parrit.io)
+
+A CI-pipeline hosted instance that you can use!
+
+### [Release Writeup](./REWRITE.md)
+
+A note from our dev team about why we've made this dramatic change
+
+### [GH-Pages](https://parrit.github.io/parrit-remix-netlify)
+
+We publish our CI test runs to this site for easy viewing
 
 ## Tech Stack
 
@@ -14,7 +26,7 @@ Visit the app: https://parrit.io/
 - Xata.io
 - Netlify
 - Sentry (for bug detection)
-- Playwright (unit tests)
+- Playwright (e2e tests)
 - GithubActions (general automation)
 
 ## Playwright

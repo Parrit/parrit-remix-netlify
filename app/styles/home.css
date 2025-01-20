@@ -48,12 +48,7 @@ h3 {
   justify-content: center;
 }
 
-.dashboard-container .dashboard-content-container .dashboard-content {
-  padding-bottom: 46px;
-}
-
 .dashboard-container .dashboard-content-container .dashboard-content .logo {
-  margin: 0 auto 52px auto;
   background-image: url("./images/parrit-logo-with-tag.svg");
 }
 
@@ -61,7 +56,6 @@ h3 {
   .dashboard-content-container
   .dashboard-content
   .description {
-  margin: 0 auto 62px auto;
   text-align: center;
 }
 
@@ -122,6 +116,12 @@ h3 {
   margin: 4px auto;
 }
 
+.feedback.link {
+  color: #f3736c;
+  font: normal normal 600 15px Raleway;
+  text-transform: uppercase;
+}
+
 @media (max-width: 875px) {
   .dashboard-container .dashboard-content-container .dashboard-content {
     margin: 0 10px;
@@ -147,14 +147,6 @@ h3 {
     .form {
     margin: auto;
   }
-
-  .dashboard-container
-    .dashboard-content-container
-    .dashboard-content
-    .forms-container
-    .form.new-form {
-    margin-bottom: 30px;
-  }
 }
 
 @media (min-width: 875px) {
@@ -165,13 +157,6 @@ h3 {
   .dashboard-container .dashboard-content-container .dashboard-content .logo {
     width: 400px;
     height: 112px;
-  }
-
-  .dashboard-container
-    .dashboard-content-container
-    .dashboard-content
-    .description {
-    width: 538px;
   }
 
   .dashboard-container
