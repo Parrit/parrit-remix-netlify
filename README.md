@@ -52,12 +52,22 @@ Take a look at the tech talk we presented about the making of Parrit: https://yo
 
 We use Xata as our data backend. Why? Because AI recommended it.
 
-#### Quickstart
+#### Install the CLI and Login
 
 1. `npm install -g @xata.io/cli`
 2. `xata auth login`
 
 In order to connect to the core databases you'll need to be part of the Parrit Xata team. Reach out if you aren't already. You can also get started with your own Xata database for free.
+
+#### Shema
+
+Xata doesn't appear to have a clean way of migrating (or even exporting) the schema. What it does do is allow you to upload CSVs which become tables. Reach out for starter data or make some of your own.
+
+#### Create the sentinel "Floating" record
+
+easiest way is through the Xata UI
+
+`id: -1, project: null`
 
 ### Step 2: Netlify
 
