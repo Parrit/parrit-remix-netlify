@@ -21,7 +21,7 @@ import ReactGA from "react-ga4";
 import "~/styles/global.css";
 import layoutStyles from "~/styles/layout.css?url";
 import errorStyles from "~/styles/error.css?url";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = () => [
   {
@@ -46,7 +46,10 @@ export const logPageView = (path: string) => {
 };
 
 export const loader: LoaderFunction = async () => {
-  return { SENTRY_ENVIRONMENT: process.env.SENTRY_ENVIRONMENT };
+  return {
+    SENTRY_ENVIRONMENT: process.env.SENTRY_ENVIRONMENT,
+    G_TAG: process.env.G_TAG,
+  };
 };
 
 const InitializeSentry = (environment: string) => {
@@ -81,8 +84,9 @@ const InitializeSentry = (environment: string) => {
 };
 
 function App() {
-  const { SENTRY_ENVIRONMENT } = useLoaderData<{
+  const { SENTRY_ENVIRONMENT, G_TAG } = useLoaderData<{
     SENTRY_ENVIRONMENT: string;
+    G_TAG: string;
   }>();
   const location = useLocation();
 
@@ -96,16 +100,10 @@ function App() {
   }, [SENTRY_ENVIRONMENT]);
 
   useEffect(() => {
-    if (!document.getElementById("Cookiebot")) {
-      const script = document.createElement("script");
-      script.src = "https://consent.cookiebot.com/uc.js";
-      script.id = "Cookiebot";
-      script.setAttribute("data-cbid", "5c963d7c-d540-4606-b8f7-b1618d8c8fb4");
-      script.type = "text/javascript";
-      script.async = true;
-      document.head.appendChild(script);
+    if (G_TAG) {
+      addGtmScript(G_TAG);
     }
-  }, []);
+  }, [G_TAG]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -199,4 +197,35 @@ export function ErrorBoundary() {
       </body>
     </html>
   );
+}
+
+let gtmScriptAdded = false;
+
+declare global {
+  interface Window {
+    [key: string]: object[];
+  }
+}
+
+function addGtmScript(GTM_ID: string) {
+  if (!GTM_ID || gtmScriptAdded) {
+    return;
+  }
+
+  // Code copied from GTM console + added type annotations.
+  (function (w: Window, d: Document, s: "script", l: string, i: string) {
+    w[l] = w[l] || [];
+    w[l].push({
+      "gtm.start": new Date().getTime(),
+      event: "gtm.js",
+    });
+    const f = d.getElementsByTagName(s)[0];
+    const j = d.createElement<"script">(s);
+    const dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode?.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", GTM_ID);
+
+  gtmScriptAdded = true;
 }
