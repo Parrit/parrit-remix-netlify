@@ -12,6 +12,7 @@ export const action: ActionFunction = async ({ request }) => {
   const xata = parritXataClient();
   switch (request.method) {
     case "PUT": {
+      
       const json = (await request.json()) as BulkPersonUpdate;
       return await xata.transactions.run(
         json.persons.map((p) => ({

@@ -4,7 +4,32 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import * as isbotModule from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/remix";
+
+Sentry.init({
+  dsn: "https://c8a47fcd86fce0c2b5913396f6b08533@o4508546853830656.ingest.us.sentry.io/4508546855272448",
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for tracing.
+  // We recommend adjusting this value in production
+  // Learn more at
+  // https://docs.sentry.io/platforms/javascript/configuration/options/#traces-sample-rate
+  tracesSampleRate: 1.0,
+
+  // To use Sentry OpenTelemetry auto-instrumentation
+  // default: false
+  autoInstrumentRemix: true,
+
+  // Optionally capture action formData attributes with errors.
+  // This requires `sendDefaultPii` set to true as well.
+  captureActionFormDataKeys: {
+    key_x: true,
+    key_y: true,
+  },
+  // To capture action formData attributes.
+  sendDefaultPii: true,
+});
+
+export const handleError = Sentry.sentryHandleError;
 
 const ABORT_DELAY = 5_000;
 
