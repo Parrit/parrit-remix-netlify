@@ -86,6 +86,7 @@ function App() {
 
   useEffect(() => {
     if (!SENTRY_ENVIRONMENT) {
+      console.error("No sentry environment. Bugs will not be reported.");
       return;
     }
 
