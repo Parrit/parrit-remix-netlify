@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="88.189156mm"
+   height="88.189156mm"
+   viewBox="0 0 88.189156 88.189156"
+   version="1.1"
+   id="svg5"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-3.5021417,-3.1656189)">
+    <g
+       id="g711"
+       transform="translate(-80.838705,-78.952785)">
+      <circle
+         style="fill:none;stroke:#000000;stroke-width:4.16401;stroke-opacity:0.967595"
+         id="path234"
+         cx="128.43542"
+         cy="126.21298"
+         r="42.012573" />
+      <text
+         xml:space="preserve"
+         style="font-size:78.2494px;font-family:Cousine;-inkscape-font-specification:'Cousine, Normal';fill:#000000;stroke:none;stroke-width:3.05721;stroke-opacity:0.967595"
+         x="99.68412"
+         y="153.14941"
+         id="text446"><tspan
+           sodipodi:role="line"
+           id="tspan444"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:78.2494px;font-family:Arimo;-inkscape-font-specification:'Arimo, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:none;stroke-width:3.0572"
+           x="99.68412"
+           y="153.14941">C</tspan></text>
+    </g>
+  </g>
+</svg>

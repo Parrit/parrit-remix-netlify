@@ -21,7 +21,7 @@ import ReactGA from "react-ga4";
 import "~/styles/global.css";
 import layoutStyles from "~/styles/layout.css?url";
 import errorStyles from "~/styles/error.css?url";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const meta: MetaFunction = () => [
   {
@@ -50,32 +50,34 @@ export const loader: LoaderFunction = async () => {
 };
 
 const InitializeSentry = (environment: string) => {
-  Sentry.init({
-    dsn: "https://c8a47fcd86fce0c2b5913396f6b08533@o4508546853830656.ingest.us.sentry.io/4508546855272448",
-    tracesSampleRate: 1,
-    environment,
+  if (!Sentry.isInitialized()) {
+    Sentry.init({
+      dsn: "https://c8a47fcd86fce0c2b5913396f6b08533@o4508546853830656.ingest.us.sentry.io/4508546855272448",
+      tracesSampleRate: 1,
+      environment,
 
-    integrations: [
-      Sentry.browserTracingIntegration({
-        useEffect,
-        useLocation,
-        useMatches,
-      }),
-      Sentry.replayIntegration({
-        maskAllText: true,
-        blockAllMedia: true,
-      }),
-    ],
+      integrations: [
+        Sentry.browserTracingIntegration({
+          useEffect,
+          useLocation,
+          useMatches,
+        }),
+        Sentry.replayIntegration({
+          maskAllText: true,
+          blockAllMedia: true,
+        }),
+      ],
 
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1,
-    beforeSend(event) {
-      if (window.location.hostname === "localhost") {
-        return null;
-      }
-      return event;
-    },
-  });
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1,
+      beforeSend(event) {
+        if (window.location.hostname === "localhost") {
+          return null;
+        }
+        return event;
+      },
+    });
+  }
 };
 
 function App() {
@@ -86,7 +88,7 @@ function App() {
 
   useEffect(() => {
     if (!SENTRY_ENVIRONMENT) {
-      console.error("No sentry environment. Bugs will not be reported.");
+      console.warn("No sentry environment. Bugs will not be reported.");
       return;
     }
 
